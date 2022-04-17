@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<block type="Module" ID="440838143">
+ <ObjName>XKProperty</ObjName>
+ <ObjContainerID>1262106623</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>XKAbstractProperty</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>517099519</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>IsComputed = False</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FromAbstractProperty</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Creates a new property from the passed abstract property. Members are cloned.</CodeDescription>
+  <PartID>1366564863</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function FromAbstractProperty(absProp As XKAbstractProperty) As XKProperty</SourceLine>
+   <SourceLine>/// Creates a new property from the passed abstract property. Members are cloned.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var prop As New XKProperty</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each att As Pair In absProp.Attributes_</SourceLine>
+   <SourceLine>prop.Attributes_.Add(att)</SourceLine>
+   <SourceLine>Next att</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>prop.Description = absProp.Description</SourceLine>
+   <SourceLine>prop.IsComputed = absProp.IsComputed</SourceLine>
+   <SourceLine>prop.IsShared = absProp.IsShared</SourceLine>
+   <SourceLine>prop.Name = absProp.Name</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each noteLine As String In absProp.NoteLines</SourceLine>
+   <SourceLine>prop.NoteLines.Add(noteLine)</SourceLine>
+   <SourceLine>Next noteLine</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>prop.Scope = absProp.Scope</SourceLine>
+   <SourceLine>prop.Type = absProp.Type</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return prop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>absProp As XKAbstractProperty</ItemParams>
+  <ItemResult>XKProperty</ItemResult>
+ </Method>
+ <Property>
+  <ItemName>DefaultValue</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The optional default value.</CodeDescription>
+  <PartID>1430945791</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DefaultValue As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DefaultValue As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>IsArray</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>True if this property is an array.</CodeDescription>
+  <PartID>723687423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>IsArray As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>IsArray As Boolean = False</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Description</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsShared</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Scope</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
+   <ItemType>XojoKit.Scopes</ItemType>
+   <Enumeration>
+    <ItemDef>0 - Public_</ItemDef>
+    <ItemDef>1 - Private_</ItemDef>
+    <ItemDef>2 - Protected_</ItemDef>
+    <ItemDef>3 - Global_</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Type</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsComputed</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DefaultValue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsArray</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

@@ -1,0 +1,1082 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<block type="Module" ID="1868421119">
+ <ObjName>XKProject</ObjName>
+ <ObjContainerID>1262106623</ObjContainerID>
+ <IsClass>1</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>906502143</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(manifest As FolderItem)</SourceLine>
+   <SourceLine>Self.Manifest = manifest</SourceLine>
+   <SourceLine>Self.Containers = New Dictionary</SourceLine>
+   <SourceLine>Self.Options = New XKOptions</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>manifest As FolderItem</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FolderItemFromManifestPath</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the FolderItem referenced by `path`, optionally relative to `relativeTo`. May raise a `XodocException`.</CodeDescription>
+  <PartID>1195825151</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FolderItemFromManifestPath(path As String, relativeTo As FolderItem = Nil) As FolderItem</SourceLine>
+   <SourceLine>/// Returns the FolderItem referenced by `path`, optionally relative to `relativeTo`.</SourceLine>
+   <SourceLine>/// May raise a `XKException`.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var prefix As String = ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var pathSep As String</SourceLine>
+   <SourceLine>#If TargetWindows Then</SourceLine>
+   <SourceLine>pathSep = "\"</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>pathSep = "/"</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Is what is passed actually a relative path?</SourceLine>
+   <SourceLine>#If TargetWindows Then</SourceLine>
+   <SourceLine>If path.Middle(1, 1) = ":" Then</SourceLine>
+   <SourceLine>Return GetFolderItem(path, FolderItem.PathTypeShell)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If path.Left(1) = pathSep Then</SourceLine>
+   <SourceLine>relativeTo = GetFolderItem(SpecialFolder.CurrentWorkingDirectory.NativePath.Left(3))</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>If path.Left(1) = pathSep Then</SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>Var f As New FolderItem(path, FolderItem.PathModes.Shell)</SourceLine>
+   <SourceLine>Return f</SourceLine>
+   <SourceLine>Catch e</SourceLine>
+   <SourceLine>Raise New XKException("Unable to retrieve FolderItem with path `" + path + "`.")</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>prefix = pathSep</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Seems to be a relative path.</SourceLine>
+   <SourceLine>If relativeTo = Nil Then relativeTo = SpecialFolder.CurrentWorkingDirectory</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>path = relativeTo.NativePath + pathSep + path</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var newParts() As String</SourceLine>
+   <SourceLine>Var pathParts() As String = path.Split(pathSep)</SourceLine>
+   <SourceLine>For i As Integer = 0 to pathParts.LastIndex</SourceLine>
+   <SourceLine>Var p As String = pathParts(i)</SourceLine>
+   <SourceLine>If p = "" Then</SourceLine>
+   <SourceLine>// Happens on Windows as it appends `pathSep` onto the end of NativePath if `relativeTo` is a folder.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ElseIf p = "." Then</SourceLine>
+   <SourceLine>// Skip this path component.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ElseIf p = ".." Then</SourceLine>
+   <SourceLine>// Remove the last path component from `newParts`.</SourceLine>
+   <SourceLine>If newParts.Count &gt; 0 Then Call newParts.Pop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// Nothing special about this path component.</SourceLine>
+   <SourceLine>newParts.Add(p)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>path = prefix + String.FromArray(newParts, pathSep)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>Var f As New FolderItem(path, FolderItem.PathModes.Shell)</SourceLine>
+   <SourceLine>Return f</SourceLine>
+   <SourceLine>Catch e</SourceLine>
+   <SourceLine>Raise New XKException("Unable to retrieve FolderItem with path `" + path + "`.")</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>path As String, relativeTo As FolderItem = Nil</ItemParams>
+  <ItemResult>FolderItem</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FQNSortDelegate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>A delegate to sort an array of `XKItem` objects by their FQN.</CodeDescription>
+  <PartID>1117095935</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FQNSortDelegate(item1 As XKItem, item2 As XKItem) As Integer</SourceLine>
+   <SourceLine>/// A delegate to sort an array of `XKItem` objects by their FQN.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If item1.FQN &gt; item2.FQN Then</SourceLine>
+   <SourceLine>Return 1</SourceLine>
+   <SourceLine>ElseIf item1.FQN &lt; item2.FQN Then</SourceLine>
+   <SourceLine>Return -1</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return 0</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>item1 As XKItem, item2 As XKItem</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Parse</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses the project file adhering to its set options.</CodeDescription>
+  <PartID>877957119</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Parse()</SourceLine>
+   <SourceLine>/// Parses the project file adhering to its set options.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ParseManifest</SourceLine>
+   <SourceLine>ParseItems</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseItems</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses those files in the project manifest that have not been excluded. Assumes `ParseManifest` has already executed.</CodeDescription>
+  <PartID>942989311</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseItems()</SourceLine>
+   <SourceLine>/// Parses those items in the project manifest that have not been excluded. </SourceLine>
+   <SourceLine>/// Assumes `ParseManifest` has already executed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var item As XKItem = Items(i)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>item.Parse(Options)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Since we only now know the item's scope, exclude it if needed.</SourceLine>
+   <SourceLine>If Options.ExcludePrivate And item.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
+   <SourceLine>items.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find the classes and modules contained within other modules.</SourceLine>
+   <SourceLine>For Each item As XKItem In Items</SourceLine>
+   <SourceLine>If item.Type &lt;&gt; XojoKit.ObjectTypes.Module_ Then Continue</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each query As XKItem In Items</SourceLine>
+   <SourceLine>If query.ParentID = item.ID Then</SourceLine>
+   <SourceLine>// `item` is the parent of `query`.</SourceLine>
+   <SourceLine>If query.Type = XojoKit.ObjectTypes.Class_ Then</SourceLine>
+   <SourceLine>item.Classes.Add(query)</SourceLine>
+   <SourceLine>ElseIf query.Type = XojoKit.ObjectTypes.Module_ Then</SourceLine>
+   <SourceLine>item.Modules.Add(query)</SourceLine>
+   <SourceLine>ElseIf query.Type = XojoKit.ObjectTypes.Interface_ Then</SourceLine>
+   <SourceLine>item.Interfaces.Add(query)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next query</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseManifest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses the contents of the manifest.</CodeDescription>
+  <PartID>1005135871</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseManifest()</SourceLine>
+   <SourceLine>/// Parses the contents of the manifest. May raise a `XKException`.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Sanity checks.</SourceLine>
+   <SourceLine>If Self.Manifest = Nil Then</SourceLine>
+   <SourceLine>Raise New UnsupportedOperationException("Cannot parse the manifest as it is Nil.")</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>If Not Self.Manifest.Exists Then</SourceLine>
+   <SourceLine>Raise New UnsupportedOperationException("Cannot parse the manifest file as it does not exist.")</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Is this a Xojo Project or XML manifest?</SourceLine>
+   <SourceLine>Select Case Self.Manifest.NameExtensionMBS</SourceLine>
+   <SourceLine>Case "xojo_project"</SourceLine>
+   <SourceLine>Self.FileFormat = XojoKit.FileFormats.Project</SourceLine>
+   <SourceLine>ParseProjectManifest</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "xojo_xml_project"</SourceLine>
+   <SourceLine>Self.FileFormat = XojoKit.FileFormats.XML</SourceLine>
+   <SourceLine>ParseXMLManifest</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New XKException("Unknown project manifest file format. Only `.xojo_project` and " + _</SourceLine>
+   <SourceLine>"`.xojo_xml_project` formats are supported.")</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseProjectManifest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses the contents of a "Xojo Project" format manifest. May raise a `XKException`.</CodeDescription>
+  <PartID>1691418623</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseProjectManifest()</SourceLine>
+   <SourceLine>/// Parses the contents of a "Xojo Project" format manifest. May raise a `XKException`.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Assumes `Self.Manifest` is actually a `.xojo_project` file.</SourceLine>
+   <SourceLine>/// Line format:</SourceLine>
+   <SourceLine>/// KEY EQUAL value</SourceLine>
+   <SourceLine>/// value = (component(;component)*)?</SourceLine>
+   <SourceLine>/// component = STRING | NUMBER | BOOLEAN</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// `excludedPaths()` contains the paths (full or wildcard) to exclude when parsing.</SourceLine>
+   <SourceLine>/// `excludedFQNs()` contains the fully qualified names (full or wildcard) to exclude when parsing. </SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Many line values follow a specified format of multiple semicolon-delimited components.</SourceLine>
+   <SourceLine>// KEY=NAME;PATH;ID;PARENT_ID;UNKNOWN</SourceLine>
+   <SourceLine>Const COMPONENT_NAME = 0</SourceLine>
+   <SourceLine>Const COMPONENT_PATH = 1</SourceLine>
+   <SourceLine>Const COMPONENT_ID = 2</SourceLine>
+   <SourceLine>Const COMPONENT_PARENT_ID = 3</SourceLine>
+   <SourceLine>Const COMPONENT_UNKNOWN = 4</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Get the contents of the manifest.</SourceLine>
+   <SourceLine>Var tin As TextInputStream</SourceLine>
+   <SourceLine>Var contents As String</SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>tin = TextInputStream.Open(Self.Manifest)</SourceLine>
+   <SourceLine>contents = tin.ReadAll.ReplaceLineEndings(EndOfLine.UNIX)</SourceLine>
+   <SourceLine>tin.Close</SourceLine>
+   <SourceLine>Catch e As IOException</SourceLine>
+   <SourceLine>Raise New IOException("Unable to read the contents of the manifest file: `" + e.Message + "`.")</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Get the lines.</SourceLine>
+   <SourceLine>Var lines() As String = contents.Split(EndOfLine.UNIX)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Remove empty lines.</SourceLine>
+   <SourceLine>For i As Integer = lines.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If lines(i).IsEmpty Then lines.RemoveAt(i)</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Analyse each line of the manifest.</SourceLine>
+   <SourceLine>For Each line As String In lines</SourceLine>
+   <SourceLine>// Get the line's key and raw value.</SourceLine>
+   <SourceLine>Var key As String = line.Left(line.IndexOf("="))</SourceLine>
+   <SourceLine>Var value As String = line.Middle(line.IndexOf("=") + 1).Trim</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Split the value into its components.</SourceLine>
+   <SourceLine>Var components() As String = value.Split(";")</SourceLine>
+   <SourceLine>If components.Count = 0 Then</SourceLine>
+   <SourceLine>// Not interested in this.</SourceLine>
+   <SourceLine>Continue</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case key</SourceLine>
+   <SourceLine>Case "Type"</SourceLine>
+   <SourceLine>Self.Type = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "RBProjectVersion"</SourceLine>
+   <SourceLine>Self.RBProjectVersion = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "MinIDEVersion"</SourceLine>
+   <SourceLine>Self.MinimumIDEVersion = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "OrigIDEVersion"</SourceLine>
+   <SourceLine>Self.OriginalIDEVersion = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Class", "Module", "Interface"</SourceLine>
+   <SourceLine>// Assert that the path is a known xojo file format.</SourceLine>
+   <SourceLine>Var fileFormat As XojoKit.FileFormats = XojoKit.FileFormats.Unknown</SourceLine>
+   <SourceLine>If components(COMPONENT_PATH).EndsWith(".xojo_code") Then</SourceLine>
+   <SourceLine>fileFormat = XojoKit.FileFormats.Project</SourceLine>
+   <SourceLine>ElseIf components(COMPONENT_PATH).EndsWith(".xojo_xml_code") Then</SourceLine>
+   <SourceLine>fileFormat = XojoKit.FileFormats.XML</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If fileFormat = XojoKit.FileFormats.Unknown Then</SourceLine>
+   <SourceLine>// We don't support files of this type.</SourceLine>
+   <SourceLine>Continue</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Add this item to the project.</SourceLine>
+   <SourceLine>Var item As New XKItem(Self)</SourceLine>
+   <SourceLine>Var f As FolderItem = FolderItemFromManifestPath(components(COMPONENT_PATH), Self.Manifest.Parent)</SourceLine>
+   <SourceLine>item.Name = components(COMPONENT_NAME)</SourceLine>
+   <SourceLine>item.File = f</SourceLine>
+   <SourceLine>item.FileFormat = fileFormat</SourceLine>
+   <SourceLine>item.ID = Integer.FromHex(components(COMPONENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
+   <SourceLine>item.ParentID = Integer.FromHex(components(COMPONENT_PARENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// XML files within a `.xojo_project` are external.</SourceLine>
+   <SourceLine>item.IsExternal = If(fileFormat = XojoKit.FileFormats.XML, True, False)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If this is an XML file, get the XML node containing the item's properties.</SourceLine>
+   <SourceLine>If item.IsExternal And item.FileFormat = XojoKit.FileFormats.XML Then</SourceLine>
+   <SourceLine>Var itemXML As String</SourceLine>
+   <SourceLine>// The item is contained within an external XML file.</SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>tin = TextInputStream.Open(item.File)</SourceLine>
+   <SourceLine>itemXML = tin.ReadAll</SourceLine>
+   <SourceLine>tin.Close</SourceLine>
+   <SourceLine>Catch e</SourceLine>
+   <SourceLine>Raise New XKException("Unable to get the XML contents of the item's file.")</SourceLine>
+   <SourceLine>Finally</SourceLine>
+   <SourceLine>tin.Close</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine>// Create an XML document from the string.</SourceLine>
+   <SourceLine>Var xmlDoc As New XmlDocument(itemXML)</SourceLine>
+   <SourceLine>// Extract the item's node from the document. </SourceLine>
+   <SourceLine>// It's properties are contained within the first &lt;block&gt; element.</SourceLine>
+   <SourceLine>// &lt;RBProject&gt;&lt;block&gt;...&lt;/block&gt;&lt;/RBProject&gt;</SourceLine>
+   <SourceLine>item.XML = xmlDoc.FirstChild.FirstChild</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Self.Items.Add(item)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Modules can also be containers.</SourceLine>
+   <SourceLine>If key = "Module" Then</SourceLine>
+   <SourceLine>Var container As New XKContainer(XojoKit.ContainerTypes.Module_)</SourceLine>
+   <SourceLine>container.Name = components(COMPONENT_NAME)</SourceLine>
+   <SourceLine>container.ID = Integer.FromHex(components(COMPONENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
+   <SourceLine>container.ParentID = Integer.FromHex(components(COMPONENT_PARENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
+   <SourceLine>Self.Containers.Value(container.ID) = container</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Folder"</SourceLine>
+   <SourceLine>Var folder As New XKContainer(XojoKit.ContainerTypes.Folder)</SourceLine>
+   <SourceLine>folder.Name = components(COMPONENT_NAME)</SourceLine>
+   <SourceLine>folder.ID = Integer.FromHex(components(COMPONENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
+   <SourceLine>folder.ParentID = Integer.FromHex(components(COMPONENT_PARENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
+   <SourceLine>Containers.Value(folder.ID) = folder</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "MajorVersion"</SourceLine>
+   <SourceLine>Self.AppMajorVersion = Integer.FromString(value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "MinorVersion"</SourceLine>
+   <SourceLine>Self.AppMinorVersion = Integer.FromString(value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "SubVersion"</SourceLine>
+   <SourceLine>Self.AppBugVersion = Integer.FromString(value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "NonRelease"</SourceLine>
+   <SourceLine>Self.AppNonReleaseVersion = Integer.FromString(value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// We're not interested in the other manifest values.</SourceLine>
+   <SourceLine>Continue</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next line</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute each object's fully qualified name (FQN).</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentId = 0 Then</SourceLine>
+   <SourceLine>// This is an object at the root of the project.</SourceLine>
+   <SourceLine>item.FQN = item.Name</SourceLine>
+   <SourceLine>Continue</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// This object is within folder(s)/module(s).</SourceLine>
+   <SourceLine>Var current As XKContainer = Containers.Lookup(item.ParentID, Nil)</SourceLine>
+   <SourceLine>Var parents() As XKContainer</SourceLine>
+   <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>parents.Add(current)</SourceLine>
+   <SourceLine>current = Self.Containers.Lookup(current.ParentID, Nil)</SourceLine>
+   <SourceLine>Loop Until current Is Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var path() As String</SourceLine>
+   <SourceLine>Var fqn() As String</SourceLine>
+   <SourceLine>For i As Integer = parents.LastIndex DownTo 0</SourceLine>
+   <SourceLine>path.Add(parents(i).Name)</SourceLine>
+   <SourceLine>If parents(i).Type = XojoKit.ContainerTypes.Folder Then</SourceLine>
+   <SourceLine>path(path.LastIndex) = path(path.LastIndex) + "&gt;"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>fqn.Add(parents(i).Name)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Add this object's name to the fqn array we will concatenate.</SourceLine>
+   <SourceLine>fqn.Add(item.Name)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// We can now construct the folder/module path from the parents.</SourceLine>
+   <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
+   <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// And the fully qualifed name (excluding folders).</SourceLine>
+   <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Any exclusions?</SourceLine>
+   <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
+   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>GoTo NextFile</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next excludedPath</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
+   <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>GoTo NextFile</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next excludedFQN</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>NextFile:</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Sort the files alphabetically by FQN.</SourceLine>
+   <SourceLine>Self.Items.Sort(AddressOf FQNSortDelegate)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseXMLManifest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses the contents of a Xojo XML format manifest. May raise a `XKException`.</CodeDescription>
+  <PartID>600942591</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseXMLManifest()</SourceLine>
+   <SourceLine>/// Parses the contents of a Xojo XML format manifest. May raise a `XKException`.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Assumes `Self.Manifest` is actually a `.xojo_xml_project` file.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var xmlDoc As New XmlDocument(Self.Manifest)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var rbProject As XmlNode = xmlDoc.FirstChild</SourceLine>
+   <SourceLine>// Get the versions used when saving the project.</SourceLine>
+   <SourceLine>// The XML project format `RBProjectVersion` value is subtly different:</SourceLine>
+   <SourceLine>// XML format:          "2022r1"</SourceLine>
+   <SourceLine>// Xojo project format: "2022.01"</SourceLine>
+   <SourceLine>Self.RBProjectVersion = rbProject.GetAttribute("version")</SourceLine>
+   <SourceLine>Self.MinimumIDEVersion = rbProject.GetAttribute("MinIDEVersion")</SourceLine>
+   <SourceLine>Self.XMLProjectFormat = rbProject.GetAttribute("FormatVersion")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 0 To rbProject.ChildCount - 1</SourceLine>
+   <SourceLine>Var block As XmlNode = rbProject.Child(i)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If block.Name = "block" Then</SourceLine>
+   <SourceLine>Select Case block.GetAttribute("type")</SourceLine>
+   <SourceLine>Case "Project"</SourceLine>
+   <SourceLine>// Contains data about the project.</SourceLine>
+   <SourceLine>For j As Integer = 0 To block.ChildCount - 1</SourceLine>
+   <SourceLine>Var node As XmlNode = block.Child(j)</SourceLine>
+   <SourceLine>Select Case node.Name</SourceLine>
+   <SourceLine>Case "IDEVersion"</SourceLine>
+   <SourceLine>Self.OriginalIDEVersion = node.FirstChild.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "MajorVersion"</SourceLine>
+   <SourceLine>Self.AppMajorVersion = Integer.FromString(node.FirstChild.Value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "MinorVersion"</SourceLine>
+   <SourceLine>Self.AppMinorVersion = Integer.FromString(node.FirstChild.Value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "SubVersion"</SourceLine>
+   <SourceLine>Self.AppBugVersion = Integer.FromString(node.FirstChild.Value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ProjectType"</SourceLine>
+   <SourceLine>Self.Type = XMLProjectTypeToString(Integer.FromString(node.FirstChild.Value))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// We're not interested in the other project block elements.</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next j</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Module"</SourceLine>
+   <SourceLine>// An internal item. Either a class, interface or module.</SourceLine>
+   <SourceLine>// Build this item.</SourceLine>
+   <SourceLine>Var item As New XKItem(Self)</SourceLine>
+   <SourceLine>item.FileFormat = XojoKit.FileFormats.XML</SourceLine>
+   <SourceLine>item.IsExternal = False</SourceLine>
+   <SourceLine>item.File = Nil</SourceLine>
+   <SourceLine>item.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
+   <SourceLine>item.XML = block.Clone(True)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For k As Integer = 0 To block.ChildCount - 1</SourceLine>
+   <SourceLine>Var node As XmlNode = block.Child(k)</SourceLine>
+   <SourceLine>Select Case node.Name</SourceLine>
+   <SourceLine>Case "ObjName"</SourceLine>
+   <SourceLine>item.Name = node.FirstChild.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ObjContainerID"</SourceLine>
+   <SourceLine>item.ParentID = Integer.FromString(node.FirstChild.Value)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next k</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Add this item to the project.</SourceLine>
+   <SourceLine>Self.Items.Add(item)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// *Actual* modules can also be containers.</SourceLine>
+   <SourceLine>Var container As New XKContainer(XojoKit.ContainerTypes.Module_)</SourceLine>
+   <SourceLine>container.Name = item.Name</SourceLine>
+   <SourceLine>container.ID = item.ID</SourceLine>
+   <SourceLine>container.ParentID = item.ParentID</SourceLine>
+   <SourceLine>Self.Containers.Value(container.ID) = container</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ExternalCode"</SourceLine>
+   <SourceLine>// An external item.</SourceLine>
+   <SourceLine>// Build this item.</SourceLine>
+   <SourceLine>Var item As New XKItem(Self)</SourceLine>
+   <SourceLine>item.FileFormat = XojoKit.FileFormats.XML</SourceLine>
+   <SourceLine>item.IsExternal = True</SourceLine>
+   <SourceLine>item.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For k As Integer = 0 To block.ChildCount - 1</SourceLine>
+   <SourceLine>Var node As XmlNode = block.Child(k)</SourceLine>
+   <SourceLine>Select Case node.Name</SourceLine>
+   <SourceLine>Case "ObjName"</SourceLine>
+   <SourceLine>item.Name = node.FirstChild.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ObjContainerID"</SourceLine>
+   <SourceLine>item.ParentID = Integer.FromString(node.FirstChild.Value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "FullPath"</SourceLine>
+   <SourceLine>item.File = FolderItemFromManifestPath(node.FirstChild.Value, Nil)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Extract the XML block node from this file.</SourceLine>
+   <SourceLine>Var tin As TextInputStream = TextInputStream.Open(item.File)</SourceLine>
+   <SourceLine>Var externalXML As String = tin.ReadAll</SourceLine>
+   <SourceLine>tin.Close</SourceLine>
+   <SourceLine>Var doc As New XmlDocument(externalXML)</SourceLine>
+   <SourceLine>item.XML = doc.FirstChild.FirstChild.Clone(True)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next k</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Add this item to the project.</SourceLine>
+   <SourceLine>Self.Items.Add(item)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Folder"</SourceLine>
+   <SourceLine>// A folder.</SourceLine>
+   <SourceLine>Var folder As New XKContainer(XojoKit.ContainerTypes.Folder)</SourceLine>
+   <SourceLine>folder.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For a As Integer = 0 To block.ChildCount - 1</SourceLine>
+   <SourceLine>Var node As XmlNode = block.Child(a)</SourceLine>
+   <SourceLine>Select Case node.Name</SourceLine>
+   <SourceLine>Case "ObjName"</SourceLine>
+   <SourceLine>folder.Name = node.FirstChild.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ObjContainerID"</SourceLine>
+   <SourceLine>folder.ParentID = Integer.FromString(node.FirstChild.Value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next a</SourceLine>
+   <SourceLine>Containers.Value(folder.ID) = folder</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// We're not interested in these blocks.</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute each object's fully qualified name (FQN).</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentId = 0 Then</SourceLine>
+   <SourceLine>// This is an object at the root of the project.</SourceLine>
+   <SourceLine>item.FQN = item.Name</SourceLine>
+   <SourceLine>Continue</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// This object is within folder(s)/module(s).</SourceLine>
+   <SourceLine>Var current As XKContainer = Containers.Lookup(item.ParentID, Nil)</SourceLine>
+   <SourceLine>Var parents() As XKContainer</SourceLine>
+   <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>parents.Add(current)</SourceLine>
+   <SourceLine>current = Self.Containers.Lookup(current.ParentID, Nil)</SourceLine>
+   <SourceLine>Loop Until current Is Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var path() As String</SourceLine>
+   <SourceLine>Var fqn() As String</SourceLine>
+   <SourceLine>For i As Integer = parents.LastIndex DownTo 0</SourceLine>
+   <SourceLine>path.Add(parents(i).Name)</SourceLine>
+   <SourceLine>If parents(i).Type = XojoKit.ContainerTypes.Folder Then</SourceLine>
+   <SourceLine>path(path.LastIndex) = path(path.LastIndex) + "&gt;"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>fqn.Add(parents(i).Name)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Add this object's name to the fqn array we will concatenate.</SourceLine>
+   <SourceLine>fqn.Add(item.Name)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// We can now construct the folder/module path from the parents.</SourceLine>
+   <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
+   <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// And the fully qualifed name (excluding folders).</SourceLine>
+   <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Any exclusions?</SourceLine>
+   <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
+   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>GoTo NextFile</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next excludedPath</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
+   <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>GoTo NextFile</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next excludedFQN</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>NextFile:</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Sort the files alphabetically by FQN.</SourceLine>
+   <SourceLine>Self.Items.Sort(AddressOf FQNSortDelegate)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>XMLProjectTypeToString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>XML projects store the project type as an integer. This returns that as a string.</CodeDescription>
+  <PartID>1234163711</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function XMLProjectTypeToString(value As Integer) As String</SourceLine>
+   <SourceLine>/// XML projects store the project type as an integer. This returns that as a string.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case value</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>Return "Desktop"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 1</SourceLine>
+   <SourceLine>Return "Console"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>Raise New XKException("Unknown XML project type (" + value.ToString + ").")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 3</SourceLine>
+   <SourceLine>// Note that Web 2.0 apps in Xojo Project files are "Web2". In XML projects both Web 1.0 and </SourceLine>
+   <SourceLine>// Web 2.0 projects have the same integer value. We'll therefore just return "Web".</SourceLine>
+   <SourceLine>Return "Web"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 4</SourceLine>
+   <SourceLine>Return "iOS"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New XKException("Unknown XML project type (" + value.ToString + ").")</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>value As Integer</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Property>
+  <ItemName>AppBugVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The app bug version.</CodeDescription>
+  <PartID>821102591</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>AppBugVersion As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>AppBugVersion As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>AppMajorVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The app major version.</CodeDescription>
+  <PartID>1393862655</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>AppMajorVersion As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>AppMajorVersion As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>AppMinorVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The app minor version.</CodeDescription>
+  <PartID>960090111</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>AppMinorVersion As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>AppMinorVersion As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>AppNonReleaseVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The app non-release version.</CodeDescription>
+  <PartID>1421508607</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>AppNonReleaseVersion As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>AppNonReleaseVersion As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Containers</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>A map of the containers in this project. Key = ID, Value = XodocContainer instance.</CodeDescription>
+  <PartID>533868543</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Containers As Dictionary</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Containers As Dictionary</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>FileFormat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The file format of the project manifest.</CodeDescription>
+  <PartID>2053380095</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>FileFormat As XojoKit.FileFormats = XojoKit.FileFormats.Project</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>FileFormat As XojoKit.FileFormats = XojoKit.FileFormats.Project</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Items()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The items (classes, modules and interfaces) within this project.</CodeDescription>
+  <PartID>1200119807</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Items() As XKItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Items() As XKItem</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Manifest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The Xojo project manifest file.</CodeDescription>
+  <PartID>1061197823</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Manifest As FolderItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Manifest As FolderItem</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>MinimumIDEVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The minimum required Xojo IDE version.</CodeDescription>
+  <PartID>1863399423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>MinimumIDEVersion As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>MinimumIDEVersion As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Name</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The name of the project being documented.</CodeDescription>
+  <PartID>2035415039</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Name As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Name As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Options</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The options to use when parsing the project.</CodeDescription>
+  <PartID>1026301951</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Options As XKOptions</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Options As XKOptions</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>OriginalIDEVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The version of the IDE the project was originally saved in.</CodeDescription>
+  <PartID>1064126463</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>OriginalIDEVersion As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>OriginalIDEVersion As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>RBProjectVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The IDE version the project was saved in.</CodeDescription>
+  <PartID>1136789503</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RBProjectVersion As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RBProjectVersion As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Type</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The project type (e.g. "Desktop").</CodeDescription>
+  <PartID>2008066047</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Type As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Type As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>XMLProjectFormat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>For XML projects, this is the value of the `FormatVersion` attribute in the `RBProject` node.</CodeDescription>
+  <PartID>5969919</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>XMLProjectFormat As String = "-1"</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>XMLProjectFormat As String = "-1"</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AppBugVersion</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AppMajorVersion</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AppMinorVersion</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AppNonReleaseVersion</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MinimumIDEVersion</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>OriginalIDEVersion</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RBProjectVersion</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Type</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>XMLProjectFormat</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>-1</PropertyValue>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FileFormat</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.FileFormats.Project</PropertyValue>
+   <ItemType>XojoKit.FileFormats</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

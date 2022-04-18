@@ -105,8 +105,6 @@
    <SourceLine>/// The XML to parse should be stored in `item.XML`.</SourceLine>
    <SourceLine>/// Part of the XKItemParser interface.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse structures"</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>// Sanity check.</SourceLine>
    <SourceLine>If item.XML = Nil Then</SourceLine>
    <SourceLine>Raise New XKException("Unable to parse item as its XML property is Nil.")</SourceLine>
@@ -174,6 +172,10 @@
    <SourceLine>Var ev As XKEvent = ParseEvent(node)</SourceLine>
    <SourceLine>If ev &lt;&gt; Nil Then item.Events.Add(ev)</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Structure"</SourceLine>
+   <SourceLine>Var s As XKStructure = ParseStructure(node)</SourceLine>
+   <SourceLine>If s &lt;&gt; Nil Then item.Structures.Add(s)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
@@ -1047,6 +1049,113 @@
   <IsShared>0</IsShared>
   <ItemParams>xmlValue As Integer</ItemParams>
   <ItemResult>XojoKit.Scopes</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseStructure</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses an XML "Structure" node into a `XKStructure`. Returns Nil if the parsed structure's scope means it should be excluded.</CodeDescription>
+  <PartID>1895835647</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ParseStructure(node As XmlNode) As XKStructure</SourceLine>
+   <SourceLine>/// Parses an XML "Structure" node into a `XKStructure`. Returns Nil if the parsed structure's scope means </SourceLine>
+   <SourceLine>/// it should be excluded.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Assumes that `node` has already been validated to be a "Structure" node.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var s As New XKStructure</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
+   <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
+   <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
+   <SourceLine>Select Case child.Name</SourceLine>
+   <SourceLine>Case "Attributes"</SourceLine>
+   <SourceLine>s.Attributes_ = ParseAttributesNode(child)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "CodeDescription"</SourceLine>
+   <SourceLine>s.Description = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemFlags"</SourceLine>
+   <SourceLine>s.Scope = ScopeFromXMLInteger(Integer.FromString(child.FirstChild.Value))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemName"</SourceLine>
+   <SourceLine>s.Name = child.FirstChild.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemSource"</SourceLine>
+   <SourceLine>s.Fields = ParseStructureFields(child)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Return the structure if it's scope is not excluded by the parser's options.</SourceLine>
+   <SourceLine>If mOptions.ExcludePrivate And s.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>node As XmlNode</ItemParams>
+  <ItemResult>XKStructure</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseStructureFields</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses an XML structure's "ItemSource" node into an array of XKStructureFields representing it's fields.</CodeDescription>
+  <PartID>152535039</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ParseStructureFields(node As XmlNode) As XKStructureField()</SourceLine>
+   <SourceLine>/// Parses an XML structure's "ItemSource" node into an array of XKStructureFields representing it's fields.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Assumes that `node` has already been validated to be an "ItemSource" node within a "Structure" node.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// ```</SourceLine>
+   <SourceLine>///   &lt;ItemSource&gt;</SourceLine>
+   <SourceLine>///    &lt;TextEncoding&gt;134217984&lt;/TextEncoding&gt;</SourceLine>
+   <SourceLine>///    &lt;SourceLine&gt;Age As Integer&lt;/SourceLine&gt;</SourceLine>
+   <SourceLine>///    &lt;SourceLine&gt;Data(100) As Byte&lt;/SourceLine&gt;</SourceLine>
+   <SourceLine>///    &lt;SourceLine&gt;Name As String * 50&lt;/SourceLine&gt;</SourceLine>
+   <SourceLine>///   &lt;/ItemSource&gt;</SourceLine>
+   <SourceLine>/// ```</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var fields() As XKStructureField</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
+   <SourceLine>Var fieldIndex As Integer = -1</SourceLine>
+   <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
+   <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
+   <SourceLine>Select Case child.Name</SourceLine>
+   <SourceLine>Case "SourceLine"</SourceLine>
+   <SourceLine>fieldIndex = fieldIndex + 1</SourceLine>
+   <SourceLine>If child.FirstChild = Nil Then</SourceLine>
+   <SourceLine>// This is a field with an empty declaration in the IDE. We will still add it as an</SourceLine>
+   <SourceLine>// empty field although I suspect this is a broken implementation in the IDE.</SourceLine>
+   <SourceLine>fields.Add(New XKStructureField(fieldIndex, "", ""))</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Var nameType() As String = child.FirstChild.Value.Split(" As ")</SourceLine>
+   <SourceLine>fields.Add(New XKStructureField(fieldIndex, nameType(0), nameType(1)))</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return fields</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>node As XmlNode</ItemParams>
+  <ItemResult>XKStructureField()</ItemResult>
  </Method>
  <Property>
   <ItemName>mOptions</ItemName>

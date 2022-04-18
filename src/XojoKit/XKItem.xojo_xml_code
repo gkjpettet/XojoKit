@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1258860543">
  <ObjName>XKItem</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -53,6 +53,8 @@
    <SourceLine></SourceLine>
    <SourceLine>parser.Parse(Self, options)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>ComputeLineAndCommentCounts</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -61,6 +63,115 @@
   <IsShared>0</IsShared>
   <ItemParams>options As XKOptions</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeLineAndCommentCounts</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes the total number of user-written lines of code and comments.</CodeDescription>
+  <PartID>1662312447</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ComputeLineAndCommentCounts()</SourceLine>
+   <SourceLine>/// Computes the total number of user-written lines of code and comments.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Computed properties.</SourceLine>
+   <SourceLine>For Each cp As XKComputedProperty In Self.ComputedProperties</SourceLine>
+   <SourceLine>mCodeLineCount = mCodeLineCount + cp.CodeLineCount</SourceLine>
+   <SourceLine>mCommentCount = mCommentCount + cp.CommentCount</SourceLine>
+   <SourceLine>Next cp</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Events.</SourceLine>
+   <SourceLine>For Each e As XKEvent In Self.Events</SourceLine>
+   <SourceLine>mCodeLineCount = mCodeLineCount + e.CodeLineCount</SourceLine>
+   <SourceLine>mCommentCount = mCommentCount + e.CommentCount</SourceLine>
+   <SourceLine>Next e</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Methods.</SourceLine>
+   <SourceLine>For Each m As XKMethod In Self.Methods</SourceLine>
+   <SourceLine>mCodeLineCount = mCodeLineCount + m.CodeLineCount</SourceLine>
+   <SourceLine>mCommentCount = mCommentCount + m.CommentCount</SourceLine>
+   <SourceLine>Next m</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MembersMissingDescription</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns an array of any members in this item that could have a description but are missing one. This is an expensive operation.</CodeDescription>
+  <PartID>1555957759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function MembersMissingDescription(excludeConstructors As Boolean = False) As Variant()</SourceLine>
+   <SourceLine>/// Returns an array of any members in this item that could have a description but are missing one.</SourceLine>
+   <SourceLine>/// This is an expensive operation.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// We provide the option to exclude constructors because there is little point adding a description to</SourceLine>
+   <SourceLine>/// them for many developers as the IDE does not show their descriptions in the IDE.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var missing() As Variant</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Computed properties.</SourceLine>
+   <SourceLine>For Each cp As XKComputedProperty In Self.ComputedProperties</SourceLine>
+   <SourceLine>If cp.Description.IsEmpty Then missing.Add(cp)</SourceLine>
+   <SourceLine>Next cp</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Constants.</SourceLine>
+   <SourceLine>For Each con As XKConstant In Self.Constants</SourceLine>
+   <SourceLine>If con.Description.IsEmpty Then missing.Add(con)</SourceLine>
+   <SourceLine>Next con</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Delegates.</SourceLine>
+   <SourceLine>For Each d As XKDelegate In Self.Delegates</SourceLine>
+   <SourceLine>If d.Description.IsEmpty Then missing.Add(d)</SourceLine>
+   <SourceLine>Next d</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Enums.</SourceLine>
+   <SourceLine>For Each en As XKEnum In Self.Enums</SourceLine>
+   <SourceLine>If en.Description.IsEmpty Then missing.Add(en)</SourceLine>
+   <SourceLine>Next en</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Event definitions.</SourceLine>
+   <SourceLine>For Each ed As XKEventDefinition In Self.EventDefinitions</SourceLine>
+   <SourceLine>If ed.Description.IsEmpty Then missing.Add(ed)</SourceLine>
+   <SourceLine>Next ed</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Methods.</SourceLine>
+   <SourceLine>For Each m As XKMethod In Self.Methods</SourceLine>
+   <SourceLine>If m.Description.IsEmpty Then</SourceLine>
+   <SourceLine>If excludeConstructors And m.Name = "Constructor" Then Continue</SourceLine>
+   <SourceLine>missing.Add(m)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next m</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Properties.</SourceLine>
+   <SourceLine>For Each prop As XKProperty In Self.Properties</SourceLine>
+   <SourceLine>If prop.Description.IsEmpty Then missing.Add(prop)</SourceLine>
+   <SourceLine>Next prop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Structures.</SourceLine>
+   <SourceLine>For Each s As XKStructure In Self.Structures</SourceLine>
+   <SourceLine>If s.Description.IsEmpty Then missing.Add(s)</SourceLine>
+   <SourceLine>Next s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return missing</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>excludeConstructors As Boolean = False</ItemParams>
+  <ItemResult>Variant()</ItemResult>
  </Method>
  <Property>
   <ItemName>Attributes_()</ItemName>
@@ -548,6 +659,96 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>CodeLineCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of user-written lines of code in this item excluding comments. Computed once after the item is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1596721151</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property CodeLineCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>CodeLineCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mCodeLineCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mCodeLineCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Backs `CodeLineCount`. The total number of user-written lines of code in this item excluding comments. Computed after the item is parsed.</CodeDescription>
+  <PartID>1262770175</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mCodeLineCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mCodeLineCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>mCommentCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The total number of comments in this item.</CodeDescription>
+  <PartID>392904703</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mCommentCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mCommentCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>CommentCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of comments in this item. Computed once after the item is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1868398591</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property CommentCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>CommentCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mCommentCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -657,6 +858,16 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CodeLineCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CommentCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

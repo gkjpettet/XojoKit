@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="479965183">
  <ObjName>XojoKit</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -43,6 +43,36 @@
   <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>Scopes</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsCommentLine</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns True if `line` is a Xojo comment line.</CodeDescription>
+  <PartID>777113599</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsCommentLine(line As String) As Boolean</SourceLine>
+   <SourceLine>/// Returns True if `line` is a Xojo comment line.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>line = line.Trim</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If line.IsEmpty Then Return False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If line.BeginsWith("'") Or line.BeginsWith("//") Or line.BeginsWith("rem") Then</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>line As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
  </Method>
  <ViewBehavior>
   <ViewProperty>

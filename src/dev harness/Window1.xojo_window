@@ -10,7 +10,7 @@ Begin DesktopWindow Window1
    HasFullScreenButton=   False
    HasMaximizeButton=   True
    HasMinimizeButton=   True
-   Height          =   400
+   Height          =   502
    ImplicitInstance=   True
    MacProcID       =   0
    MaximumHeight   =   32000
@@ -23,7 +23,7 @@ Begin DesktopWindow Window1
    Title           =   "XojoKit Test"
    Type            =   0
    Visible         =   True
-   Width           =   600
+   Width           =   836
    Begin DesktopButton ButtonChooseProject
       AllowAutoDeactivate=   True
       Bold            =   False
@@ -71,12 +71,19 @@ End
 		  Var project As New XKProject(f)
 		  
 		  // Set options.
-		  project.Options.ExcludedPaths.Add("XUI>Utilities")
+		  project.Options.ExcludedPaths.Add("Unit Tests")
 		  project.Options.ExcludePrivate = False
 		  'project.Options.IncludeEvents = True
 		  
 		  // Parse the project file.
 		  project.Parse
+		  
+		  Var items() As XKItem = project.ItemsMissingDescription(True)
+		  Var missing() As Pair
+		  For Each item As XKItem In items
+		    missing.Add(item.Name : item.MembersMissingDescription(True))
+		  Next item
+		  
 		  
 		  Break
 		End Sub

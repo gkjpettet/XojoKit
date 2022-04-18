@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -154,6 +154,7 @@
    <SourceLine></SourceLine>
    <SourceLine>ParseManifest</SourceLine>
    <SourceLine>ParseItems</SourceLine>
+   <SourceLine>ComputeLineAndCommentCounts</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -741,6 +742,65 @@
   <ItemParams>value As Integer</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
+ <Method>
+  <ItemName>ComputeLineAndCommentCounts</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes the total number of user-written lines of code and comments.</CodeDescription>
+  <PartID>1180858367</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ComputeLineAndCommentCounts()</SourceLine>
+   <SourceLine>/// Computes the total number of user-written lines of code and comments.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>mCodeLineCount = mCodeLineCount + item.CodeLineCount</SourceLine>
+   <SourceLine>mCommentCount = mCommentCount + item.CommentCount</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ItemsMissingDescription</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns an array of all items in the project with an empty description.</CodeDescription>
+  <PartID>1061384191</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ItemsMissingDescription(excludeConstructors As Boolean = False) As XKItem()</SourceLine>
+   <SourceLine>/// Returns an array of all items in the project with an empty description.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// This is useful for ensuring you have added a description to all item members.</SourceLine>
+   <SourceLine>/// We provide the option to exclude constructors because there is little point adding a description to</SourceLine>
+   <SourceLine>/// them for many developers as the IDE does not show their descriptions in the IDE.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var missing() As XKItem</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.MembersMissingDescription(excludeConstructors).Count &gt; 0 Then</SourceLine>
+   <SourceLine>missing.Add(item)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return missing</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>excludeConstructors As Boolean = False</ItemParams>
+  <ItemResult>XKItem()</ItemResult>
+ </Method>
  <Property>
   <ItemName>AppBugVersion</ItemName>
   <Compatibility></Compatibility>
@@ -981,6 +1041,96 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>mCodeLineCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Backs `CodeLineCount`. The total number of user-written lines of code in this project excluding comments. Computed after the project is parsed.</CodeDescription>
+  <PartID>1800409087</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mCodeLineCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mCodeLineCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>mCommentCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Backs `CommentCount`. The total number of comments in this project. Computed after the project is parsed.</CodeDescription>
+  <PartID>884453375</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mCommentCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mCommentCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>CodeLineCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of user-written lines of code in this project excluding comments. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>28323839</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property CodeLineCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>CodeLineCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mCodeLineCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>CommentCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of comments in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>913776639</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property CommentCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>CommentCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mCommentCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -1076,6 +1226,22 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>XojoKit.FileFormats.Project</PropertyValue>
    <ItemType>XojoKit.FileFormats</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Project</ItemDef>
+    <ItemDef>1 - Unknown</ItemDef>
+    <ItemDef>2 - XML</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CodeLineCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CommentCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

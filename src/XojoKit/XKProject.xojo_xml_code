@@ -287,6 +287,17 @@
    <SourceLine>Const COMPONENT_PARENT_ID = 3</SourceLine>
    <SourceLine>Const COMPONENT_UNKNOWN = 4</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Clear out the containers dictionary and add the root.</SourceLine>
+   <SourceLine>Self.Containers = New Dictionary</SourceLine>
+   <SourceLine>Var root As New XKContainer(XojoKit.ContainerTypes.Root)</SourceLine>
+   <SourceLine>root.Name = "Project Root"</SourceLine>
+   <SourceLine>root.ID = 0</SourceLine>
+   <SourceLine>root.ParentID = -1</SourceLine>
+   <SourceLine>Containers.Value(root.ID) = root</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Clear out any existing items.</SourceLine>
+   <SourceLine>Self.Items.RemoveAll</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Get the contents of the manifest.</SourceLine>
    <SourceLine>Var tin As TextInputStream</SourceLine>
    <SourceLine>Var contents As String</SourceLine>
@@ -476,8 +487,28 @@
    <SourceLine>NextFile:</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Sort the files alphabetically by FQN.</SourceLine>
-   <SourceLine>Self.Items.Sort(AddressOf FQNSortDelegate)</SourceLine>
+   <SourceLine>// Sort the files alphabetically by their path.</SourceLine>
+   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find the direct child containers and items of all the containers.</SourceLine>
+   <SourceLine>For Each entry As DictionaryEntry In Self.Containers</SourceLine>
+   <SourceLine>Var current As XKContainer = entry.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find every container whose parent is the current one.</SourceLine>
+   <SourceLine>For Each entry2 As DictionaryEntry In Self.Containers</SourceLine>
+   <SourceLine>Var child As XKContainer = entry2.Value</SourceLine>
+   <SourceLine>If child.ParentID = current.ID Then</SourceLine>
+   <SourceLine>current.Containers.Add(child)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next entry2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find every item whose parent is the current one.</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentID = current.ID Then</SourceLine>
+   <SourceLine>current.Items.Add(item)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -675,6 +706,7 @@
    <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
    <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
    <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>If Self.Containers.HasKey(item.ID) Then Self.Containers.Remove(item.ID)</SourceLine>
    <SourceLine>GoTo NextFile</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedPath</SourceLine>
@@ -682,6 +714,7 @@
    <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
    <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
    <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>If Self.Containers.HasKey(item.ID) Then Self.Containers.Remove(item.ID)</SourceLine>
    <SourceLine>GoTo NextFile</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedFQN</SourceLine>
@@ -689,8 +722,28 @@
    <SourceLine>NextFile:</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Sort the files alphabetically by FQN.</SourceLine>
-   <SourceLine>Self.Items.Sort(AddressOf FQNSortDelegate)</SourceLine>
+   <SourceLine>// Sort the files alphabetically by their paths.</SourceLine>
+   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find the direct child containers and items of all the containers.</SourceLine>
+   <SourceLine>For Each entry As DictionaryEntry In Self.Containers</SourceLine>
+   <SourceLine>Var current As XKContainer = entry.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find every container whose parent is the current one.</SourceLine>
+   <SourceLine>For Each entry2 As DictionaryEntry In Self.Containers</SourceLine>
+   <SourceLine>Var child As XKContainer = entry2.Value</SourceLine>
+   <SourceLine>If child.ParentID = current.ID Then</SourceLine>
+   <SourceLine>current.Containers.Add(child)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next entry2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find every item whose parent is the current one.</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentID = current.ID Then</SourceLine>
+   <SourceLine>current.Items.Add(item)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -801,6 +854,34 @@
   <ItemParams>excludeConstructors As Boolean = False</ItemParams>
   <ItemResult>XKItem()</ItemResult>
  </Method>
+ <Method>
+  <ItemName>PathSortDelegate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>A delegate to sort an array of `XKItem` objects by their path.</CodeDescription>
+  <PartID>385249279</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PathSortDelegate(item1 As XKItem, item2 As XKItem) As Integer</SourceLine>
+   <SourceLine>/// A delegate to sort an array of `XKItem` objects by their path.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If item1.Path &gt; item2.Path Then</SourceLine>
+   <SourceLine>Return 1</SourceLine>
+   <SourceLine>ElseIf item1.Path &lt; item2.Path Then</SourceLine>
+   <SourceLine>Return -1</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return 0</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>item1 As XKItem, item2 As XKItem</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
  <Property>
   <ItemName>AppBugVersion</ItemName>
   <Compatibility></Compatibility>
@@ -878,7 +959,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Containers As Dictionary</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
+  <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <Property>
@@ -1081,7 +1162,7 @@
   <PartID>28323839</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property CodeLineCount As Integer</SourceLine>
+   <SourceLine>CodeLineCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1110,7 +1191,7 @@
   <PartID>913776639</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property CommentCount As Integer</SourceLine>
+   <SourceLine>CommentCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

@@ -123,6 +123,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Folder</SourceLine>
    <SourceLine>Module_</SourceLine>
+   <SourceLine>Root</SourceLine>
   </ItemSource>
  </Enumeration>
  <Enumeration>

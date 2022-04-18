@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1352204287">
  <ObjName>XKContainer</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -99,6 +99,38 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Type As XojoKit.ContainerTypes = XojoKit.ContainerTypes.Folder</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Containers()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Top level child containers (folders &amp; modules).</CodeDescription>
+  <PartID>1523896319</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Containers() As XKContainer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Containers() As XKContainer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Items()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Top level items within this container.</CodeDescription>
+  <PartID>281309183</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Items() As XKItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Items() As XKItem</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

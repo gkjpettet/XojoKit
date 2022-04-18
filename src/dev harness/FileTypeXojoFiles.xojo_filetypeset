@@ -1,0 +1,34 @@
+#tag FileTypeSet
+	#tag FileType
+		CodeName=XojoProject
+		Extension=.xojo_project
+		Flags=&h2
+		MacCreator=
+		MacType=TEXT
+		Name=XojoProject
+		UTI=public.text
+		UTIConformsTo=public.data
+		Description=
+		MimeType=
+		Imported=True
+		HandlerRank=&h9
+		UTIPhysicalType=public.data
+	#tag EndFileType
+
+	#tag FileType
+		CodeName=XojoXMLProject
+		Extension=.xojo_xml_project
+		Flags=&h2
+		MacCreator=
+		MacType=TEXT
+		Name=XojoXMLProject
+		UTI=public.xml
+		UTIConformsTo=public.xml,public.data
+		Description=
+		MimeType=
+		Imported=True
+		HandlerRank=&h9
+		UTIPhysicalType=public.data
+	#tag EndFileType
+
+#tag EndFileTypeSet

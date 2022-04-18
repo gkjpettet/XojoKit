@@ -64,7 +64,7 @@ End
 #tag Events ButtonChooseProject
 	#tag Event
 		Sub Pressed()
-		  Var f As FolderItem = FolderItem.ShowOpenFileDialog(FileTypeXojoProjects.All)
+		  Var f As FolderItem = FolderItem.ShowOpenFileDialog(FileTypeXojoFiles.All)
 		  
 		  If f = Nil Then Return
 		  

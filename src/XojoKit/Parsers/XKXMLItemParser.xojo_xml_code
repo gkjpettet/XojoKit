@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1087893503</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -336,23 +336,26 @@
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
-   <SourceLine>Case "ItemName"</SourceLine>
-   <SourceLine>con.Name = child.FirstChild.Value</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case "ItemFlags"</SourceLine>
-   <SourceLine>con.Scope = ScopeFromXMLInteger(Integer.FromString(child.FirstChild.Value))</SourceLine>
+   <SourceLine>Case "Attributes"</SourceLine>
+   <SourceLine>con.Attributes_ = ParseAttributesNode(child)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "CodeDescription"</SourceLine>
    <SourceLine>con.Description = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case "ItemType"</SourceLine>
-   <SourceLine>con.Type = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
+   <SourceLine>Case "ConstantInstance"</SourceLine>
+   <SourceLine>con.Variants.Add(ParseConstantVariant(child))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemDef"</SourceLine>
    <SourceLine>con.DefaultValue = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case "ConstantInstance"</SourceLine>
-   <SourceLine>con.Variants.Add(ParseConstantVariant(child))</SourceLine>
+   <SourceLine>Case "ItemFlags"</SourceLine>
+   <SourceLine>con.Scope = ScopeFromXMLInteger(Integer.FromString(child.FirstChild.Value))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemName"</SourceLine>
+   <SourceLine>con.Name = child.FirstChild.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemType"</SourceLine>
+   <SourceLine>con.Type = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
@@ -491,17 +494,20 @@
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
-   <SourceLine>Case "ItemName"</SourceLine>
-   <SourceLine>e.Name = child.FirstChild.Value</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case "ItemFlags"</SourceLine>
-   <SourceLine>e.Scope = ScopeFromXMLInteger(Integer.FromString(child.FirstChild.Value))</SourceLine>
+   <SourceLine>Case "Attributes"</SourceLine>
+   <SourceLine>e.Attributes_ = ParseAttributesNode(child)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "BinaryEnum"</SourceLine>
    <SourceLine>e.IsBinary = If(Integer.FromString(child.FirstChild.Value) = 0, False, True)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "CodeDescription"</SourceLine>
    <SourceLine>e.Description = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemFlags"</SourceLine>
+   <SourceLine>e.Scope = ScopeFromXMLInteger(Integer.FromString(child.FirstChild.Value))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemName"</SourceLine>
+   <SourceLine>e.Name = child.FirstChild.Value</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemSource"</SourceLine>
    <SourceLine>e.Members = ParseEnumMembers(child)</SourceLine>
@@ -660,20 +666,20 @@
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
-   <SourceLine>Case "ItemName"</SourceLine>
-   <SourceLine>ed.Name = child.FirstChild.Value</SourceLine>
+   <SourceLine>Case "Attributes"</SourceLine>
+   <SourceLine>ed.Attributes_ = ParseAttributesNode(child)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "CodeDescription"</SourceLine>
    <SourceLine>ed.Description = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case "Attributes"</SourceLine>
-   <SourceLine>ed.Attributes_ = ParseAttributesNode(child)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case "ItemResult"</SourceLine>
-   <SourceLine>ed.ReturnType = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
+   <SourceLine>Case "ItemName"</SourceLine>
+   <SourceLine>ed.Name = child.FirstChild.Value</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemParams"</SourceLine>
    <SourceLine>ed.Parameters = ParseParametersNode(child)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ItemResult"</SourceLine>
+   <SourceLine>ed.ReturnType = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>

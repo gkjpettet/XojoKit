@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="708849663">
  <ObjName>XKProjectItemParser</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1057513471</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -20,8 +20,6 @@
    <SourceLine>/// Parses the contents of an item into its constituent methods, properties, events and notes.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Part of the XKItemParser interface.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse structures"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Keep a reference to the parsing options.</SourceLine>
    <SourceLine>mOptions = options</SourceLine>
@@ -104,6 +102,10 @@
    <SourceLine>Case "Constant"</SourceLine>
    <SourceLine>Var c As XKConstant = ParseConstant(tag, lines, i)</SourceLine>
    <SourceLine>If c &lt;&gt; Nil Then item.Constants.Add(c)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Structure"</SourceLine>
+   <SourceLine>Var s As XKStructure = ParseStructure(tag, lines, i)</SourceLine>
+   <SourceLine>If s &lt;&gt; Nil Then item.Structures.Add(s)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
@@ -387,6 +389,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Var con As New XKConstant</SourceLine>
    <SourceLine>con.Name = tag.Name</SourceLine>
+   <SourceLine>con.Attributes_ = tag.Attributes_</SourceLine>
    <SourceLine>con.DefaultValue = tag.Default</SourceLine>
    <SourceLine>con.IsDynamic = tag.IsDynamic</SourceLine>
    <SourceLine>con.Scope = tag.Scope</SourceLine>
@@ -624,6 +627,7 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var e As New XKEnum</SourceLine>
+   <SourceLine>e.Attributes_ = tag.Attributes_</SourceLine>
    <SourceLine>e.Name = tag.Name</SourceLine>
    <SourceLine>e.IsBinary = tag.IsBinary</SourceLine>
    <SourceLine>e.Description = tag.Description</SourceLine>
@@ -1414,6 +1418,86 @@
   <IsShared>0</IsShared>
   <ItemParams>lines() As String, ByRef i As Integer</ItemParams>
   <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseStructure</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses a Xojo structure from `lines` starting at `i` using the data within `tag` May be Nil.</CodeDescription>
+  <PartID>1746708479</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ParseStructure(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKStructure</SourceLine>
+   <SourceLine>/// Parses a Xojo structure from `lines` starting at `i` using the data within `tag`</SourceLine>
+   <SourceLine>/// May be Nil.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Assumes `lines(i)` is the "#tag Structure" line which has been parsed into `tag`.</SourceLine>
+   <SourceLine>/// Returns Nil if the parsed structure's scope means it should be excluded.</SourceLine>
+   <SourceLine>/// Format:</SourceLine>
+   <SourceLine>/// ```</SourceLine>
+   <SourceLine>/// #TAG STRUCTURE TagProperties</SourceLine>
+   <SourceLine>///   (Field)*</SourceLine>
+   <SourceLine>/// #TAG ENDSTRUCTURE</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// TagProperties      → NAME EQUAL IDENTIFIER, TYPE EQUAL Literal, DYNAMIC EQUAL Boolean, </SourceLine>
+   <SourceLine>///                      (FLAGS EQUAL HexLiteral)?, DESCRIPTION EQUAL Base64String, SCOPE EQUAL ScopeString, </SourceLine>
+   <SourceLine>///                      DEFAULT EQUAL \"Literal"</SourceLine>
+   <SourceLine>/// Scope              → PUBLIC | GLOBAL | PROTECTED | PRIVATE</SourceLine>
+   <SourceLine>/// Field → NAME (LPAREN NUMBER RPAREN)? AS FieldType</SourceLine>
+   <SourceLine>/// FieldType → TYPE (STAR) NUMBER</SourceLine>
+   <SourceLine>/// ```</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Sanity check.</SourceLine>
+   <SourceLine>If i &gt;= lines.LastIndex Then</SourceLine>
+   <SourceLine>Raise New XKException("Expected a constant declaration line but instead the parser reached the end.")</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var s As New XKStructure</SourceLine>
+   <SourceLine>s.Attributes_ = tag.Attributes_</SourceLine>
+   <SourceLine>s.Description = tag.Description</SourceLine>
+   <SourceLine>s.Name = tag.Name</SourceLine>
+   <SourceLine>s.Scope = tag.Scope</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Advance past the #Tag Structure line.</SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Fields?</SourceLine>
+   <SourceLine>Var fieldIndex As Integer = -1</SourceLine>
+   <SourceLine>While i &lt;= lines.LastIndex</SourceLine>
+   <SourceLine>Var line As String = lines(i).Trim</SourceLine>
+   <SourceLine>If line.BeginsWith("#tag EndStructure") Then</SourceLine>
+   <SourceLine>Exit</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>fieldIndex = fieldIndex + 1</SourceLine>
+   <SourceLine>If line = "" Then</SourceLine>
+   <SourceLine>s.Fields.Add(New XKStructureField(fieldIndex, "", ""))</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Var nameValue() As String = line.Split(" As ")</SourceLine>
+   <SourceLine>s.Fields.Add(New XKStructureField(fieldIndex, nameValue(0).Trim, nameValue(1).Trim))</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>// There seems to be a bug in the IDE where an empty field can get appended to the end of the declaration.</SourceLine>
+   <SourceLine>If s.Fields.Count &gt; 0 And s.Fields(s.Fields.LastIndex).Name = "" Then</SourceLine>
+   <SourceLine>Call s.Fields.Pop</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Return Nil if the structure should be excluded.</SourceLine>
+   <SourceLine>If mOptions.ExcludePrivate And s.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>tag As XKProjectItemTag, lines() As String, ByRef i As Integer</ItemParams>
+  <ItemResult>XKStructure</ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>

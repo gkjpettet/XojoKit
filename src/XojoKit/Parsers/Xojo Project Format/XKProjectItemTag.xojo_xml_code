@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="154281983">
  <ObjName>XKProjectItemTag</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -18,7 +18,12 @@
    <SourceLine>/// Extracts the tag data from a #tag line in a .xojo_code object file.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// #tag TypeString, Name = NameString, Type = ClassType, Dynamic = Boolean, Flags = HexLiteral, </SourceLine>
-   <SourceLine>/// Description = Base64String, Scope = ScopeString, Default = \"ValueString", Binary = Boolean</SourceLine>
+   <SourceLine>/// Description = Base64String, Scope = ScopeString, Default = \"ValueString", Binary = Boolean, </SourceLine>
+   <SourceLine>/// Attributes = \"AttributeString"</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// AttributeString → Attribute(\x2C Attribute)*</SourceLine>
+   <SourceLine>/// Attribute       → NAME \x3D VALUE</SourceLine>
+   <SourceLine>/// Note above that `\x2C` is a comma and `\x3D` is the equal sign. Who designed this file format??</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Remove the #tag prefix.</SourceLine>
    <SourceLine>line = line.Replace("#tag", "").Trim</SourceLine>
@@ -56,6 +61,20 @@
    <SourceLine>If Self.Default.Left(2) = "\""" Then</SourceLine>
    <SourceLine>Self.Default = Self.Default.Middle(2, Default.Length - 3)</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Attributes"</SourceLine>
+   <SourceLine>value = value.ReplaceAll("\x2C", ",").ReplaceAll("\x3D", "=").Trim</SourceLine>
+   <SourceLine>If value.BeginsWith("\""") Then value = value.Replace("\""", "")</SourceLine>
+   <SourceLine>If value.EndsWith("""") Then value = value.Left(value.Length - 1)</SourceLine>
+   <SourceLine>Var atts() As String = value.Split(",")</SourceLine>
+   <SourceLine>For Each att As String In atts</SourceLine>
+   <SourceLine>Var nameValue() As String = att.Split("=")</SourceLine>
+   <SourceLine>If nameValue.Count = 1 Then</SourceLine>
+   <SourceLine>Self.Attributes_.Add(nameValue(0).Trim : "")</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Self.Attributes_.Add(nameValue(0).Trim : nameValue(1).Trim)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next att</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Scope"</SourceLine>
    <SourceLine>Self.Scope = XojoKit.ScopeFromString(value)</SourceLine>
@@ -240,6 +259,22 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>Attributes_()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>This tag's optional attributes as key/value pairs. Left = Key (String), Right = Value (String).</CodeDescription>
+  <PartID>797728767</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Attributes_() As Pair</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Attributes_() As Pair</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -297,19 +332,6 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>String</ItemType>
    <EditorType>MultiLineEditor</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Scope</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>Xodoc.Scopes.Public_</PropertyValue>
-   <ItemType>XojoKit.Scopes</ItemType>
-   <EditorType>Enum</EditorType>
-   <Enumeration>
-    <ItemDef>0 - Public_</ItemDef>
-    <ItemDef>1 - Private_</ItemDef>
-    <ItemDef>2 - Protected_</ItemDef>
-    <ItemDef>3 - Global_</ItemDef>
-   </Enumeration>
   </ViewProperty>
   <ViewProperty>
    <ObjName>IsBinary</ObjName>

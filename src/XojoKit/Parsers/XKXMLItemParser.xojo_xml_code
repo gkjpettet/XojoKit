@@ -732,8 +732,12 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Don't add the last line.</SourceLine>
-   <SourceLine>If i &lt; iLimit And child.FirstChild &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If i &lt; iLimit Then</SourceLine>
+   <SourceLine>If child.FirstChild = Nil Then</SourceLine>
+   <SourceLine>lines.Add("")</SourceLine>
+   <SourceLine>Else</SourceLine>
    <SourceLine>lines.Add(child.FirstChild.Value)</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
@@ -787,9 +791,14 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Don't add the last line.</SourceLine>
-   <SourceLine>If i &lt; iLimit And child.FirstChild &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If i &lt; iLimit Then</SourceLine>
+   <SourceLine>If child.FirstChild = Nil Then</SourceLine>
+   <SourceLine>lines.Add("")</SourceLine>
+   <SourceLine>Else</SourceLine>
    <SourceLine>lines.Add(child.FirstChild.Value)</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
@@ -906,6 +915,8 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>If itemSourceChild.FirstChild &lt;&gt; Nil Then</SourceLine>
    <SourceLine>note.Lines.Add(itemSourceChild.FirstChild.Value)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>note.Lines.Add("")</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next j</SourceLine>
@@ -1006,6 +1017,8 @@
    <SourceLine></SourceLine>
    <SourceLine>If child.FirstChild &lt;&gt; Nil Then</SourceLine>
    <SourceLine>lines.Add(child.FirstChild.Value)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>lines.Add("")</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>

@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="154281983">
  <ObjName>XKProjectItemTag</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1057513471</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -15,7 +15,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Constructor(line As String)</SourceLine>
-   <SourceLine>/// Extracts the tag data from a #tag line in a .xojo_code object file.</SourceLine>
+   <SourceLine>/// Extracts the tag data from a #tag line in a .xojo_code item file.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// #tag TypeString, Name = NameString, Type = ClassType, Dynamic = Boolean, Flags = HexLiteral, </SourceLine>
    <SourceLine>/// Description = Base64String, Scope = ScopeString, Default = \"ValueString", Binary = Boolean, </SourceLine>
@@ -350,6 +350,19 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>String</ItemType>
    <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Scope</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
+   <ItemType>XojoKit.Scopes</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Public_</ItemDef>
+    <ItemDef>1 - Private_</ItemDef>
+    <ItemDef>2 - Protected_</ItemDef>
+    <ItemDef>3 - Global_</ItemDef>
+   </Enumeration>
   </ViewProperty>
  </ViewBehavior>
 </block>

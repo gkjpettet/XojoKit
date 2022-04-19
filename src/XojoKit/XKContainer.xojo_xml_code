@@ -119,18 +119,18 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Objects()</ItemName>
+  <ItemName>Items()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <CodeDescription>Top level items within this container.</CodeDescription>
-  <PartID>281309183</PartID>
+  <PartID>1788547071</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Objects() As XKItem</SourceLine>
+   <SourceLine>Items() As XKItem</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Objects() As XKItem</ItemDeclaration>
+  <ItemDeclaration>Items() As XKItem</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

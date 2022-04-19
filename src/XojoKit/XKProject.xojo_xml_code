@@ -122,7 +122,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function FQNSortDelegate(item1 As XKItem, item2 As XKItem) As Integer</SourceLine>
-   <SourceLine>/// A delegate to sort an array of `XKItem` objects by their FQN.</SourceLine>
+   <SourceLine>/// A delegate to sort an array of `XKItem` items by their FQN.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If item1.FQN &gt; item2.FQN Then</SourceLine>
    <SourceLine>Return 1</SourceLine>
@@ -153,7 +153,7 @@
    <SourceLine>/// Parses the project file adhering to its set options.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>ParseManifest</SourceLine>
-   <SourceLine>ParseObjects</SourceLine>
+   <SourceLine>ParseItems</SourceLine>
    <SourceLine>ComputeLineAndCommentCounts</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -166,46 +166,46 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>ParseObjects</ItemName>
+  <ItemName>ParseItems</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <CodeDescription>Parses those files in the project manifest that have not been excluded. Assumes `ParseManifest` has already executed.</CodeDescription>
   <PartID>942989311</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub ParseObjects()</SourceLine>
-   <SourceLine>/// Parses those objects in the project manifest that have not been excluded. </SourceLine>
+   <SourceLine>Sub ParseItems()</SourceLine>
+   <SourceLine>/// Parses those items in the project manifest that have not been excluded. </SourceLine>
    <SourceLine>/// Assumes `ParseManifest` has already executed.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>For i As Integer = Objects.LastIndex DownTo 0</SourceLine>
-   <SourceLine>Var item As XKItem = Objects(i)</SourceLine>
+   <SourceLine>For i As Integer = Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>item.Parse(Options)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Since we only now know the item's scope, exclude it if needed.</SourceLine>
    <SourceLine>If Options.ExcludePrivate And item.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>objects.RemoveAt(i)</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Find the classes and modules contained within other modules.</SourceLine>
-   <SourceLine>For Each obj As XKItem In Objects</SourceLine>
-   <SourceLine>If obj.Type &lt;&gt; XojoKit.ObjectTypes.Module_ Then Continue</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.Type &lt;&gt; XojoKit.ObjectTypes.Module_ Then Continue</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>For Each query As XKItem In Objects</SourceLine>
-   <SourceLine>If query.ParentID = obj.ID Then</SourceLine>
+   <SourceLine>For Each query As XKItem In Self.Items</SourceLine>
+   <SourceLine>If query.ParentID = item.ID Then</SourceLine>
    <SourceLine>// `item` is the parent of `query`.</SourceLine>
    <SourceLine>If query.Type = XojoKit.ObjectTypes.Class_ Then</SourceLine>
-   <SourceLine>obj.Classes.Add(query)</SourceLine>
+   <SourceLine>item.Classes.Add(query)</SourceLine>
    <SourceLine>ElseIf query.Type = XojoKit.ObjectTypes.Module_ Then</SourceLine>
-   <SourceLine>obj.Modules.Add(query)</SourceLine>
+   <SourceLine>item.Modules.Add(query)</SourceLine>
    <SourceLine>ElseIf query.Type = XojoKit.ObjectTypes.Interface_ Then</SourceLine>
-   <SourceLine>obj.Interfaces.Add(query)</SourceLine>
+   <SourceLine>item.Interfaces.Add(query)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next query</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Next obj</SourceLine>
+   <SourceLine>Next item</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -295,8 +295,8 @@
    <SourceLine>root.ParentID = -1</SourceLine>
    <SourceLine>Containers.Value(root.ID) = root</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Clear out any existing objects.</SourceLine>
-   <SourceLine>Self.Objects.RemoveAll</SourceLine>
+   <SourceLine>// Clear out any existing items.</SourceLine>
+   <SourceLine>Self.Items.RemoveAll</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Get the contents of the manifest.</SourceLine>
    <SourceLine>Var tin As TextInputStream</SourceLine>
@@ -390,7 +390,7 @@
    <SourceLine>item.XML = xmlDoc.FirstChild.FirstChild</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Self.Objects.Add(item)</SourceLine>
+   <SourceLine>Self.Items.Add(item)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Modules can also be containers.</SourceLine>
    <SourceLine>If key = "Module" Then</SourceLine>
@@ -426,16 +426,16 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next line</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Compute each object's fully qualified name (FQN).</SourceLine>
-   <SourceLine>For Each obj As XKItem In Self.Objects</SourceLine>
-   <SourceLine>If obj.ParentId = 0 Then</SourceLine>
-   <SourceLine>// This is an object at the root of the project.</SourceLine>
-   <SourceLine>obj.FQN = obj.Name</SourceLine>
+   <SourceLine>// Compute each item's fully qualified name (FQN).</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentId = 0 Then</SourceLine>
+   <SourceLine>// This is an item at the root of the project.</SourceLine>
+   <SourceLine>item.FQN = item.Name</SourceLine>
    <SourceLine>Continue</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// This object is within folder(s)/module(s).</SourceLine>
-   <SourceLine>Var current As XKContainer = Containers.Lookup(obj.ParentID, Nil)</SourceLine>
+   <SourceLine>// This item is within folder(s)/module(s).</SourceLine>
+   <SourceLine>Var current As XKContainer = Containers.Lookup(item.ParentID, Nil)</SourceLine>
    <SourceLine>Var parents() As XKContainer</SourceLine>
    <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Do</SourceLine>
@@ -455,31 +455,31 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Add this object's name to the fqn array we will concatenate.</SourceLine>
-   <SourceLine>fqn.Add(obj.Name)</SourceLine>
+   <SourceLine>// Add this item's name to the fqn array we will concatenate.</SourceLine>
+   <SourceLine>fqn.Add(item.Name)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// We can now construct the folder/module path from the parents.</SourceLine>
-   <SourceLine>obj.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
-   <SourceLine>If obj.Path.EndsWith("&gt;") Then obj.Path = obj.Path.TrimRight("&gt;")</SourceLine>
+   <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
+   <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// And the fully qualifed name (excluding folders).</SourceLine>
-   <SourceLine>obj.FQN = String.FromArray(fqn, ".")</SourceLine>
-   <SourceLine>Next obj</SourceLine>
+   <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
+   <SourceLine>Next item</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Any exclusions?</SourceLine>
-   <SourceLine>For i As Integer = Self.Objects.LastIndex DownTo 0</SourceLine>
-   <SourceLine>Var obj As XKItem = Self.Objects(i)</SourceLine>
+   <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
-   <SourceLine>If obj.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Objects.RemoveAt(i)</SourceLine>
+   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
    <SourceLine>GoTo NextObject</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedPath</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
-   <SourceLine>If obj.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Objects.RemoveAt(i)</SourceLine>
+   <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
    <SourceLine>GoTo NextObject</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedFQN</SourceLine>
@@ -488,7 +488,7 @@
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Sort the files alphabetically by their path.</SourceLine>
-   <SourceLine>Self.Objects.Sort(AddressOf PathSortDelegate)</SourceLine>
+   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Find the direct child containers and items of all the containers.</SourceLine>
    <SourceLine>For Each entry As DictionaryEntry In Self.Containers</SourceLine>
@@ -503,11 +503,11 @@
    <SourceLine>Next entry2</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Find every item whose parent is the current one.</SourceLine>
-   <SourceLine>For Each obj As XKItem In Self.Objects</SourceLine>
-   <SourceLine>If obj.ParentID = current.ID Then</SourceLine>
-   <SourceLine>current.Objects.Add(obj)</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentID = current.ID Then</SourceLine>
+   <SourceLine>current.Items.Add(item)</SourceLine>
    <SourceLine>End If</SourceLine>
-   <SourceLine>Next obj</SourceLine>
+   <SourceLine>Next item</SourceLine>
    <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -539,8 +539,8 @@
    <SourceLine>root.ParentID = -1</SourceLine>
    <SourceLine>Containers.Value(root.ID) = root</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Clear out any existing objects.</SourceLine>
-   <SourceLine>Self.Objects.RemoveAll</SourceLine>
+   <SourceLine>// Clear out any existing items.</SourceLine>
+   <SourceLine>Self.Items.RemoveAll</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var xmlDoc As New XmlDocument(Self.Manifest)</SourceLine>
    <SourceLine></SourceLine>
@@ -605,7 +605,7 @@
    <SourceLine>Next k</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Add this item to the project.</SourceLine>
-   <SourceLine>Self.Objects.Add(item)</SourceLine>
+   <SourceLine>Self.Items.Add(item)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// *Actual* modules can also be containers.</SourceLine>
    <SourceLine>Var container As New XKContainer(XojoKit.ContainerTypes.Module_)</SourceLine>
@@ -644,7 +644,7 @@
    <SourceLine>Next k</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Add this item to the project.</SourceLine>
-   <SourceLine>Self.Objects.Add(item)</SourceLine>
+   <SourceLine>Self.Items.Add(item)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Folder"</SourceLine>
    <SourceLine>// A folder.</SourceLine>
@@ -670,16 +670,16 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Compute each object's fully qualified name (FQN).</SourceLine>
-   <SourceLine>For Each obj As XKItem In Self.Objects</SourceLine>
-   <SourceLine>If obj.ParentId = 0 Then</SourceLine>
-   <SourceLine>// This is an object at the root of the project.</SourceLine>
-   <SourceLine>obj.FQN = obj.Name</SourceLine>
+   <SourceLine>// Compute each item's fully qualified name (FQN).</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentId = 0 Then</SourceLine>
+   <SourceLine>// This is an item at the root of the project.</SourceLine>
+   <SourceLine>item.FQN = item.Name</SourceLine>
    <SourceLine>Continue</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// This object is within folder(s)/module(s).</SourceLine>
-   <SourceLine>Var current As XKContainer = Containers.Lookup(obj.ParentID, Nil)</SourceLine>
+   <SourceLine>// This item is within folder(s)/module(s).</SourceLine>
+   <SourceLine>Var current As XKContainer = Containers.Lookup(item.ParentID, Nil)</SourceLine>
    <SourceLine>Var parents() As XKContainer</SourceLine>
    <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Do</SourceLine>
@@ -699,33 +699,33 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Add this object's name to the fqn array we will concatenate.</SourceLine>
-   <SourceLine>fqn.Add(obj.Name)</SourceLine>
+   <SourceLine>// Add this item's name to the fqn array we will concatenate.</SourceLine>
+   <SourceLine>fqn.Add(item.Name)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// We can now construct the folder/module path from the parents.</SourceLine>
-   <SourceLine>obj.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
-   <SourceLine>If obj.Path.EndsWith("&gt;") Then obj.Path = obj.Path.TrimRight("&gt;")</SourceLine>
+   <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
+   <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// And the fully qualifed name (excluding folders).</SourceLine>
-   <SourceLine>obj.FQN = String.FromArray(fqn, ".")</SourceLine>
-   <SourceLine>Next obj</SourceLine>
+   <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
+   <SourceLine>Next item</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Any exclusions?</SourceLine>
-   <SourceLine>For i As Integer = Self.Objects.LastIndex DownTo 0</SourceLine>
-   <SourceLine>Var obj As XKItem = Self.Objects(i)</SourceLine>
+   <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
-   <SourceLine>If obj.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Objects.RemoveAt(i)</SourceLine>
-   <SourceLine>If Self.Containers.HasKey(obj.ID) Then Self.Containers.Remove(obj.ID)</SourceLine>
+   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>If Self.Containers.HasKey(item.ID) Then Self.Containers.Remove(item.ID)</SourceLine>
    <SourceLine>GoTo NextObject</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedPath</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
-   <SourceLine>If obj.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Objects.RemoveAt(i)</SourceLine>
-   <SourceLine>If Self.Containers.HasKey(obj.ID) Then Self.Containers.Remove(obj.ID)</SourceLine>
+   <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>If Self.Containers.HasKey(item.ID) Then Self.Containers.Remove(item.ID)</SourceLine>
    <SourceLine>GoTo NextObject</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedFQN</SourceLine>
@@ -734,7 +734,7 @@
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Sort the files alphabetically by their paths.</SourceLine>
-   <SourceLine>Self.Objects.Sort(AddressOf PathSortDelegate)</SourceLine>
+   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Find the direct child containers and items of all the containers.</SourceLine>
    <SourceLine>For Each entry As DictionaryEntry In Self.Containers</SourceLine>
@@ -749,11 +749,11 @@
    <SourceLine>Next entry2</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Find every item whose parent is the current one.</SourceLine>
-   <SourceLine>For Each obj As XKItem In Self.Objects</SourceLine>
-   <SourceLine>If obj.ParentID = current.ID Then</SourceLine>
-   <SourceLine>current.Objects.Add(obj)</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentID = current.ID Then</SourceLine>
+   <SourceLine>current.Items.Add(item)</SourceLine>
    <SourceLine>End If</SourceLine>
-   <SourceLine>Next obj</SourceLine>
+   <SourceLine>Next item</SourceLine>
    <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -817,10 +817,10 @@
    <SourceLine>Sub ComputeLineAndCommentCounts()</SourceLine>
    <SourceLine>/// Computes the total number of user-written lines of code and comments.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>For Each obj As XKItem In Self.Objects</SourceLine>
-   <SourceLine>mCodeLineCount = mCodeLineCount + obj.CodeLineCount</SourceLine>
-   <SourceLine>mCommentCount = mCommentCount + obj.CommentCount</SourceLine>
-   <SourceLine>Next obj</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>mCodeLineCount = mCodeLineCount + item.CodeLineCount</SourceLine>
+   <SourceLine>mCommentCount = mCommentCount + item.CommentCount</SourceLine>
+   <SourceLine>Next item</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -848,11 +848,11 @@
    <SourceLine></SourceLine>
    <SourceLine>Var missing() As XKItem</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>For Each obj As XKItem In Self.Objects</SourceLine>
-   <SourceLine>If obj.MembersMissingDescription(excludeConstructors).Count &gt; 0 Then</SourceLine>
-   <SourceLine>missing.Add(obj)</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.MembersMissingDescription(excludeConstructors).Count &gt; 0 Then</SourceLine>
+   <SourceLine>missing.Add(item)</SourceLine>
    <SourceLine>End If</SourceLine>
-   <SourceLine>Next obj</SourceLine>
+   <SourceLine>Next item</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return missing</SourceLine>
    <SourceLine></SourceLine>
@@ -874,7 +874,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PathSortDelegate(item1 As XKItem, item2 As XKItem) As Integer</SourceLine>
-   <SourceLine>/// A delegate to sort an array of `XKItem` objects by their path.</SourceLine>
+   <SourceLine>/// A delegate to sort an array of `XKItem` items by their path.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If item1.Path &gt; item2.Path Then</SourceLine>
    <SourceLine>Return 1</SourceLine>
@@ -990,18 +990,18 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Objects()</ItemName>
+  <ItemName>Items()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>The objects (classes, modules and interfaces) within this project.</CodeDescription>
+  <CodeDescription>The items (classes, modules and interfaces) within this project.</CodeDescription>
   <PartID>1200119807</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Objects() As XKItem</SourceLine>
+   <SourceLine>Items() As XKItem</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Objects() As XKItem</ItemDeclaration>
+  <ItemDeclaration>Items() As XKItem</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

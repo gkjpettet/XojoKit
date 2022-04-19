@@ -180,7 +180,7 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Determine the type of object by analysing the isClass and isInterface flags.</SourceLine>
+   <SourceLine>// Determine the type of item by analysing the isClass and isInterface flags.</SourceLine>
    <SourceLine>If isInterface Then</SourceLine>
    <SourceLine>item.Type = XojoKit.ObjectTypes.Interface_</SourceLine>
    <SourceLine>ElseIf isClass Then</SourceLine>
@@ -1056,7 +1056,7 @@
    <SourceLine>Return XojoKit.Scopes.Private_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>// This is lazy but for now we'll just assume this is a public object.</SourceLine>
+   <SourceLine>// This is lazy but for now we'll just assume this is a public item.</SourceLine>
    <SourceLine>Return XojoKit.Scopes.Public_</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine></SourceLine>

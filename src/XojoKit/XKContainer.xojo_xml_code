@@ -119,18 +119,18 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Items()</ItemName>
+  <ItemName>Objects()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <CodeDescription>Top level items within this container.</CodeDescription>
   <PartID>281309183</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Items() As XKItem</SourceLine>
+   <SourceLine>Objects() As XKItem</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Items() As XKItem</ItemDeclaration>
+  <ItemDeclaration>Objects() As XKItem</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -192,6 +192,7 @@
    <Enumeration>
     <ItemDef>0 - Folder</ItemDef>
     <ItemDef>1 - Module_</ItemDef>
+    <ItemDef>2 - Root</ItemDef>
    </Enumeration>
   </ViewProperty>
  </ViewBehavior>

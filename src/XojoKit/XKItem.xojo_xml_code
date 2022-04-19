@@ -177,7 +177,7 @@
   <ItemName>Attributes_()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Optional attributes pairs this class, module or interface may have. Left = Attribute name (String), Right = Attribute Value (String).</CodeDescription>
+  <CodeDescription>Optional attributes this class, module or interface may have. Left = Attribute name (String), Right = Attribute Value (String).</CodeDescription>
   <PartID>158910463</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
@@ -667,7 +667,7 @@
   <PartID>1596721151</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property CodeLineCount As Integer</SourceLine>
+   <SourceLine>CodeLineCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -728,7 +728,7 @@
   <PartID>1868398591</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property CommentCount As Integer</SourceLine>
+   <SourceLine>CommentCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

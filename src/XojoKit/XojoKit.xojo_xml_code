@@ -74,6 +74,45 @@
   <ItemParams>line As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
+ <Method>
+  <ItemName>ToString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns a string representation of `type`.</CodeDescription>
+  <PartID>144852991</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToString(Extends type As XojoKit.ObjectTypes) As String</SourceLine>
+   <SourceLine>/// Returns a string representation of `type`.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case type</SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>Return "Class"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Folder</SourceLine>
+   <SourceLine>Return "Folder"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Interface_</SourceLine>
+   <SourceLine>Return "Interface"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>Return "Module"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>Return "Root"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New InvalidArgumentException("Unknown item type.")</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends type As XojoKit.ObjectTypes</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -109,23 +148,6 @@
    <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
- <Enumeration>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemName>ContainerTypes</ItemName>
-  <ItemFlags>1</ItemFlags>
-  <ItemType>Integer</ItemType>
-  <BinaryEnum>0</BinaryEnum>
-  <ItemName>ContainerTypes</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1383997439</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Folder</SourceLine>
-   <SourceLine>Module_</SourceLine>
-   <SourceLine>Root</SourceLine>
-  </ItemSource>
- </Enumeration>
  <Enumeration>
   <TextEncoding>134217984</TextEncoding>
   <ItemName>FileFormats</ItemName>

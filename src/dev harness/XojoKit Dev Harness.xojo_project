@@ -18,7 +18,6 @@ Class=XKConstantVariant;../XojoKit/Members/XKConstantVariant.xojo_xml_code;&h000
 Class=XKDelegate;../XojoKit/Members/XKDelegate.xojo_xml_code;&h000000004C1E17FF;&h000000000CF18FFF;false
 Class=XKEnum;../XojoKit/Members/XKEnum.xojo_xml_code;&h000000001FE0BFFF;&h000000000CF18FFF;false
 Module=XojoKit;../XojoKit/XojoKit.xojo_xml_code;&h000000000B6B9FFF;&h000000001F9AD7FF;false
-Class=XKContainer;../XojoKit/XKContainer.xojo_xml_code;&h000000007477B7FF;&h000000001F9AD7FF;false
 Class=XKException;../XojoKit/XKException.xojo_xml_code;&h000000007DE0D7FF;&h000000001F9AD7FF;false
 Class=XKItem;../XojoKit/XKItem.xojo_xml_code;&h000000000F1F57FF;&h000000001F9AD7FF;false
 Class=XKOptions;../XojoKit/XKOptions.xojo_xml_code;&h000000000E03DFFF;&h000000001F9AD7FF;false

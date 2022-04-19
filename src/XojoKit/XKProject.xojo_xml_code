@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>530241535</ObjContainerID>
+ <ObjContainerID>451715071</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -16,7 +16,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Constructor(manifest As FolderItem)</SourceLine>
    <SourceLine>Self.Manifest = manifest</SourceLine>
-   <SourceLine>Self.Containers = New Dictionary</SourceLine>
+   <SourceLine>Self.ItemContainers = New Dictionary</SourceLine>
    <SourceLine>Self.Options = New XKOptions</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -114,34 +114,6 @@
   <ItemResult>FolderItem</ItemResult>
  </Method>
  <Method>
-  <ItemName>FQNSortDelegate</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>A delegate to sort an array of `XKItem` objects by their FQN.</CodeDescription>
-  <PartID>1117095935</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function FQNSortDelegate(item1 As XKItem, item2 As XKItem) As Integer</SourceLine>
-   <SourceLine>/// A delegate to sort an array of `XKItem` items by their FQN.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If item1.FQN &gt; item2.FQN Then</SourceLine>
-   <SourceLine>Return 1</SourceLine>
-   <SourceLine>ElseIf item1.FQN &lt; item2.FQN Then</SourceLine>
-   <SourceLine>Return -1</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return 0</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>item1 As XKItem, item2 As XKItem</ItemParams>
-  <ItemResult>Integer</ItemResult>
- </Method>
- <Method>
   <ItemName>Parse</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -180,7 +152,9 @@
    <SourceLine>For i As Integer = Items.LastIndex DownTo 0</SourceLine>
    <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If item.Type &lt;&gt; XojoKit.ObjectTypes.Folder And item.Type &lt;&gt; XojoKit.ObjectTypes.Root Then</SourceLine>
    <SourceLine>item.Parse(Options)</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Since we only now know the item's scope, exclude it if needed.</SourceLine>
    <SourceLine>If Options.ExcludePrivate And item.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -250,6 +224,93 @@
    <SourceLine>"`.xojo_xml_project` formats are supported.")</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// =================================================</SourceLine>
+   <SourceLine>// COMPUTE EACH ITEM'S PATH AND FULLY QUALIFIED NAME</SourceLine>
+   <SourceLine>// =================================================</SourceLine>
+   <SourceLine>Var path() As String</SourceLine>
+   <SourceLine>Var fqn() As String // Will be concatenated to form the item's FQN.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentId = 0 Then</SourceLine>
+   <SourceLine>// This is an item at the root of the project.</SourceLine>
+   <SourceLine>item.FQN = item.Name</SourceLine>
+   <SourceLine>Continue</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// This item is within folder(s) and/or module(s). Get its parent(s).</SourceLine>
+   <SourceLine>Var current As XKItem = ItemContainers.Lookup(item.ParentID, Nil)</SourceLine>
+   <SourceLine>Var parents() As XKItem</SourceLine>
+   <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>parents.Add(current)</SourceLine>
+   <SourceLine>current = Self.ItemContainers.Lookup(current.ParentID, Nil)</SourceLine>
+   <SourceLine>Loop Until current Is Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Add the parent names to the FQN array.</SourceLine>
+   <SourceLine>For i As Integer = parents.LastIndex DownTo 0</SourceLine>
+   <SourceLine>path.Add(parents(i).Name)</SourceLine>
+   <SourceLine>If parents(i).Type = XojoKit.ObjectTypes.Folder Then</SourceLine>
+   <SourceLine>path(path.LastIndex) = path(path.LastIndex) + "&gt;"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>fqn.Add(parents(i).Name)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Lastly append item's name to the FQN array.</SourceLine>
+   <SourceLine>fqn.Add(item.Name)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// We can now construct the folder/module path from the parents.</SourceLine>
+   <SourceLine>// Modules and folders are separated with `&gt;`. Items in the root of the project have an empty path.</SourceLine>
+   <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
+   <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The fully qualifed name is a dot-separated path that excludes folders.</SourceLine>
+   <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// =================================================</SourceLine>
+   <SourceLine>// EXCLUSIONS</SourceLine>
+   <SourceLine>// =================================================</SourceLine>
+   <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Exclude any items in the option's list of excluded paths.</SourceLine>
+   <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
+   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
+   <SourceLine>GoTo NextItem</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next excludedPath</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Exclude any items in the option's list of excluded FQNs.</SourceLine>
+   <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
+   <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
+   <SourceLine>GoTo NextItem</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next excludedFQN</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>NextItem:</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// =================================================</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Let's be tidy and sort the items alphabetically by their path.</SourceLine>
+   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Set each item's children.</SourceLine>
+   <SourceLine>For Each entry As DictionaryEntry In Self.ItemContainers</SourceLine>
+   <SourceLine>Var current As XKItem = entry.Value</SourceLine>
+   <SourceLine>// Find every item whose parent is the current one.</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.ParentID = current.ID Then</SourceLine>
+   <SourceLine>current.Children.Add(item)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -275,9 +336,6 @@
    <SourceLine>/// KEY EQUAL value</SourceLine>
    <SourceLine>/// value = (component(;component)*)?</SourceLine>
    <SourceLine>/// component = STRING | NUMBER | BOOLEAN</SourceLine>
-   <SourceLine>///</SourceLine>
-   <SourceLine>/// `excludedPaths()` contains the paths (full or wildcard) to exclude when parsing.</SourceLine>
-   <SourceLine>/// `excludedFQNs()` contains the fully qualified names (full or wildcard) to exclude when parsing. </SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Many line values follow a specified format of multiple semicolon-delimited components.</SourceLine>
    <SourceLine>// KEY=NAME;PATH;ID;PARENT_ID;UNKNOWN</SourceLine>
@@ -287,13 +345,14 @@
    <SourceLine>Const COMPONENT_PARENT_ID = 3</SourceLine>
    <SourceLine>Const COMPONENT_UNKNOWN = 4</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Clear out the containers dictionary and add the root.</SourceLine>
-   <SourceLine>Self.Containers = New Dictionary</SourceLine>
-   <SourceLine>Var root As New XKContainer(XojoKit.ContainerTypes.Root)</SourceLine>
-   <SourceLine>root.Name = "Project Root"</SourceLine>
-   <SourceLine>root.ID = 0</SourceLine>
-   <SourceLine>root.ParentID = -1</SourceLine>
-   <SourceLine>Containers.Value(root.ID) = root</SourceLine>
+   <SourceLine>// Clear out the `ItemContainers` dictionary and add a new project root.</SourceLine>
+   <SourceLine>Self.ItemContainers = New Dictionary</SourceLine>
+   <SourceLine>mRoot = New XKItem(Self)</SourceLine>
+   <SourceLine>mRoot.Type = XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>mRoot.Name = "Project Root"</SourceLine>
+   <SourceLine>mRoot.ID = 0</SourceLine>
+   <SourceLine>mRoot.ParentID = -1</SourceLine>
+   <SourceLine>ItemContainers.Value(mRoot.ID) = mRoot</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Clear out any existing items.</SourceLine>
    <SourceLine>Self.Items.RemoveAll</SourceLine>
@@ -394,19 +453,18 @@
    <SourceLine></SourceLine>
    <SourceLine>// Modules can also be containers.</SourceLine>
    <SourceLine>If key = "Module" Then</SourceLine>
-   <SourceLine>Var container As New XKContainer(XojoKit.ContainerTypes.Module_)</SourceLine>
-   <SourceLine>container.Name = components(COMPONENT_NAME)</SourceLine>
-   <SourceLine>container.ID = Integer.FromHex(components(COMPONENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
-   <SourceLine>container.ParentID = Integer.FromHex(components(COMPONENT_PARENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
-   <SourceLine>Self.Containers.Value(container.ID) = container</SourceLine>
+   <SourceLine>item.Type = XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>Self.ItemContainers.Value(item.ID) = item</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Folder"</SourceLine>
-   <SourceLine>Var folder As New XKContainer(XojoKit.ContainerTypes.Folder)</SourceLine>
+   <SourceLine>Var folder As New XKItem(Self)</SourceLine>
+   <SourceLine>folder.Type = XojoKit.ObjectTypes.Folder</SourceLine>
    <SourceLine>folder.Name = components(COMPONENT_NAME)</SourceLine>
    <SourceLine>folder.ID = Integer.FromHex(components(COMPONENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
    <SourceLine>folder.ParentID = Integer.FromHex(components(COMPONENT_PARENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
-   <SourceLine>Containers.Value(folder.ID) = folder</SourceLine>
+   <SourceLine>Self.Items.Add(folder)</SourceLine>
+   <SourceLine>ItemContainers.Value(folder.ID) = folder</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "MajorVersion"</SourceLine>
    <SourceLine>Self.AppMajorVersion = Integer.FromString(value)</SourceLine>
@@ -426,89 +484,6 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next line</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Compute each item's fully qualified name (FQN).</SourceLine>
-   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
-   <SourceLine>If item.ParentId = 0 Then</SourceLine>
-   <SourceLine>// This is an item at the root of the project.</SourceLine>
-   <SourceLine>item.FQN = item.Name</SourceLine>
-   <SourceLine>Continue</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// This item is within folder(s)/module(s).</SourceLine>
-   <SourceLine>Var current As XKContainer = Containers.Lookup(item.ParentID, Nil)</SourceLine>
-   <SourceLine>Var parents() As XKContainer</SourceLine>
-   <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>Do</SourceLine>
-   <SourceLine>parents.Add(current)</SourceLine>
-   <SourceLine>current = Self.Containers.Lookup(current.ParentID, Nil)</SourceLine>
-   <SourceLine>Loop Until current Is Nil</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Var path() As String</SourceLine>
-   <SourceLine>Var fqn() As String</SourceLine>
-   <SourceLine>For i As Integer = parents.LastIndex DownTo 0</SourceLine>
-   <SourceLine>path.Add(parents(i).Name)</SourceLine>
-   <SourceLine>If parents(i).Type = XojoKit.ContainerTypes.Folder Then</SourceLine>
-   <SourceLine>path(path.LastIndex) = path(path.LastIndex) + "&gt;"</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>fqn.Add(parents(i).Name)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next i</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Add this item's name to the fqn array we will concatenate.</SourceLine>
-   <SourceLine>fqn.Add(item.Name)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// We can now construct the folder/module path from the parents.</SourceLine>
-   <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
-   <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// And the fully qualifed name (excluding folders).</SourceLine>
-   <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
-   <SourceLine>Next item</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Any exclusions?</SourceLine>
-   <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
-   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
-   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
-   <SourceLine>GoTo NextObject</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next excludedPath</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
-   <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
-   <SourceLine>GoTo NextObject</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next excludedFQN</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>NextObject:</SourceLine>
-   <SourceLine>Next i</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Sort the files alphabetically by their path.</SourceLine>
-   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Find the direct child containers and items of all the containers.</SourceLine>
-   <SourceLine>For Each entry As DictionaryEntry In Self.Containers</SourceLine>
-   <SourceLine>Var current As XKContainer = entry.Value</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Find every container whose parent is the current one.</SourceLine>
-   <SourceLine>For Each entry2 As DictionaryEntry In Self.Containers</SourceLine>
-   <SourceLine>Var child As XKContainer = entry2.Value</SourceLine>
-   <SourceLine>If child.ParentID = current.ID Then</SourceLine>
-   <SourceLine>current.Containers.Add(child)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next entry2</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Find every item whose parent is the current one.</SourceLine>
-   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
-   <SourceLine>If item.ParentID = current.ID Then</SourceLine>
-   <SourceLine>current.Items.Add(item)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next item</SourceLine>
-   <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -531,13 +506,14 @@
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `Self.Manifest` is actually a `.xojo_xml_project` file.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Clear out the containers dictionary and add the root.</SourceLine>
-   <SourceLine>Self.Containers = New Dictionary</SourceLine>
-   <SourceLine>Var root As New XKContainer(XojoKit.ContainerTypes.Root)</SourceLine>
-   <SourceLine>root.Name = "Project Root"</SourceLine>
-   <SourceLine>root.ID = 0</SourceLine>
-   <SourceLine>root.ParentID = -1</SourceLine>
-   <SourceLine>Containers.Value(root.ID) = root</SourceLine>
+   <SourceLine>// Clear out the item containers dictionary and add the root.</SourceLine>
+   <SourceLine>Self.ItemContainers = New Dictionary</SourceLine>
+   <SourceLine>mRoot = New XKItem(Self)</SourceLine>
+   <SourceLine>mRoot.Type = XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>mRoot.Name = "Project Root"</SourceLine>
+   <SourceLine>mRoot.ID = 0</SourceLine>
+   <SourceLine>mRoot.ParentID = -1</SourceLine>
+   <SourceLine>ItemContainers.Value(mRoot.ID) = mRoot</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Clear out any existing items.</SourceLine>
    <SourceLine>Self.Items.RemoveAll</SourceLine>
@@ -592,6 +568,7 @@
    <SourceLine>item.File = Nil</SourceLine>
    <SourceLine>item.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
    <SourceLine>item.XML = block.Clone(True)</SourceLine>
+   <SourceLine>item.Type = XojoKit.ObjectTypes.Module_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For k As Integer = 0 To block.ChildCount - 1</SourceLine>
    <SourceLine>Var node As XmlNode = block.Child(k)</SourceLine>
@@ -607,12 +584,8 @@
    <SourceLine>// Add this item to the project.</SourceLine>
    <SourceLine>Self.Items.Add(item)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// *Actual* modules can also be containers.</SourceLine>
-   <SourceLine>Var container As New XKContainer(XojoKit.ContainerTypes.Module_)</SourceLine>
-   <SourceLine>container.Name = item.Name</SourceLine>
-   <SourceLine>container.ID = item.ID</SourceLine>
-   <SourceLine>container.ParentID = item.ParentID</SourceLine>
-   <SourceLine>Self.Containers.Value(container.ID) = container</SourceLine>
+   <SourceLine>// Modules can also be containers.</SourceLine>
+   <SourceLine>Self.ItemContainers.Value(item.ID) = item</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "ExternalCode"</SourceLine>
    <SourceLine>// An external item.</SourceLine>
@@ -648,7 +621,8 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "Folder"</SourceLine>
    <SourceLine>// A folder.</SourceLine>
-   <SourceLine>Var folder As New XKContainer(XojoKit.ContainerTypes.Folder)</SourceLine>
+   <SourceLine>Var folder As New XKItem(Self)</SourceLine>
+   <SourceLine>folder.Type = XojoKit.ObjectTypes.Folder</SourceLine>
    <SourceLine>folder.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For a As Integer = 0 To block.ChildCount - 1</SourceLine>
@@ -662,7 +636,7 @@
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next a</SourceLine>
-   <SourceLine>Containers.Value(folder.ID) = folder</SourceLine>
+   <SourceLine>ItemContainers.Value(folder.ID) = folder</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>// We're not interested in these blocks.</SourceLine>
@@ -670,91 +644,6 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Compute each item's fully qualified name (FQN).</SourceLine>
-   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
-   <SourceLine>If item.ParentId = 0 Then</SourceLine>
-   <SourceLine>// This is an item at the root of the project.</SourceLine>
-   <SourceLine>item.FQN = item.Name</SourceLine>
-   <SourceLine>Continue</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// This item is within folder(s)/module(s).</SourceLine>
-   <SourceLine>Var current As XKContainer = Containers.Lookup(item.ParentID, Nil)</SourceLine>
-   <SourceLine>Var parents() As XKContainer</SourceLine>
-   <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>Do</SourceLine>
-   <SourceLine>parents.Add(current)</SourceLine>
-   <SourceLine>current = Self.Containers.Lookup(current.ParentID, Nil)</SourceLine>
-   <SourceLine>Loop Until current Is Nil</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Var path() As String</SourceLine>
-   <SourceLine>Var fqn() As String</SourceLine>
-   <SourceLine>For i As Integer = parents.LastIndex DownTo 0</SourceLine>
-   <SourceLine>path.Add(parents(i).Name)</SourceLine>
-   <SourceLine>If parents(i).Type = XojoKit.ContainerTypes.Folder Then</SourceLine>
-   <SourceLine>path(path.LastIndex) = path(path.LastIndex) + "&gt;"</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>fqn.Add(parents(i).Name)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next i</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Add this item's name to the fqn array we will concatenate.</SourceLine>
-   <SourceLine>fqn.Add(item.Name)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// We can now construct the folder/module path from the parents.</SourceLine>
-   <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
-   <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// And the fully qualifed name (excluding folders).</SourceLine>
-   <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
-   <SourceLine>Next item</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Any exclusions?</SourceLine>
-   <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
-   <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
-   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
-   <SourceLine>If Self.Containers.HasKey(item.ID) Then Self.Containers.Remove(item.ID)</SourceLine>
-   <SourceLine>GoTo NextObject</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next excludedPath</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
-   <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
-   <SourceLine>If Self.Containers.HasKey(item.ID) Then Self.Containers.Remove(item.ID)</SourceLine>
-   <SourceLine>GoTo NextObject</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next excludedFQN</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>NextObject:</SourceLine>
-   <SourceLine>Next i</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Sort the files alphabetically by their paths.</SourceLine>
-   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Find the direct child containers and items of all the containers.</SourceLine>
-   <SourceLine>For Each entry As DictionaryEntry In Self.Containers</SourceLine>
-   <SourceLine>Var current As XKContainer = entry.Value</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Find every container whose parent is the current one.</SourceLine>
-   <SourceLine>For Each entry2 As DictionaryEntry In Self.Containers</SourceLine>
-   <SourceLine>Var child As XKContainer = entry2.Value</SourceLine>
-   <SourceLine>If child.ParentID = current.ID Then</SourceLine>
-   <SourceLine>current.Containers.Add(child)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next entry2</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Find every item whose parent is the current one.</SourceLine>
-   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
-   <SourceLine>If item.ParentID = current.ID Then</SourceLine>
-   <SourceLine>current.Items.Add(item)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next item</SourceLine>
-   <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -954,22 +843,6 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>AppNonReleaseVersion As Integer</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>Containers</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>A map of the containers in this project. Key = ID, Value = XodocContainer instance.</CodeDescription>
-  <PartID>533868543</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Containers As Dictionary</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Containers As Dictionary</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -1227,15 +1100,15 @@
   <ItemName>Root</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>The root container.</CodeDescription>
+  <CodeDescription>The "virtual" root item. It contains all other items in the project.</CodeDescription>
   <PartID>821686271</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Root As XKContainer</SourceLine>
+   <SourceLine>Property Root As XKItem</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Root As XKContainer</ItemDeclaration>
+  <ItemDeclaration>Root As XKItem</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <SetAccessor>
@@ -1247,17 +1120,51 @@
   <GetAccessor>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
-   <SourceLine>If Self.Containers.Lookup(0, Nil) = Nil Then</SourceLine>
-   <SourceLine>Var root As New XKContainer(XojoKit.ContainerTypes.Root)</SourceLine>
-   <SourceLine>root.Name = "Project Root"</SourceLine>
-   <SourceLine>root.ID = 0</SourceLine>
-   <SourceLine>root.ParentID = -1</SourceLine>
-   <SourceLine>Return root</SourceLine>
+   <SourceLine>If Self.ItemContainers.Lookup(0, Nil) = Nil Then</SourceLine>
+   <SourceLine>mRoot = New XKItem(Self)</SourceLine>
+   <SourceLine>mRoot.Type = XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>mRoot.Name = "Project Root"</SourceLine>
+   <SourceLine>mRoot.ID = 0</SourceLine>
+   <SourceLine>mRoot.ParentID = -1</SourceLine>
+   <SourceLine>Return mRoot</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>Return Self.Containers.Value(0)</SourceLine>
+   <SourceLine>Return Self.ItemContainers.Value(0)</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>ItemContainers</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>A dictionary mapping the ID of items that contain children to the actual item. Key = item ID (Integer), Value = XKItem. Used during parsing.</CodeDescription>
+  <PartID>2110345215</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>ItemContainers As Dictionary</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ItemContainers As Dictionary</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>mRoot</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The "virtual" root item that contains all other items in the project.</CodeDescription>
+  <PartID>163301375</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mRoot As XKItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mRoot As XKItem</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
   <ViewProperty>

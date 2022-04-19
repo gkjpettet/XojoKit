@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1258860543">
  <ObjName>XKItem</ObjName>
- <ObjContainerID>530241535</ObjContainerID>
+ <ObjContainerID>451715071</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -748,6 +748,21 @@
    <SourceLine></SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>Children()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>936038399</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Children() As XKItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Children() As XKItem</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
   <ViewProperty>

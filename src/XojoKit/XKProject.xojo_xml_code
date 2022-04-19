@@ -297,10 +297,6 @@
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// =================================================</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Let's be tidy and sort the items alphabetically by their path.</SourceLine>
-   <SourceLine>Self.Items.Sort(AddressOf PathSortDelegate)</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>// Set each item's children.</SourceLine>
    <SourceLine>For Each entry As DictionaryEntry In Self.ItemContainers</SourceLine>
    <SourceLine>Var current As XKItem = entry.Value</SourceLine>
@@ -310,6 +306,8 @@
    <SourceLine>current.Children.Add(item)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next item</SourceLine>
+   <SourceLine>// Sort this item's children alphabetically (folders first, then modules, then all other item types)</SourceLine>
+   <SourceLine>current.Children.Sort(AddressOf ItemChildrenSortDelegate)</SourceLine>
    <SourceLine>Next entry</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -336,6 +334,12 @@
    <SourceLine>/// KEY EQUAL value</SourceLine>
    <SourceLine>/// value = (component(;component)*)?</SourceLine>
    <SourceLine>/// component = STRING | NUMBER | BOOLEAN</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse MenuBars"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse FileTypes"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse ImageSets"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse ToolBars"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Many line values follow a specified format of multiple semicolon-delimited components.</SourceLine>
    <SourceLine>// KEY=NAME;PATH;ID;PARENT_ID;UNKNOWN</SourceLine>
@@ -505,6 +509,12 @@
    <SourceLine>/// Parses the contents of a Xojo XML format manifest. May raise a `XKException`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `Self.Manifest` is actually a `.xojo_xml_project` file.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse MenuBars"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse FileTypes"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse ImageSets"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse ToolBars"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Clear out the item containers dictionary and add the root.</SourceLine>
    <SourceLine>Self.ItemContainers = New Dictionary</SourceLine>
@@ -755,24 +765,23 @@
   <ItemResult>XKItem()</ItemResult>
  </Method>
  <Method>
-  <ItemName>PathSortDelegate</ItemName>
+  <ItemName>ItemChildrenSortDelegate</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>A delegate to sort an array of `XKItem` objects by their path.</CodeDescription>
-  <PartID>385249279</PartID>
+  <CodeDescription>A delegate to sort an array of `XKItem` items alphabetically by name.</CodeDescription>
+  <PartID>1779025919</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function PathSortDelegate(item1 As XKItem, item2 As XKItem) As Integer</SourceLine>
-   <SourceLine>/// A delegate to sort an array of `XKItem` items by their path.</SourceLine>
+   <SourceLine>Function ItemChildrenSortDelegate(item1 As XKItem, item2 As XKItem) As Integer</SourceLine>
+   <SourceLine>/// A delegate to sort an array of `XKItem` items alphabetically by name.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If item1.Path &gt; item2.Path Then</SourceLine>
+   <SourceLine>If item1.Name &gt; item2.Name Then</SourceLine>
    <SourceLine>Return 1</SourceLine>
-   <SourceLine>ElseIf item1.Path &lt; item2.Path Then</SourceLine>
+   <SourceLine>ElseIf item1.Name &lt; item2.Name Then</SourceLine>
    <SourceLine>Return -1</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Return 0</SourceLine>
    <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

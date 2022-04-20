@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
- <ObjContainerID>1087893503</ObjContainerID>
+ <ObjContainerID>358213631</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -128,6 +128,9 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "Attributes"</SourceLine>
    <SourceLine>item.Attributes_ = ParseAttributesNode(node)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "SuperClass"</SourceLine>
+   <SourceLine>item.Superclass = If(node.FirstChild = Nil, "", node.FirstChild.Value)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Method"</SourceLine>
    <SourceLine>Var m As XKMethod = ParseMethod(node)</SourceLine>

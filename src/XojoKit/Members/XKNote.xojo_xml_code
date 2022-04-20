@@ -2,8 +2,9 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="877637631">
  <ObjName>XKNote</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>470968319</ObjContainerID>
  <IsClass>1</IsClass>
+ <Interfaces>XKMember</Interfaces>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>

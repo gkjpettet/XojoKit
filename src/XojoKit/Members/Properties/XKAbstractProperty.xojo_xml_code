@@ -2,8 +2,9 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="280391679">
  <ObjName>XKAbstractProperty</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>997058559</ObjContainerID>
  <IsClass>1</IsClass>
+ <Interfaces>XKMember</Interfaces>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
@@ -195,6 +196,18 @@
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
+   <ObjName>Type</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsComputed</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
    <ObjName>Scope</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
@@ -206,18 +219,6 @@
     <ItemDef>2 - Protected_</ItemDef>
     <ItemDef>3 - Global_</ItemDef>
    </Enumeration>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Type</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>String</ItemType>
-   <EditorType>MultiLineEditor</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>IsComputed</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>False</PropertyValue>
-   <ItemType>Boolean</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

@@ -132,6 +132,9 @@
    <SourceLine>Case "SuperClass"</SourceLine>
    <SourceLine>item.Superclass = If(node.FirstChild = Nil, "", node.FirstChild.Value)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Case "IsApplicationObject"</SourceLine>
+   <SourceLine>item.IsApplicationObject = If(node.FirstChild.Value = "0", False, True)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Case "Method"</SourceLine>
    <SourceLine>Var m As XKMethod = ParseMethod(node)</SourceLine>
    <SourceLine>If m &lt;&gt; Nil Then item.Methods.Add(m)</SourceLine>

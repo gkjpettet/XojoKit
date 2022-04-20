@@ -764,6 +764,22 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>IsApplicationObject</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>True if this item is the project's application object.</CodeDescription>
+  <PartID>2048141311</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>IsApplicationObject As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>IsApplicationObject As Boolean = False</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -835,6 +851,8 @@
     <ItemDef>0 - Class_</ItemDef>
     <ItemDef>1 - Interface_</ItemDef>
     <ItemDef>2 - Module_</ItemDef>
+    <ItemDef>3 - Folder</ItemDef>
+    <ItemDef>4 - Root</ItemDef>
    </Enumeration>
   </ViewProperty>
   <ViewProperty>

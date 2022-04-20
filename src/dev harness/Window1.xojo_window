@@ -78,13 +78,6 @@ End
 		  // Parse the project file.
 		  project.Parse
 		  
-		  Var items() As XKItem = project.ItemsMissingDescription(True)
-		  Var missing() As Pair
-		  For Each item As XKItem In items
-		    missing.Add(item.Name : item.MembersMissingDescription(True))
-		  Next item
-		  
-		  
 		  Break
 		End Sub
 	#tag EndEvent

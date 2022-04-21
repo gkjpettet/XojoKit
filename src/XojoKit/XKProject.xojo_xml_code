@@ -158,7 +158,6 @@
    <SourceLine></SourceLine>
    <SourceLine>// Since we only now know the item's scope, exclude it if needed.</SourceLine>
    <SourceLine>If Options.ExcludePrivate And item.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>'Self.Items.RemoveAt(i)</SourceLine>
    <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
@@ -179,8 +178,11 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next query</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Self.FileFormat = XojoKit.FileFormats.Project Then</SourceLine>
+   <SourceLine>FindApplicationObject</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -279,9 +281,7 @@
    <SourceLine>// Exclude any items in the option's list of excluded paths.</SourceLine>
    <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
    <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>'Self.Items.RemoveAt(i)</SourceLine>
    <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
-   <SourceLine>' If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
    <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then</SourceLine>
    <SourceLine>XKItem(Self.ItemContainers.Value(item.ID)).IsExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -292,9 +292,7 @@
    <SourceLine>// Exclude any items in the option's list of excluded FQNs.</SourceLine>
    <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
    <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>'Self.Items.RemoveAt(i)</SourceLine>
    <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
-   <SourceLine>' If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
    <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then</SourceLine>
    <SourceLine>XKItem(Self.ItemContainers.Value(item.ID)).IsExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -800,6 +798,101 @@
   <ItemParams>item1 As XKItem, item2 As XKItem</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
+ <Method>
+  <ItemName>FindApplicationObject</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>For "Xojo Project" format projects, find the item that is the application object.</CodeDescription>
+  <PartID>1733214207</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub FindApplicationObject()</SourceLine>
+   <SourceLine>/// For "Xojo Project" format projects, find the item that is the application object.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// This process is not required for XML projects as the application object item has a special </SourceLine>
+   <SourceLine>/// flag (`&lt;IsApplicationObject&gt;1&lt;/IsApplicationObject&gt;`).</SourceLine>
+   <SourceLine>/// Thanks to Norm for help with this: https://ifnotnil.com/t/re-tree-problem/2450/7?u=garry</SourceLine>
+   <SourceLine>/// See also my public post: https://forum.xojo.com/t/xojo-project-manifest/69783/10</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Essentially we need to find the **first** item whose super class is the correct "Application" class (this </SourceLine>
+   <SourceLine>/// will vary by project type, e.g. DesktopApplication, WebApplication, etc). This is the **Prime** item. </SourceLine>
+   <SourceLine>/// If this is the only item with that superclass then that's the AppObject.</SourceLine>
+   <SourceLine>/// If there are multiple items in the project that subclass the "Application" class then we'll assume </SourceLine>
+   <SourceLine>/// that the AppObject is the first item found that inherits from the Prime item.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var prime As XKItem // The first item that subclasses the Application super.</SourceLine>
+   <SourceLine>Var appSubclassCount As Integer = 0 // How many items subclass the Application super.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// What is the expected Application superclass?</SourceLine>
+   <SourceLine>Var superClass As String</SourceLine>
+   <SourceLine>Select Case Self.Type</SourceLine>
+   <SourceLine>Case "Desktop"</SourceLine>
+   <SourceLine>// There are two types of application superclass (Application and DesktopApplication). We'll have</SourceLine>
+   <SourceLine>// to check for both of these separately so do nothing for now.</SourceLine>
+   <SourceLine>superClass = ""</SourceLine>
+   <SourceLine>Case "Console"</SourceLine>
+   <SourceLine>superClass = "ConsoleApplication"</SourceLine>
+   <SourceLine>Case "Web", "Web2"</SourceLine>
+   <SourceLine>superClass = "WebApplication"</SourceLine>
+   <SourceLine>Case "iOS"</SourceLine>
+   <SourceLine>superClass = "MobileApplication"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New UnsupportedOperationException("Unknown Xojo project type `" + Self.type + "`")</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Find the prime and count the number of items that subclass the application super.</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If Self.Type = "Desktop" Then</SourceLine>
+   <SourceLine>If item.Superclass = "DesktopApplication" Or item.Superclass = "Application" Then</SourceLine>
+   <SourceLine>If appSubclassCount = 0 Then</SourceLine>
+   <SourceLine>prime = item</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>appSubclassCount = appSubclassCount + 1</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If item.Superclass = superClass Then</SourceLine>
+   <SourceLine>If appSubclassCount = 0 Then</SourceLine>
+   <SourceLine>prime = item</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>appSubclassCount = appSubclassCount + 1</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var foundAppObject As Boolean = False</SourceLine>
+   <SourceLine>If appSubclassCount = 0 Then</SourceLine>
+   <SourceLine>Raise New UnsupportedOperationException("Could not find the application object in the project.")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If appSubclassCount = 1 And prime.Name = "App" Then</SourceLine>
+   <SourceLine>// This is the commonest scenario. The prime is the AppObject.</SourceLine>
+   <SourceLine>prime.IsApplicationObject = True</SourceLine>
+   <SourceLine>foundAppObject = True</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// Find the first item whose super is the prime.</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.Superclass = prime.Name Then</SourceLine>
+   <SourceLine>item.IsApplicationObject = True</SourceLine>
+   <SourceLine>foundAppObject = True</SourceLine>
+   <SourceLine>Exit</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not foundAppObject Then</SourceLine>
+   <SourceLine>Raise New UnsupportedOperationException("Could not find the application object in the project.")</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Property>
   <ItemName>AppBugVersion</ItemName>
   <Compatibility></Compatibility>
@@ -1275,18 +1368,6 @@
    <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>FileFormat</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>XojoKit.FileFormats.Project</PropertyValue>
-   <ItemType>XojoKit.FileFormats</ItemType>
-   <EditorType>Enum</EditorType>
-   <Enumeration>
-    <ItemDef>0 - Project</ItemDef>
-    <ItemDef>1 - Unknown</ItemDef>
-    <ItemDef>2 - XML</ItemDef>
-   </Enumeration>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>CodeLineCount</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
@@ -1295,6 +1376,12 @@
    <ObjName>CommentCount</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FileFormat</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.FileFormats.Project</PropertyValue>
+   <ItemType>XojoKit.FileFormats</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

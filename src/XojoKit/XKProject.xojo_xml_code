@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>451715071</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -158,7 +158,8 @@
    <SourceLine></SourceLine>
    <SourceLine>// Since we only now know the item's scope, exclude it if needed.</SourceLine>
    <SourceLine>If Options.ExcludePrivate And item.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>'Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
@@ -278,8 +279,12 @@
    <SourceLine>// Exclude any items in the option's list of excluded paths.</SourceLine>
    <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
    <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
-   <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
+   <SourceLine>'Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
+   <SourceLine>' If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
+   <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then</SourceLine>
+   <SourceLine>XKItem(Self.ItemContainers.Value(item.ID)).IsExcluded = True</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>GoTo NextItem</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedPath</SourceLine>
@@ -287,8 +292,12 @@
    <SourceLine>// Exclude any items in the option's list of excluded FQNs.</SourceLine>
    <SourceLine>For Each excludedFQN As String In Options.ExcludedFQNs</SourceLine>
    <SourceLine>If item.FQN.IndexOf(excludedFQN) &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Self.Items.RemoveAt(i)</SourceLine>
-   <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
+   <SourceLine>'Self.Items.RemoveAt(i)</SourceLine>
+   <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
+   <SourceLine>' If Self.ItemContainers.HasKey(item.ID) Then Self.ItemContainers.Remove(item.ID)</SourceLine>
+   <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then</SourceLine>
+   <SourceLine>XKItem(Self.ItemContainers.Value(item.ID)).IsExcluded = True</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>GoTo NextItem</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedFQN</SourceLine>
@@ -1113,7 +1122,7 @@
   <PartID>821686271</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property Root As XKItem</SourceLine>
+   <SourceLine>Root As XKItem</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

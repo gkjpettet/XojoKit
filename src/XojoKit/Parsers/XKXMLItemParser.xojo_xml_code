@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
- <ObjContainerID>358213631</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -136,12 +136,10 @@
    <SourceLine>item.IsApplicationObject = If(node.FirstChild.Value = "0", False, True)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Method"</SourceLine>
-   <SourceLine>Var m As XKMethod = ParseMethod(node)</SourceLine>
-   <SourceLine>If m &lt;&gt; Nil Then item.Methods.Add(m)</SourceLine>
+   <SourceLine>item.Methods.Add(ParseMethod(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Constant"</SourceLine>
-   <SourceLine>Var con As XKConstant = ParseConstant(node)</SourceLine>
-   <SourceLine>If con &lt;&gt; Nil Then item.Constants.Add(con)</SourceLine>
+   <SourceLine>item.Constants.Add(ParseConstant(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Property"</SourceLine>
    <SourceLine>// Could be either a regular property or a computed property.</SourceLine>
@@ -160,28 +158,21 @@
    <SourceLine>item.Notes.Add(ParseNote(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "DelegateDeclaration"</SourceLine>
-   <SourceLine>Var d As XKDelegate = ParseDelegate(node)</SourceLine>
-   <SourceLine>If d &lt;&gt; Nil Then item.Delegates.Add(d)</SourceLine>
+   <SourceLine>item.Delegates.Add(ParseDelegate(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Enumeration"</SourceLine>
-   <SourceLine>Var e As XKEnum = ParseEnum(node)</SourceLine>
-   <SourceLine>If e &lt;&gt; Nil Then item.Enums.Add(e)</SourceLine>
+   <SourceLine>item.Enums.Add(ParseEnum(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Hook"</SourceLine>
    <SourceLine>// Event definition (NOT an event implementation).</SourceLine>
-   <SourceLine>Var ed As XKEventDefinition = ParseEventDefinition(node)</SourceLine>
-   <SourceLine>If ed &lt;&gt; Nil Then item.EventDefinitions.Add(ed)</SourceLine>
+   <SourceLine>item.EventDefinitions.Add(ParseEventDefinition(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "HookInstance"</SourceLine>
    <SourceLine>// Event *implementation* (NOT an event definition).</SourceLine>
-   <SourceLine>If options.IncludeEvents Then</SourceLine>
-   <SourceLine>Var ev As XKEvent = ParseEvent(node)</SourceLine>
-   <SourceLine>If ev &lt;&gt; Nil Then item.Events.Add(ev)</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>item.Events.Add(ParseEvent(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Structure"</SourceLine>
-   <SourceLine>Var s As XKStructure = ParseStructure(node)</SourceLine>
-   <SourceLine>If s &lt;&gt; Nil Then item.Structures.Add(s)</SourceLine>
+   <SourceLine>item.Structures.Add(ParseStructure(node))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
@@ -207,16 +198,13 @@
   <ItemName>ParseAbstractProperty</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Takes a "Property" XML node and returns an abstract property comprising the common data of both regular and computed properties. May return Nil if scope prohibited.</CodeDescription>
+  <CodeDescription>Takes a "Property" XML node and returns an abstract property comprising the common data of both regular and computed properties.</CodeDescription>
   <PartID>1031852031</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseAbstractProperty(node As XmlNode) As XKAbstractProperty</SourceLine>
    <SourceLine>/// Takes a "Property" XML node and returns an abstract property comprising the common data of both </SourceLine>
-   <SourceLine>/// regular and computed properties. May return Nil if scope prohibited.</SourceLine>
-   <SourceLine>///</SourceLine>
-   <SourceLine>/// Returns Nil if the parsers options exclude this property based on its scope or if there is</SourceLine>
-   <SourceLine>/// bad XML.</SourceLine>
+   <SourceLine>/// regular and computed properties.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var prop As New XKAbstractProperty</SourceLine>
    <SourceLine>prop.IsComputed = False</SourceLine>
@@ -258,12 +246,13 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the property should be excluded.</SourceLine>
+   <SourceLine>// Is this property to be excluded from documenting?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And prop.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return prop</SourceLine>
+   <SourceLine>prop.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return prop</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -323,13 +312,12 @@
   <ItemName>ParseConstant</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses an XML "Constant" node into an `XKConstant`. Returns Nil if the parsed constant's scope means it should be excluded.</CodeDescription>
+  <CodeDescription>Parses an XML "Constant" node into an `XKConstant`.</CodeDescription>
   <PartID>754810879</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseConstant(node As XmlNode) As XKConstant</SourceLine>
-   <SourceLine>/// Parses an XML "Constant" node into an `XKConstant`. Returns Nil if the parsed constant's scope means </SourceLine>
-   <SourceLine>/// it should be excluded.</SourceLine>
+   <SourceLine>/// Parses an XML "Constant" node into an `XKConstant`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes that `node` has already been validated to be a "Constant" node.</SourceLine>
    <SourceLine></SourceLine>
@@ -366,12 +354,12 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return the constant if it's scope is not excluded by the parser's options.</SourceLine>
+   <SourceLine>// Exclude this constant?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And con.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return con</SourceLine>
+   <SourceLine>con.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return con</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -427,13 +415,12 @@
   <ItemName>ParseDelegate</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses an XML "DelegateDeclaration" node into an `XKDelegate`. Returns Nil if the parsed delegate's scope means it should be excluded.</CodeDescription>
+  <CodeDescription>Parses an XML "DelegateDeclaration" node into an `XKDelegate`.</CodeDescription>
   <PartID>74899455</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseDelegate(node As XmlNode) As XKDelegate</SourceLine>
    <SourceLine>/// Parses an XML "DelegateDeclaration" node into an `XKDelegate`. </SourceLine>
-   <SourceLine>/// Returns Nil if the parsed delegate's scope means it should be excluded.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes that `node` has already been validated to be a "DelegateDeclaration" node.</SourceLine>
    <SourceLine></SourceLine>
@@ -464,12 +451,12 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return the delegate if it's scope is not excluded by the parser's options.</SourceLine>
+   <SourceLine>// Exclude this delegate?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And d.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return d</SourceLine>
+   <SourceLine>d.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return d</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -484,13 +471,12 @@
   <ItemName>ParseEnum</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses an XML "Enumeration" node into an `XKEnum`. Returns Nil if the parsed enumeration's scope means it should be excluded.</CodeDescription>
+  <CodeDescription>Parses an XML "Enumeration" node into an `XKEnum`.</CodeDescription>
   <PartID>1780318207</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseEnum(node As XmlNode) As XKEnum</SourceLine>
-   <SourceLine>/// Parses an XML "Enumeration" node into an `XKEnum`. Returns Nil if the parsed enumeration's scope means </SourceLine>
-   <SourceLine>/// it should be excluded.</SourceLine>
+   <SourceLine>/// Parses an XML "Enumeration" node into an `XKEnum`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes that `node` has already been validated to be an "Enumeration" node.</SourceLine>
    <SourceLine></SourceLine>
@@ -521,12 +507,13 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return the enum if it's scope is not excluded by the parser's options.</SourceLine>
+   <SourceLine>// Exclude this enum?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return e</SourceLine>
+   <SourceLine>e.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return e</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -583,13 +570,12 @@
   <ItemName>ParseEvent</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses an XML "HookInstance" node into an `XKEvent`. Returns Nil if the parsed event's scope means it should be excluded.</CodeDescription>
+  <CodeDescription>Parses an XML "HookInstance" node into an `XKEvent`.</CodeDescription>
   <PartID>1360551935</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseEvent(node As XmlNode) As XKEvent</SourceLine>
-   <SourceLine>/// Parses an XML "HookInstance" node into an `XKEvent`. Returns Nil if the parsed event's scope means </SourceLine>
-   <SourceLine>/// it should be excluded.</SourceLine>
+   <SourceLine>/// Parses an XML "HookInstance" node into an `XKEvent`.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var e As New XKEvent</SourceLine>
    <SourceLine></SourceLine>
@@ -643,6 +629,10 @@
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not mOptions.IncludeEvents Then</SourceLine>
+   <SourceLine>e.isExcluded = True</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
@@ -823,13 +813,12 @@
   <ItemName>ParseMethod</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses an XML "Method" node into an `XKMethod`. Returns Nil if the parsed method's scope means it should be excluded.</CodeDescription>
+  <CodeDescription>Parses an XML "Method" node into an `XKMethod`.</CodeDescription>
   <PartID>450326527</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseMethod(node As XmlNode) As XKMethod</SourceLine>
-   <SourceLine>/// Parses an XML "Method" node into an `XKMethod`. Returns Nil if the parsed method's scope means </SourceLine>
-   <SourceLine>/// it should be excluded.</SourceLine>
+   <SourceLine>/// Parses an XML "Method" node into an `XKMethod`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes that `node` has already been validated to be a "Method" node.</SourceLine>
    <SourceLine></SourceLine>
@@ -866,12 +855,12 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return the method if it's scope is not excluded by the parser's options.</SourceLine>
+   <SourceLine>// Exclude this method?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And m.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return m</SourceLine>
+   <SourceLine>m.IsExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return m</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -1079,13 +1068,12 @@
   <ItemName>ParseStructure</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses an XML "Structure" node into a `XKStructure`. Returns Nil if the parsed structure's scope means it should be excluded.</CodeDescription>
+  <CodeDescription>Parses an XML "Structure" node into a `XKStructure`.</CodeDescription>
   <PartID>1895835647</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseStructure(node As XmlNode) As XKStructure</SourceLine>
-   <SourceLine>/// Parses an XML "Structure" node into a `XKStructure`. Returns Nil if the parsed structure's scope means </SourceLine>
-   <SourceLine>/// it should be excluded.</SourceLine>
+   <SourceLine>/// Parses an XML "Structure" node into a `XKStructure`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes that `node` has already been validated to be a "Structure" node.</SourceLine>
    <SourceLine></SourceLine>
@@ -1113,12 +1101,12 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return the structure if it's scope is not excluded by the parser's options.</SourceLine>
+   <SourceLine>// Exclude this structure?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And s.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return s</SourceLine>
+   <SourceLine>s.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return s</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>

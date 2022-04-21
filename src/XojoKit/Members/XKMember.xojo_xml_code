@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
-<block type="Module" ID="1232273407">
+<block type="Module" ID="546156543">
  <ObjName>XKMember</ObjName>
  <ObjContainerID>217157631</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
- <IsInterface>1</IsInterface>
+ <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
- <Note>
-  <ItemName>About</ItemName>
+ <Property>
+  <ItemName>IsExcluded</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>492091391</PartID>
+  <CodeDescription>True if this member should be excluded when generating the documentation.</CodeDescription>
+  <PartID>1344354303</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <NoteLine>About</NoteLine>
-   <NoteLine>Represents an object member (e.g. property, method, enum, etc).</NoteLine>
-   <NoteLine></NoteLine>
+   <SourceLine>IsExcluded As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
   </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>IsExcluded As Boolean = False</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
- </Note>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -52,6 +55,11 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsExcluded</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>

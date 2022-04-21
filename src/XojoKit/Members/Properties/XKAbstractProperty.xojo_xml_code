@@ -2,9 +2,9 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="280391679">
  <ObjName>XKAbstractProperty</ObjName>
- <ObjContainerID>997058559</ObjContainerID>
+ <ObjContainerID>1177542655</ObjContainerID>
  <IsClass>1</IsClass>
- <Interfaces>XKMember</Interfaces>
+ <Superclass>XKMember</Superclass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>

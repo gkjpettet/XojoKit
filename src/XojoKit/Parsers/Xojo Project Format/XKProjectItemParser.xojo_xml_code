@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="708849663">
  <ObjName>XKProjectItemParser</ObjName>
- <ObjContainerID>1057513471</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -66,46 +66,36 @@
    <SourceLine>ParseInterfaceTag(item, lines, i)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Property"</SourceLine>
-   <SourceLine>Var prop As XKProperty = ParseProperty(tag, lines, i)</SourceLine>
-   <SourceLine>If prop &lt;&gt; Nil Then item.Properties.Add(prop)</SourceLine>
+   <SourceLine>item.Properties.Add(ParseProperty(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "ComputedProperty"</SourceLine>
-   <SourceLine>Var cp As XKComputedProperty = ParseComputedProperty(tag, lines, i)</SourceLine>
-   <SourceLine>If cp &lt;&gt; Nil Then item.ComputedProperties.Add(cp)</SourceLine>
+   <SourceLine>item.ComputedProperties.Add(ParseComputedProperty(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Method"</SourceLine>
-   <SourceLine>Var m As XKMethod = ParseMethod(tag, lines, i)</SourceLine>
-   <SourceLine>If m &lt;&gt; Nil Then item.Methods.Add(m)</SourceLine>
+   <SourceLine>item.Methods.Add(ParseMethod(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "DelegateDeclaration"</SourceLine>
-   <SourceLine>Var d As XKDelegate = ParseDelegate(tag, lines, i)</SourceLine>
-   <SourceLine>If d &lt;&gt; Nil Then item.Delegates.Add(d)</SourceLine>
+   <SourceLine>item.Delegates.Add(ParseDelegate(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Event"</SourceLine>
    <SourceLine>// This is an event that has been implemented by a class (NOT an event definition).</SourceLine>
-   <SourceLine>If options.IncludeEvents Then</SourceLine>
-   <SourceLine>Var ev As XKEvent = ParseEvent(tag, lines, i)</SourceLine>
-   <SourceLine>If ev &lt;&gt; Nil Then item.Events.Add(ev)</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>item.Events.Add(ParseEvent(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Hook"</SourceLine>
    <SourceLine>// This is an event definition.</SourceLine>
    <SourceLine>item.EventDefinitions.Add(ParseEventDefinition(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Enum"</SourceLine>
-   <SourceLine>Var e As XKEnum = ParseEnum(tag, lines, i)</SourceLine>
-   <SourceLine>If e &lt;&gt; Nil Then item.Enums.Add(e)</SourceLine>
+   <SourceLine>item.Enums.Add(ParseEnum(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Note"</SourceLine>
    <SourceLine>item.Notes.Add(ParseNote(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Constant"</SourceLine>
-   <SourceLine>Var c As XKConstant = ParseConstant(tag, lines, i)</SourceLine>
-   <SourceLine>If c &lt;&gt; Nil Then item.Constants.Add(c)</SourceLine>
+   <SourceLine>item.Constants.Add(ParseConstant(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Structure"</SourceLine>
-   <SourceLine>Var s As XKStructure = ParseStructure(tag, lines, i)</SourceLine>
-   <SourceLine>If s &lt;&gt; Nil Then item.Structures.Add(s)</SourceLine>
+   <SourceLine>item.Structures.Add(ParseStructure(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
@@ -253,16 +243,14 @@
   <ItemName>ParseComputedProperty</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses a computed property from `lines` starting at `i` using the data within `tag`. May return Nil.</CodeDescription>
+  <CodeDescription>Parses a computed property from `lines` starting at `i` using the data within `tag`.</CodeDescription>
   <PartID>736511999</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseComputedProperty(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKComputedProperty</SourceLine>
    <SourceLine>/// Parses a computed property from `lines` starting at `i` using the data within `tag`. </SourceLine>
-   <SourceLine>/// May return Nil.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag ComputedProperty" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed property's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// #TAG COMPUTED_PROPERTY TagProperties</SourceLine>
@@ -342,12 +330,13 @@
    <SourceLine>cp.Name = nameType(0).Trim</SourceLine>
    <SourceLine>cp.Type = nameType(1).Trim</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the property should be excluded.</SourceLine>
+   <SourceLine>// Exclude this computed property?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And cp.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return cp</SourceLine>
+   <SourceLine>cp.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return cp</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -361,16 +350,14 @@
   <ItemName>ParseConstant</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses a Xojo constant from `lines` starting at `i` using the data within `tag` May be Nil.</CodeDescription>
+  <CodeDescription>Parses a Xojo constant from `lines` starting at `i` using the data within `tag`</CodeDescription>
   <PartID>1802995711</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseConstant(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKConstant</SourceLine>
    <SourceLine>/// Parses a Xojo constant from `lines` starting at `i` using the data within `tag`</SourceLine>
-   <SourceLine>/// May be Nil.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag Constant" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed constant's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// #TAG CONSTANT TagProperties</SourceLine>
@@ -412,12 +399,12 @@
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the constant should be excluded.</SourceLine>
+   <SourceLine>// Exclude this constant?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And con.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return con</SourceLine>
+   <SourceLine>con.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return con</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -501,16 +488,14 @@
   <ItemName>ParseDelegate</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses a Xojo delegate from `lines` starting at `i` using the data within `tag`. May return Nil.</CodeDescription>
+  <CodeDescription>Parses a Xojo delegate from `lines` starting at `i` using the data within `tag`.</CodeDescription>
   <PartID>1491460095</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseDelegate(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKDelegate</SourceLine>
    <SourceLine>/// Parses a Xojo delegate from `lines` starting at `i` using the data within `tag`.</SourceLine>
-   <SourceLine>/// May return Nil.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag DelegateDeclaration" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed delegate's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// Attributes? Scope? (FUNCTION | SUB) NAME LPAREN (Param (COMMA Param)*)? RPAREN (AS TYPE)?</SourceLine>
@@ -580,12 +565,12 @@
    <SourceLine></SourceLine>
    <SourceLine>d.Description = tag.Description</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the delegate should be excluded.</SourceLine>
+   <SourceLine>// Exclude this delegate?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And d.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return d</SourceLine>
+   <SourceLine>d.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return d</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -600,16 +585,14 @@
   <ItemName>ParseEnum</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses a Xojo enumeration from `lines` starting at `i` using the data within `tag`. May return Nil.</CodeDescription>
+  <CodeDescription>Parses a Xojo enumeration from `lines` starting at `i` using the data within `tag`.</CodeDescription>
   <PartID>326062079</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseEnum(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKEnum</SourceLine>
    <SourceLine>/// Parses a Xojo enumeration from `lines` starting at `i` using the data within `tag`.</SourceLine>
-   <SourceLine>/// May return Nil.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag Enum" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed enum's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// #TAG ENUM TagProperties</SourceLine>
@@ -670,12 +653,12 @@
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the enum should be excluded.</SourceLine>
+   <SourceLine>// Exclude this enum?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return e</SourceLine>
+   <SourceLine>e.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -698,7 +681,6 @@
    <SourceLine>/// Parses a Xojo event handler from `lines` starting at `i` using the data within `tag`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag Event" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed event's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// (FUNCTION | SUB) NAME LPAREN (Param (COMMA Param)*)? RPAREN (AS TYPE)?</SourceLine>
@@ -756,6 +738,11 @@
    <SourceLine>e.Lines.Add(line)</SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Exclude this event?</SourceLine>
+   <SourceLine>If Not mOptions.IncludeEvents Then</SourceLine>
+   <SourceLine>e.isExcluded = True</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
@@ -1030,15 +1017,14 @@
   <ItemName>ParseMethod</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <CodeDescription>Parses a Xojo method from `lines` starting at `i` using the data within `tag`.</CodeDescription>
   <PartID>463495167</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseMethod(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKMethod</SourceLine>
    <SourceLine>/// Parses a Xojo method from `lines` starting at `i` using the data within `tag`.</SourceLine>
-   <SourceLine>/// May return Nil.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag Method" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed method's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// Attributes? Scope? (SHARED)? (FUNCTION | SUB) NAME LPAREN (Param (COMMA Param)*)? RPAREN (AS TYPE)?</SourceLine>
@@ -1116,12 +1102,12 @@
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the method should be excluded.</SourceLine>
+   <SourceLine>// Exclude this method?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And m.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return m</SourceLine>
+   <SourceLine>m.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return m</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -1266,15 +1252,14 @@
   <ItemName>ParseProperty</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses a Xojo property from `lines` starting at `i` using the data within `tag`. May return Nil.</CodeDescription>
+  <CodeDescription>Parses a Xojo property from `lines` starting at `i` using the data within `tag`.</CodeDescription>
   <PartID>520280063</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseProperty(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKProperty</SourceLine>
-   <SourceLine>/// Parses a Xojo property from `lines` starting at `i` using the data within `tag`. May return Nil.</SourceLine>
+   <SourceLine>/// Parses a Xojo property from `lines` starting at `i` using the data within `tag`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag Property" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed property's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// Attributes? Scope? (SHARED)? NAME (LPAREN RPAREN)?</SourceLine>
@@ -1341,12 +1326,12 @@
    <SourceLine></SourceLine>
    <SourceLine>prop.Description = tag.Description</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the property should be excluded.</SourceLine>
+   <SourceLine>// Exclude this property.</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And prop.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return prop</SourceLine>
+   <SourceLine>prop.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return prop</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -1425,16 +1410,14 @@
   <ItemName>ParseStructure</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Parses a Xojo structure from `lines` starting at `i` using the data within `tag` May be Nil.</CodeDescription>
+  <CodeDescription>Parses a Xojo structure from `lines` starting at `i` using the data within `tag`</CodeDescription>
   <PartID>1746708479</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ParseStructure(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKStructure</SourceLine>
    <SourceLine>/// Parses a Xojo structure from `lines` starting at `i` using the data within `tag`</SourceLine>
-   <SourceLine>/// May be Nil.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag Structure" line which has been parsed into `tag`.</SourceLine>
-   <SourceLine>/// Returns Nil if the parsed structure's scope means it should be excluded.</SourceLine>
    <SourceLine>/// Format:</SourceLine>
    <SourceLine>/// ```</SourceLine>
    <SourceLine>/// #TAG STRUCTURE TagProperties</SourceLine>
@@ -1485,12 +1468,12 @@
    <SourceLine>Call s.Fields.Pop</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Return Nil if the structure should be excluded.</SourceLine>
+   <SourceLine>// Exclude this structure?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And s.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return s</SourceLine>
+   <SourceLine>s.IsExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return s</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>

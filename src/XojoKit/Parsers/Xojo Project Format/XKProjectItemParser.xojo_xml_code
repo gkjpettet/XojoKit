@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="708849663">
  <ObjName>XKProjectItemParser</ObjName>
- <ObjContainerID>1654888447</ObjContainerID>
+ <ObjContainerID>1057513471</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -1639,7 +1639,7 @@
   <PartID>626372607</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>0</ItemType>
-  <ItemDef>(?P&lt;attributes&gt;Attributes\(.+\))?\s?(?P&lt;scope&gt;Public|Global|Protected|Private)?\s?(?&lt;shared&gt;Shared)?\s?(?&lt;name&gt;[a-z0-9_]+(?:\(.*\))?)(?:\sAs\s)(?P&lt;return&gt;[a-z0-9_\.]+\s?=?\s?(?P&lt;default&gt;[a-z0-9_\."\-\s]+)?)$</ItemDef>
+  <ItemDef>(?P&lt;attributes&gt;Attributes\(.+\))?\s?(?P&lt;scope&gt;Public|Global|Protected|Private)?\s?(?&lt;shared&gt;Shared)?\s?(?&lt;name&gt;[a-z0-9_]+(?:\(.*\))?)(?:\sAs\s)(?P&lt;type&gt;[a-z0-9_\.]+\(?,?\)?)?\s?=?\s?(?P&lt;default&gt;[a-z0-9_\."\-\s]+)?$</ItemDef>
   <ItemFlags>33</ItemFlags>
  </Constant>
  <Constant>

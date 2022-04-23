@@ -23,6 +23,22 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>MemberType</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>This member's type.</CodeDescription>
+  <PartID>341405695</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>MemberType As XojoKit.MemberTypes = XojoKit.MemberTypes.Unknown</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>MemberType As XojoKit.MemberTypes = XojoKit.MemberTypes.Unknown</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -60,7 +76,14 @@
   <ViewProperty>
    <ObjName>IsExcluded</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Integer</ItemType>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MemberType</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.MemberTypes.Unknown</PropertyValue>
+   <ItemType>XojoKit.MemberTypes</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

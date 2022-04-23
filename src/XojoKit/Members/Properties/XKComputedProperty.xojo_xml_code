@@ -17,6 +17,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Constructor()</SourceLine>
    <SourceLine>IsComputed = True</SourceLine>
+   <SourceLine>Self.MemberType = XojoKit.MemberTypes.ComputedProperty_</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -148,7 +149,7 @@
   <PartID>1866604543</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property CodeLineCount As Integer</SourceLine>
+   <SourceLine>CodeLineCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -193,7 +194,7 @@
   <PartID>271056895</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property CommentCount As Integer</SourceLine>
+   <SourceLine>CommentCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -231,6 +232,12 @@
   </GetAccessor>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>IsExcluded</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>Description</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>

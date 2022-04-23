@@ -311,6 +311,44 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedFQN</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Exclude any member types in the option's list of excluded member types.</SourceLine>
+   <SourceLine>For Each excludedMemberType As XojoKit.MemberTypes In Options.ExcludedMemberTypes</SourceLine>
+   <SourceLine>Select Case excludedMemberType</SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.ComputedProperty_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude computed properties"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Constant_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude constants"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Delegate_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude delegates"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Enum_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude enums"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Event_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude events"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.EventDefiniition_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude event definitions"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Method_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude methods"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Note_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude notes"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Property_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude properties"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Structure_</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Exclude structures"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New UnsupportedOperationException("Unknown member type to exclude")</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next excludedMemberType</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>NextItem:</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>

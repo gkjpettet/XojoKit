@@ -208,5 +208,30 @@
    <SourceLine>Global_</SourceLine>
   </ItemSource>
  </Enumeration>
+ <Enumeration>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>MemberTypes</ItemName>
+  <ItemFlags>1</ItemFlags>
+  <ItemType>Integer</ItemType>
+  <BinaryEnum>0</BinaryEnum>
+  <ItemName>MemberTypes</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>35280895</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Constant_</SourceLine>
+   <SourceLine>Property_</SourceLine>
+   <SourceLine>Method_</SourceLine>
+   <SourceLine>Enum_</SourceLine>
+   <SourceLine>Event_</SourceLine>
+   <SourceLine>EventDefiniition_</SourceLine>
+   <SourceLine>Delegate_</SourceLine>
+   <SourceLine>ComputedProperty_</SourceLine>
+   <SourceLine>Structure_</SourceLine>
+   <SourceLine>Note_</SourceLine>
+   <SourceLine>Unknown</SourceLine>
+  </ItemSource>
+ </Enumeration>
 </block>
 </RBProject>

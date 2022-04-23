@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1087893503</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -630,7 +630,7 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Not mOptions.IncludeEvents Then</SourceLine>
+   <SourceLine>If mOptions.ExcludeEvents Then</SourceLine>
    <SourceLine>e.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>

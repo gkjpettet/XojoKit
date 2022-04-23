@@ -73,7 +73,6 @@ End
 		  // Set options.
 		  project.Options.ExcludedPaths.Add("Unit Tests")
 		  project.Options.ExcludePrivate = False
-		  'project.Options.IncludeEvents = True
 		  
 		  // Parse the project file.
 		  project.Parse

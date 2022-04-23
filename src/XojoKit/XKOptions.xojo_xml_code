@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="634740735">
  <ObjName>XKOptions</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -56,18 +56,18 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>IncludeEvents</ItemName>
+  <ItemName>ExcludeEvents</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>If True then event handlers implemented in classes will be included when generating the documentation. Default is False.</CodeDescription>
+  <CodeDescription>If True then event handlers implemented in classes will be excluded when generating the documentation. Default is True.</CodeDescription>
   <PartID>1037017087</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>IncludeEvents As Boolean = False</SourceLine>
+   <SourceLine>ExcludeEvents As Boolean = True</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>IncludeEvents As Boolean = False</ItemDeclaration>
+  <ItemDeclaration>ExcludeEvents As Boolean = True</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -106,7 +106,7 @@
    <ItemType>Integer</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>IncludeEvents</ObjName>
+   <ObjName>ExcludeEvents</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>True</PropertyValue>
    <ItemType>Boolean</ItemType>

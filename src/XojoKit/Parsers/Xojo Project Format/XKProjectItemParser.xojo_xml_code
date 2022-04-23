@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="708849663">
  <ObjName>XKProjectItemParser</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1057513471</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -137,8 +137,6 @@
    <SourceLine>///</SourceLine>
    <SourceLine>/// AttributeKeyValue → ATTRIBUTE (EQUAL VALUE)?</SourceLine>
    <SourceLine>/// Scope             → PROTECTED | PRIVATE</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Determine if this class is the application object"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// The item must be a class.</SourceLine>
    <SourceLine>item.Type = XojoKit.ObjectTypes.Class_</SourceLine>
@@ -740,7 +738,7 @@
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this event?</SourceLine>
-   <SourceLine>If Not mOptions.IncludeEvents Then</SourceLine>
+   <SourceLine>If mOptions.ExcludeEvents Then</SourceLine>
    <SourceLine>e.isExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>

@@ -16,7 +16,8 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Constructor()</SourceLine>
-   <SourceLine>Self.MemberType = XojoKit.MemberTypes.EventDefiniition_</SourceLine>
+   <SourceLine>Self.MemberType = XojoKit.MemberTypes.EventDefinition_</SourceLine>
+   <SourceLine>Self.Scope = XojoKit.Scopes.Public_</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

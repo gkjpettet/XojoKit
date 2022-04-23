@@ -88,22 +88,6 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Scope</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>This structure's scope / visibility.</CodeDescription>
-  <PartID>1493157887</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Scope As XojoKit.Scopes = XojoKit.Scopes.Public_</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Scope As XojoKit.Scopes = XojoKit.Scopes.Public_</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>Fields()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -120,6 +104,26 @@
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>MemberType</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.MemberTypes.Unknown</PropertyValue>
+   <ItemType>XojoKit.MemberTypes</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Constant_</ItemDef>
+    <ItemDef>1 - Property_</ItemDef>
+    <ItemDef>2 - Method_</ItemDef>
+    <ItemDef>3 - Enum_</ItemDef>
+    <ItemDef>4 - Event_</ItemDef>
+    <ItemDef>5 - EventDefiniition_</ItemDef>
+    <ItemDef>6 - Delegate_</ItemDef>
+    <ItemDef>7 - ComputedProperty_</ItemDef>
+    <ItemDef>8 - Structure_</ItemDef>
+    <ItemDef>9 - Note_</ItemDef>
+    <ItemDef>10 - Unknown</ItemDef>
+   </Enumeration>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>IsExcluded</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
@@ -164,19 +168,6 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>String</ItemType>
    <EditorType>MultiLineEditor</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Scope</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
-   <ItemType>XojoKit.Scopes</ItemType>
-   <EditorType>Enum</EditorType>
-   <Enumeration>
-    <ItemDef>0 - Public_</ItemDef>
-    <ItemDef>1 - Private_</ItemDef>
-    <ItemDef>2 - Protected_</ItemDef>
-    <ItemDef>3 - Global_</ItemDef>
-   </Enumeration>
   </ViewProperty>
  </ViewBehavior>
 </block>

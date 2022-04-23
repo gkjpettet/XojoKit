@@ -348,7 +348,7 @@
    <SourceLine>e.IsExcluded = True</SourceLine>
    <SourceLine>Next e</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.EventDefiniition_</SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.EventDefinition_</SourceLine>
    <SourceLine>For Each e As XKEventDefinition In item.EventDefinitions</SourceLine>
    <SourceLine>e.IsExcluded = True</SourceLine>
    <SourceLine>Next e</SourceLine>

@@ -225,7 +225,7 @@
    <SourceLine>Method_</SourceLine>
    <SourceLine>Enum_</SourceLine>
    <SourceLine>Event_</SourceLine>
-   <SourceLine>EventDefiniition_</SourceLine>
+   <SourceLine>EventDefinition_</SourceLine>
    <SourceLine>Delegate_</SourceLine>
    <SourceLine>ComputedProperty_</SourceLine>
    <SourceLine>Structure_</SourceLine>

@@ -353,12 +353,6 @@
    <SourceLine>/// value = (component(;component)*)?</SourceLine>
    <SourceLine>/// component = STRING | NUMBER | BOOLEAN</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse MenuBars"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse FileTypes"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse ImageSets"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse ToolBars"</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>// Many line values follow a specified format of multiple semicolon-delimited components.</SourceLine>
    <SourceLine>// KEY=NAME;PATH;ID;PARENT_ID;UNKNOWN</SourceLine>
    <SourceLine>Const COMPONENT_NAME = 0</SourceLine>
@@ -488,6 +482,24 @@
    <SourceLine>Self.Items.Add(folder)</SourceLine>
    <SourceLine>ItemContainers.Value(folder.ID) = folder</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Case "MenuBar"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse MenuBars"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "DesktopWindow", "Window"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "DesktopToolbar", "Toolbar"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse ToolBars"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Worker"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse Workers"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "FileTypeSet"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse FileTypeSets"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "MultiImage"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse ImageSets"</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Case "MajorVersion"</SourceLine>
    <SourceLine>Self.AppMajorVersion = Integer.FromString(value)</SourceLine>
    <SourceLine></SourceLine>
@@ -527,12 +539,6 @@
    <SourceLine>/// Parses the contents of a Xojo XML format manifest. May raise a `XKException`.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `Self.Manifest` is actually a `.xojo_xml_project` file.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse MenuBars"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse FileTypes"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse ImageSets"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse ToolBars"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Clear out the item containers dictionary and add the root.</SourceLine>
    <SourceLine>Self.ItemContainers = New Dictionary</SourceLine>
@@ -665,6 +671,24 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next a</SourceLine>
    <SourceLine>ItemContainers.Value(folder.ID) = folder</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Worker"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse Workers"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "DesktopWindow", "Window"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "MultiImage"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse ImageSets"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "FileTypes"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse FileTypeSets"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "DesktopToolbar", "Toolbar"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse Toolbars"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "Menu"</SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Parse MenuBars"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>// We're not interested in these blocks.</SourceLine>

@@ -464,6 +464,21 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Select Case key</SourceLine>
+   <SourceLine>Case "MacCarbonMachName"</SourceLine>
+   <SourceLine>Self.NameMac = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "LinuxX86Name"</SourceLine>
+   <SourceLine>Self.NameLinux = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "WindowsName"</SourceLine>
+   <SourceLine>Self.NameWindows = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "HiDPI"</SourceLine>
+   <SourceLine>Self.SupportsHiDPI = If(value = "True", True, False)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "DarkMode"</SourceLine>
+   <SourceLine>Self.SupportsDarkMode = If(value = "True", True, False)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Case "Type"</SourceLine>
    <SourceLine>Self.Type = value</SourceLine>
    <SourceLine></SourceLine>
@@ -645,6 +660,29 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "ProjectType"</SourceLine>
    <SourceLine>Self.Type = XMLProjectTypeToString(Integer.FromString(node.FirstChild.Value))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "BuildCarbonMachOName"</SourceLine>
+   <SourceLine>Self.NameMac = If(node.FirstChild &lt;&gt; Nil, node.FirstChild.Value, "")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "BuildWinName"</SourceLine>
+   <SourceLine>Self.NameWindows = If(node.FirstChild &lt;&gt; Nil, node.FirstChild.Value, "")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "BuildLinuxX86Name"</SourceLine>
+   <SourceLine>Self.NameLinux = If(node.FirstChild &lt;&gt; Nil, node.FirstChild.Value, "")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "HiDPI"</SourceLine>
+   <SourceLine>If node.FirstChild = Nil Then</SourceLine>
+   <SourceLine>Self.SupportsHiDPI = False</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Self.SupportsHiDPI = If(node.FirstChild.Value = "0", False, True)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "DarkMode"</SourceLine>
+   <SourceLine>If node.FirstChild = Nil Then</SourceLine>
+   <SourceLine>Self.SupportsDarkMode = False</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Self.SupportsDarkMode = If(node.FirstChild.Value = "0", False, True)</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>// We're not interested in the other project block elements.</SourceLine>
@@ -1115,22 +1153,6 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Name</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>The name of the project being documented.</CodeDescription>
-  <PartID>2035415039</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Name As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Name As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>Options</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -1370,6 +1392,86 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>NameMac</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The app's macOS name.</CodeDescription>
+  <PartID>952276991</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>NameMac As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>NameMac As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>NameLinux</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The app's Linux name.</CodeDescription>
+  <PartID>49016831</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>NameLinux As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>NameLinux As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>NameWindows</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The app's Windows name.</CodeDescription>
+  <PartID>1645101055</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>NameWindows As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>NameWindows As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>SupportsDarkMode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>True if this project supports dark mode.</CodeDescription>
+  <PartID>253865983</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>SupportsDarkMode As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>SupportsDarkMode As Boolean = False</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>SupportsHiDPI</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>True if this project supports HiDPI.</CodeDescription>
+  <PartID>958240767</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>SupportsHiDPI As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>SupportsHiDPI As Boolean = False</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -1481,6 +1583,36 @@
     <ItemDef>1 - Unknown</ItemDef>
     <ItemDef>2 - XML</ItemDef>
    </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>NameMac</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>NameLinux</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>NameWindows</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>SupportsDarkMode</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>SupportsHiDPI</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

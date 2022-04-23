@@ -184,6 +184,15 @@
    <SourceLine>FindApplicationObject</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If Options.ExcludeAppObject Then</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
+   <SourceLine>If item.IsApplicationObject Then</SourceLine>
+   <SourceLine>item.IsExcluded = True</SourceLine>
+   <SourceLine>Exit</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

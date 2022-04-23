@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="479965183">
  <ObjName>XojoKit</ObjName>
- <ObjContainerID>451715071</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -183,6 +183,11 @@
    <SourceLine>Module_</SourceLine>
    <SourceLine>Folder</SourceLine>
    <SourceLine>Root</SourceLine>
+   <SourceLine>Window_</SourceLine>
+   <SourceLine>MenuBar_</SourceLine>
+   <SourceLine>ToolBar_</SourceLine>
+   <SourceLine>FileType_</SourceLine>
+   <SourceLine>ImageSet_</SourceLine>
   </ItemSource>
  </Enumeration>
  <Enumeration>

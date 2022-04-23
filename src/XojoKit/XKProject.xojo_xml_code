@@ -278,6 +278,17 @@
    <SourceLine>For i As Integer = Self.Items.LastIndex DownTo 0</SourceLine>
    <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Exclude any items in the option's list of excluded object types.</SourceLine>
+   <SourceLine>For Each excludedType As XojoKit.ObjectTypes In Options.ExcludedItemTypes</SourceLine>
+   <SourceLine>If item.Type = excludedType Then</SourceLine>
+   <SourceLine>item.IsExcluded = True</SourceLine>
+   <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then</SourceLine>
+   <SourceLine>XKItem(Self.ItemContainers.Value(item.ID)).IsExcluded = True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>GoTo NextItem</SourceLine>
+   <SourceLine>Next excludedType</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude any items in the option's list of excluded paths.</SourceLine>
    <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
    <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
@@ -1382,6 +1393,12 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>XojoKit.FileFormats.Project</PropertyValue>
    <ItemType>XojoKit.FileFormats</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Project</ItemDef>
+    <ItemDef>1 - Unknown</ItemDef>
+    <ItemDef>2 - XML</ItemDef>
+   </Enumeration>
   </ViewProperty>
  </ViewBehavior>
 </block>

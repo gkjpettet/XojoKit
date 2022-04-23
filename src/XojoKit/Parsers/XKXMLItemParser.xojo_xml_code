@@ -630,10 +630,6 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If mOptions.ExcludeEvents Then</SourceLine>
-   <SourceLine>e.isExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>

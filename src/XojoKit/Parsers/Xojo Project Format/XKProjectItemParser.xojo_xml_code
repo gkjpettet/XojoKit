@@ -737,11 +737,6 @@
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this event?</SourceLine>
-   <SourceLine>If mOptions.ExcludeEvents Then</SourceLine>
-   <SourceLine>e.isExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>

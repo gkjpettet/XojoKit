@@ -56,22 +56,6 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>ExcludeEvents</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>If True then event handlers implemented in classes will be excluded when generating the documentation. Default is True.</CodeDescription>
-  <PartID>1037017087</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>ExcludeEvents As Boolean = True</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>ExcludeEvents As Boolean = True</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>ExcludedItemTypes()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -136,12 +120,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>ExcludeEvents</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>True</PropertyValue>
-   <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>ExcludePrivate</ObjName>

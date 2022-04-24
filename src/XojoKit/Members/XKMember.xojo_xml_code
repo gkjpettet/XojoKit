@@ -55,6 +55,22 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>Signature</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>This member's simplified signature for user-facing display. For some members, this will just be the member's name.</CodeDescription>
+  <PartID>1728477183</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Signature As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Signature As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -107,7 +123,7 @@
     <ItemDef>2 - Method_</ItemDef>
     <ItemDef>3 - Enum_</ItemDef>
     <ItemDef>4 - Event_</ItemDef>
-    <ItemDef>5 - EventDefiniition_</ItemDef>
+    <ItemDef>5 - EventDefinition_</ItemDef>
     <ItemDef>6 - Delegate_</ItemDef>
     <ItemDef>7 - ComputedProperty_</ItemDef>
     <ItemDef>8 - Structure_</ItemDef>

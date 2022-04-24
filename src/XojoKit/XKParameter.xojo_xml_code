@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="396412927">
  <ObjName>XKParameter</ObjName>
- <ObjContainerID>1262106623</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -47,6 +47,36 @@
   <IsShared>0</IsShared>
   <ItemParams>name As String, type As String, isArray As Boolean = False, isParamArray As Boolean = False, defaultValue As String = ""</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>A string representation of this parameter.</CodeDescription>
+  <PartID>91807743</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToString() As String</SourceLine>
+   <SourceLine>/// A string representation of this parameter.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var s As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Self.IsParamArray Then s = s + "ParamArray "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = s + Self.Name + " As "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = s + Self.Type</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>String</ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>

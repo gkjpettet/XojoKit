@@ -328,6 +328,9 @@
    <SourceLine>cp.Name = nameType(0).Trim</SourceLine>
    <SourceLine>cp.Type = nameType(1).Trim</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>cp.Signature = cp.Name</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this computed property?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And cp.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>cp.isExcluded = True</SourceLine>
@@ -396,6 +399,9 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>con.Signature = con.Name</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this constant?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And con.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -563,6 +569,9 @@
    <SourceLine></SourceLine>
    <SourceLine>d.Description = tag.Description</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Compute the delegate's signature.</SourceLine>
+   <SourceLine>d.Signature = ComputeDelegateSignature(d)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this delegate?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And d.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>d.isExcluded = True</SourceLine>
@@ -651,6 +660,9 @@
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>e.Signature = e.Name</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this enum?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>e.isExcluded = True</SourceLine>
@@ -736,6 +748,9 @@
    <SourceLine>e.Lines.Add(line)</SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute the event's signature.</SourceLine>
+   <SourceLine>e.Signature = ComputeEventSignature(e)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this event?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -831,6 +846,9 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>ed.Description = tag.Description</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute the event definition's signature.</SourceLine>
+   <SourceLine>ed.Signature = ComputeEventDefinitionSignature(ed)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this event definition?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And ed.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -1105,6 +1123,9 @@
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Compute the method's signature.</SourceLine>
+   <SourceLine>m.Signature = ComputeMethodSignature(m)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this method?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And m.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>m.isExcluded = True</SourceLine>
@@ -1240,6 +1261,9 @@
    <SourceLine>s = s.Trim</SourceLine>
    <SourceLine>note.Lines = s.Split(EndOfLine.UNIX)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>note.Signature = note.Name</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return note</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -1328,6 +1352,9 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>prop.Description = tag.Description</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>prop.Signature = prop.Name</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this property.</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And prop.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -1466,10 +1493,14 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// There seems to be a bug in the IDE where an empty field can get appended to the end of the declaration.</SourceLine>
    <SourceLine>If s.Fields.Count &gt; 0 And s.Fields(s.Fields.LastIndex).Name = "" Then</SourceLine>
    <SourceLine>Call s.Fields.Pop</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>s.Signature = s.Name</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this structure?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And s.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -1486,6 +1517,138 @@
   <IsShared>0</IsShared>
   <ItemParams>tag As XKProjectItemTag, lines() As String, ByRef i As Integer</ItemParams>
   <ItemResult>XKStructure</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeMethodSignature</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes and returns the passed method's user-facing signature (less decorations like attributes, etc).</CodeDescription>
+  <PartID>430653439</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ComputeMethodSignature(m As XKMethod) As String</SourceLine>
+   <SourceLine>/// Computes and returns the passed method's user-facing signature (less decorations like attributes, etc).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var sig as String = m.Name + "("</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 0 To m.Parameters.LastIndex</SourceLine>
+   <SourceLine>Var p As XKParameter = m.Parameters(i)</SourceLine>
+   <SourceLine>sig = sig + p.ToString + If(i &lt; m.Parameters.LastIndex, ", ", "")</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>sig = sig + ")"</SourceLine>
+   <SourceLine>If m.ReturnType &lt;&gt; "" Then</SourceLine>
+   <SourceLine>sig = sig + " As " + m.ReturnType</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return sig</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>m As XKMethod</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeEventSignature</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes and returns the passed event's user-facing signature (less decorations like attributes, etc).</CodeDescription>
+  <PartID>482846719</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ComputeEventSignature(e As XKEvent) As String</SourceLine>
+   <SourceLine>/// Computes and returns the passed event's user-facing signature (less decorations like attributes, etc).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var sig as String = e.Name + "("</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 0 To e.Parameters.LastIndex</SourceLine>
+   <SourceLine>Var p As XKParameter = e.Parameters(i)</SourceLine>
+   <SourceLine>sig = sig + p.ToString + If(i &lt; e.Parameters.LastIndex, ", ", "")</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>sig = sig + ")"</SourceLine>
+   <SourceLine>If e.ReturnType &lt;&gt; "" Then</SourceLine>
+   <SourceLine>sig = sig + " As " + e.ReturnType</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return sig</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>e As XKEvent</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeEventDefinitionSignature</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes and returns the passed event definition's user-facing signature (less decorations like attributes, etc).</CodeDescription>
+  <PartID>1740480511</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ComputeEventDefinitionSignature(e As XKEventDefinition) As String</SourceLine>
+   <SourceLine>/// Computes and returns the passed event definition's user-facing signature (less decorations </SourceLine>
+   <SourceLine>/// like attributes, etc).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var sig as String = e.Name + "("</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 0 To e.Parameters.LastIndex</SourceLine>
+   <SourceLine>Var p As XKParameter = e.Parameters(i)</SourceLine>
+   <SourceLine>sig = sig + p.ToString + If(i &lt; e.Parameters.LastIndex, ", ", "")</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>sig = sig + ")"</SourceLine>
+   <SourceLine>If e.ReturnType &lt;&gt; "" Then</SourceLine>
+   <SourceLine>sig = sig + " As " + e.ReturnType</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return sig</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>e As XKEventDefinition</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeDelegateSignature</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes and returns the passed delegate's user-facing signature (less decorations like attributes, etc).</CodeDescription>
+  <PartID>423811071</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ComputeDelegateSignature(d As XKDelegate) As String</SourceLine>
+   <SourceLine>/// Computes and returns the passed delegate's user-facing signature (less decorations like attributes, etc).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var sig as String = d.Name + "("</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 0 To d.Parameters.LastIndex</SourceLine>
+   <SourceLine>Var p As XKParameter = d.Parameters(i)</SourceLine>
+   <SourceLine>sig = sig + p.ToString + If(i &lt; d.Parameters.LastIndex, ", ", "")</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>sig = sig + ")"</SourceLine>
+   <SourceLine>If d.ReturnType &lt;&gt; "" Then</SourceLine>
+   <SourceLine>sig = sig + " As " + d.ReturnType</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return sig</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>d As XKDelegate</ItemParams>
+  <ItemResult>String</ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>

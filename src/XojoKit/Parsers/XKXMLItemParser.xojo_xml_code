@@ -39,6 +39,9 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>cp.Signature = cp.Name</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return cp</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -80,6 +83,9 @@
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>prop.Signature = prop.Name</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return prop</SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -354,6 +360,9 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>con.Signature = con.Name</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this constant?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And con.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>con.isExcluded = True</SourceLine>
@@ -427,6 +436,7 @@
    <SourceLine>Var d As New XKDelegate</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
+   <SourceLine>Var itemParams As String</SourceLine>
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
@@ -447,9 +457,12 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemParams"</SourceLine>
    <SourceLine>d.Parameters = ParseParametersNode(child)</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>itemParams = If(child.FirstChild = Nil, "", child.FirstChild.Value)</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute the signature.</SourceLine>
+   <SourceLine>d.Signature = d.Name + "(" + itemParams + ")" + If(d.ReturnType = "", "", " As " + d.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this delegate?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And d.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -506,6 +519,9 @@
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>e.Signature = e.Name</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this enum?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -630,6 +646,9 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Compute the event's signature.</SourceLine>
+   <SourceLine>e.Signature = ComputeEventSignature(e)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this event?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>e.IsExcluded = True</SourceLine>
@@ -660,6 +679,7 @@
    <SourceLine>Var ed As NEw XKEventDefinition</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
+   <SourceLine>Var itemParams As String</SourceLine>
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
@@ -674,12 +694,16 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemParams"</SourceLine>
    <SourceLine>ed.Parameters = ParseParametersNode(child)</SourceLine>
+   <SourceLine>itemParams = If(child.FirstChild = Nil, "", child.FirstChild.Value)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemResult"</SourceLine>
    <SourceLine>ed.ReturnType = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute the signature.</SourceLine>
+   <SourceLine>ed.Signature = ed.Name + "(" + itemParams + ")" + If(ed.ReturnType = "", "", " As " + ed.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this event definition?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And ed.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -831,6 +855,7 @@
    <SourceLine>Var m As New XKMethod</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
+   <SourceLine>Var itemParams As String</SourceLine>
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
@@ -857,9 +882,12 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemParams"</SourceLine>
    <SourceLine>m.Parameters = ParseParametersNode(child)</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>itemParams = If(child.FirstChild = Nil, "", child.FirstChild.Value)</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute the signature.</SourceLine>
+   <SourceLine>m.Signature = m.Name + "(" + itemParams + ")" + If(m.ReturnType = "", "", " As " + m.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this method?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And m.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
@@ -924,6 +952,9 @@
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>note.Signature = note.Name</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return note</SourceLine>
    <SourceLine></SourceLine>
@@ -1107,6 +1138,9 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// The signature is just the name.</SourceLine>
+   <SourceLine>s.Signature = s.Name</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this structure?</SourceLine>
    <SourceLine>If mOptions.ExcludePrivate And s.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>s.isExcluded = True</SourceLine>
@@ -1175,6 +1209,39 @@
   <IsShared>0</IsShared>
   <ItemParams>node As XmlNode</ItemParams>
   <ItemResult>XKStructureField()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeEventSignature</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes and returns the passed event's user-facing signature (less decorations like attributes, etc).</CodeDescription>
+  <PartID>1278957567</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ComputeEventSignature(e As XKEvent) As String</SourceLine>
+   <SourceLine>/// Computes and returns the passed event's user-facing signature (less decorations like attributes, etc).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var sig as String = e.Name + "("</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 0 To e.Parameters.LastIndex</SourceLine>
+   <SourceLine>Var p As XKParameter = e.Parameters(i)</SourceLine>
+   <SourceLine>sig = sig + p.ToString + If(i &lt; e.Parameters.LastIndex, ", ", "")</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>sig = sig + ")"</SourceLine>
+   <SourceLine>If e.ReturnType &lt;&gt; "" Then</SourceLine>
+   <SourceLine>sig = sig + " As " + e.ReturnType</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return sig</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>e As XKEvent</ItemParams>
+  <ItemResult>String</ItemResult>
  </Method>
  <Property>
   <ItemName>mOptions</ItemName>

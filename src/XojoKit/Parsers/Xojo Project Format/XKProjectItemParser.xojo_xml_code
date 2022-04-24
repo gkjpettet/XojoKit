@@ -737,6 +737,11 @@
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Exclude this event?</SourceLine>
+   <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
+   <SourceLine>e.IsExcluded = True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -826,6 +831,11 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>ed.Description = tag.Description</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Exclude this event definition?</SourceLine>
+   <SourceLine>If mOptions.ExcludePrivate And ed.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
+   <SourceLine>ed.IsExcluded = True</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return ed</SourceLine>
    <SourceLine></SourceLine>

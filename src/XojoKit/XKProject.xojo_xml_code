@@ -320,64 +320,6 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>Next excludedFQN</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude any member types in the option's list of excluded member types from this item.</SourceLine>
-   <SourceLine>For Each excludedMemberType As XojoKit.MemberTypes In Options.ExcludedMemberTypes</SourceLine>
-   <SourceLine>Select Case excludedMemberType</SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.ComputedProperty_</SourceLine>
-   <SourceLine>For Each cp As XKComputedProperty In item.ComputedProperties</SourceLine>
-   <SourceLine>cp.IsExcluded = True</SourceLine>
-   <SourceLine>Next cp</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Constant_</SourceLine>
-   <SourceLine>For Each c As XKConstant In item.Constants</SourceLine>
-   <SourceLine>c.IsExcluded = True</SourceLine>
-   <SourceLine>Next c</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Delegate_</SourceLine>
-   <SourceLine>For Each d As XKDelegate In item.Delegates</SourceLine>
-   <SourceLine>d.IsExcluded = True</SourceLine>
-   <SourceLine>Next d</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Enum_</SourceLine>
-   <SourceLine>For Each e As XKEnum In item.Enums</SourceLine>
-   <SourceLine>e.IsExcluded = True</SourceLine>
-   <SourceLine>Next e</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Event_</SourceLine>
-   <SourceLine>For Each e As XKEvent In item.Events</SourceLine>
-   <SourceLine>e.IsExcluded = True</SourceLine>
-   <SourceLine>Next e</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.EventDefinition_</SourceLine>
-   <SourceLine>For Each e As XKEventDefinition In item.EventDefinitions</SourceLine>
-   <SourceLine>e.IsExcluded = True</SourceLine>
-   <SourceLine>Next e</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Method_</SourceLine>
-   <SourceLine>For Each m As XKMethod In item.Methods</SourceLine>
-   <SourceLine>m.IsExcluded = True</SourceLine>
-   <SourceLine>Next m</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Note_</SourceLine>
-   <SourceLine>For Each n As XKNote In item.Notes</SourceLine>
-   <SourceLine>n.IsExcluded = True</SourceLine>
-   <SourceLine>Next n</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Property_</SourceLine>
-   <SourceLine>For Each p As XKProperty In item.Properties</SourceLine>
-   <SourceLine>p.IsExcluded = True</SourceLine>
-   <SourceLine>Next p</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.MemberTypes.Structure_</SourceLine>
-   <SourceLine>For Each s As XKStructure In item.Structures</SourceLine>
-   <SourceLine>s.IsExcluded = True</SourceLine>
-   <SourceLine>Next s</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Raise New UnsupportedOperationException("Unknown member type to exclude")</SourceLine>
-   <SourceLine>End Select</SourceLine>
-   <SourceLine>Next excludedMemberType</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>NextItem:</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>

@@ -7,6 +7,50 @@
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Clone</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns a clone of this object.</CodeDescription>
+  <PartID>1812568063</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Clone() As XKOptions</SourceLine>
+   <SourceLine>/// Returns a clone of this object.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var options As New XKOptions</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>options.ExcludeAppObject = Self.ExcludeAppObject</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each fqn As String In Self.ExcludedFQNs</SourceLine>
+   <SourceLine>options.ExcludedFQNs.Add(fqn)</SourceLine>
+   <SourceLine>Next fqn</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each type As XojoKit.ObjectTypes In Self.ExcludedItemTypes</SourceLine>
+   <SourceLine>options.ExcludedItemTypes.Add(type)</SourceLine>
+   <SourceLine>Next type</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each type As XojoKit.MemberTypes In Self.ExcludedMemberTypes</SourceLine>
+   <SourceLine>options.ExcludedMemberTypes.Add(type)</SourceLine>
+   <SourceLine>Next type</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each path As String In Self.ExcludedPaths</SourceLine>
+   <SourceLine>options.ExcludedPaths.Add(path)</SourceLine>
+   <SourceLine>Next path</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>options.ExcludePrivate = Self.ExcludePrivate</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return options</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>XKOptions</ItemResult>
+ </Method>
  <Property>
   <ItemName>ExcludedFQNs()</ItemName>
   <Compatibility></Compatibility>

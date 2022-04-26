@@ -1033,6 +1033,33 @@
   <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Method>
+ <Method>
+  <ItemName>ShouldExcludeMember</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns True if `member` should be excluded from a project based on `options`.</CodeDescription>
+  <PartID>1768421375</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function ShouldExcludeMember(member As XKMember, options As XKOptions) As Boolean</SourceLine>
+   <SourceLine>/// Returns True if `member` should be excluded from a project based on `options`.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (options.ExcludePrivate And member.Scope = XojoKit.Scopes.Private_) Or _</SourceLine>
+   <SourceLine>options.ExcludedMemberTypes.IndexOf(member.MemberType) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>member As XKMember, options As XKOptions</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
  <Property>
   <ItemName>AppBugVersion</ItemName>
   <Compatibility></Compatibility>

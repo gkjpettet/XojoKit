@@ -252,10 +252,8 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Is this property to be excluded from documenting?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And prop.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>prop.isExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>prop.IsExcluded = XKProject.ShouldExcludeMember(prop, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return prop</SourceLine>
    <SourceLine></SourceLine>
@@ -363,10 +361,8 @@
    <SourceLine>// The signature is just the name.</SourceLine>
    <SourceLine>con.Signature = con.Name</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this constant?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And con.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>con.isExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>con.IsExcluded = XKProject.ShouldExcludeMember(con, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return con</SourceLine>
    <SourceLine></SourceLine>
@@ -464,10 +460,8 @@
    <SourceLine>// Compute the signature.</SourceLine>
    <SourceLine>d.Signature = d.Name + "(" + itemParams + ")" + If(d.ReturnType = "", "", " As " + d.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this delegate?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And d.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>d.isExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>d.IsExcluded = XKProject.ShouldExcludeMember(d, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return d</SourceLine>
    <SourceLine></SourceLine>
@@ -523,10 +517,8 @@
    <SourceLine>// The signature is just the name.</SourceLine>
    <SourceLine>e.Signature = e.Name</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this enum?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>e.isExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>e.IsExcluded = XKProject.ShouldExcludeMember(e, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
@@ -649,10 +641,8 @@
    <SourceLine>// Compute the event's signature.</SourceLine>
    <SourceLine>e.Signature = ComputeEventSignature(e)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this event?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And e.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>e.IsExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>e.IsExcluded = XKProject.ShouldExcludeMember(e, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return e</SourceLine>
    <SourceLine></SourceLine>
@@ -705,10 +695,8 @@
    <SourceLine>// Compute the signature.</SourceLine>
    <SourceLine>ed.Signature = ed.Name + "(" + itemParams + ")" + If(ed.ReturnType = "", "", " As " + ed.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this event definition?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And ed.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>ed.IsExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>ed.IsExcluded = XKProject.ShouldExcludeMember(ed, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return ed</SourceLine>
    <SourceLine></SourceLine>
@@ -889,10 +877,8 @@
    <SourceLine>// Compute the signature.</SourceLine>
    <SourceLine>m.Signature = m.Name + "(" + itemParams + ")" + If(m.ReturnType = "", "", " As " + m.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this method?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And m.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>m.IsExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>m.IsExcluded = XKProject.ShouldExcludeMember(m, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return m</SourceLine>
    <SourceLine></SourceLine>
@@ -955,6 +941,9 @@
    <SourceLine></SourceLine>
    <SourceLine>// The signature is just the name.</SourceLine>
    <SourceLine>note.Signature = note.Name</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>note.IsExcluded = XKProject.ShouldExcludeMember(note, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return note</SourceLine>
    <SourceLine></SourceLine>
@@ -1141,10 +1130,8 @@
    <SourceLine>// The signature is just the name.</SourceLine>
    <SourceLine>s.Signature = s.Name</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Exclude this structure?</SourceLine>
-   <SourceLine>If mOptions.ExcludePrivate And s.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
-   <SourceLine>s.isExcluded = True</SourceLine>
-   <SourceLine>End If</SourceLine>
+   <SourceLine>// Exclude this member?</SourceLine>
+   <SourceLine>s.IsExcluded = XKProject.ShouldExcludeMember(s, mOptions)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return s</SourceLine>
    <SourceLine></SourceLine>

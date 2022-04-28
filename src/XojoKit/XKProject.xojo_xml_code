@@ -160,6 +160,12 @@
    <SourceLine>If Options.ExcludePrivate And item.Scope = XojoKit.Scopes.Private_ Then</SourceLine>
    <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If at least one item is external then store this fact.</SourceLine>
+   <SourceLine>If item.IsExternal Then mContainsExternalItems = True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Update the project's count of individual item counts.</SourceLine>
+   <SourceLine>UpdateItemCounts(item)</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Find the classes and modules contained within other modules.</SourceLine>
@@ -1002,6 +1008,51 @@
   <ItemParams>member As XKMember, options As XKOptions</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
+ <Method>
+  <ItemName>UpdateItemCounts</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Determine's the type of item passed and increments the project's internal item type count properties.</CodeDescription>
+  <PartID>936980479</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub UpdateItemCounts(item As XKItem)</SourceLine>
+   <SourceLine>/// Determine's the type of item passed and increments the project's internal item type count properties.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case item.Type</SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>mClassCount = mClassCount + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.FileType_</SourceLine>
+   <SourceLine>mFileTypeCount = mFileTypeCount + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.ImageSet_</SourceLine>
+   <SourceLine>mImageSetCount = mImageSetCount + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Interface_</SourceLine>
+   <SourceLine>mInterfaceCount = mInterfaceCount + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.MenuBar_</SourceLine>
+   <SourceLine>mMenuBarCount = mMenuBarCount + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>mModuleCount = mModuleCount + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.ToolBar_</SourceLine>
+   <SourceLine>mToolBarCount = mToolBarCount + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ObjectTypes.Window_</SourceLine>
+   <SourceLine>mWindowCount = mWindowCount + 1</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>item As XKItem</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Property>
   <ItemName>AppBugVersion</ItemName>
   <Compatibility></Compatibility>
@@ -1450,6 +1501,414 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>ContainsExternalItems</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>True if the project contains any external items. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1597429759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property ContainsExternalItems As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ContainsExternalItems As Boolean</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mContainsExternalItems</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mContainsExternalItems</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>True if the project contains any external items. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>49084415</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mContainsExternalItems As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mContainsExternalItems As Boolean = False</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>ClassCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of classes in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1753765887</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property ClassCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ClassCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mClassCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mClassCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>129576959</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mClassCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mClassCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>ModuleCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of modules in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1301868543</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property ModuleCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ModuleCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mModuleCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mModuleCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1754148863</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mModuleCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mModuleCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>InterfaceCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of interfaces in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>596185087</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property InterfaceCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>InterfaceCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mInterfaceCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mInterfaceCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1290272767</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mInterfaceCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mInterfaceCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>FileTypeCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of file type sets in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>2036768767</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property FileTypeCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>FileTypeCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mFileTypeCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mFileTypeCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1247240191</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mFileTypeCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mFileTypeCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>ImageSetCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of image sets in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>2056341503</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property ImageSetCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ImageSetCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mImageSetCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mImageSetCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>31191039</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mImageSetCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mImageSetCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>WindowCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of windows in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1614755839</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property WindowCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>WindowCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mWindowCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mWindowCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>538830847</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mWindowCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mWindowCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>ToolBarCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of toolbars in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1449041919</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property ToolBarCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ToolBarCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mToolBarCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mToolBarCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1927413759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mToolBarCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mToolBarCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>MenuBarCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns the total number of menubars in this project. Computed once after the project is parsed so inexpensive to call.</CodeDescription>
+  <PartID>1367289855</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property MenuBarCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>MenuBarCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mMenuBarCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mMenuBarCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>275392511</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mMenuBarCount As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mMenuBarCount As Integer = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -1591,6 +2050,57 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ContainsExternalItems</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ClassCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ModuleCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>InterfaceCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FileTypeCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ImageSetCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>WindowCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ToolBarCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MenuBarCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mMenuBarCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="479965183">
  <ObjName>XojoKit</ObjName>
- <ObjContainerID>530241535</ObjContainerID>
+ <ObjContainerID>2039191551</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -87,19 +87,19 @@
    <SourceLine></SourceLine>
    <SourceLine>Select Case type</SourceLine>
    <SourceLine>Case XojoKit.ObjectTypes.Class_</SourceLine>
-   <SourceLine>Return "Class"</SourceLine>
+   <SourceLine>Return "class"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ObjectTypes.Folder</SourceLine>
-   <SourceLine>Return "Folder"</SourceLine>
+   <SourceLine>Return "folder"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ObjectTypes.Interface_</SourceLine>
-   <SourceLine>Return "Interface"</SourceLine>
+   <SourceLine>Return "interface"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ObjectTypes.Module_</SourceLine>
-   <SourceLine>Return "Module"</SourceLine>
+   <SourceLine>Return "module"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ObjectTypes.Root</SourceLine>
-   <SourceLine>Return "Root"</SourceLine>
+   <SourceLine>Return "root"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Raise New InvalidArgumentException("Unknown item type.")</SourceLine>
@@ -111,6 +111,60 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>Extends type As XojoKit.ObjectTypes</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns a string representation of `type`.</CodeDescription>
+  <PartID>21872639</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToString(Extends type As XojoKit.MemberTypes) As String</SourceLine>
+   <SourceLine>/// Returns a string representation of `type`.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case type</SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.ComputedProperty_</SourceLine>
+   <SourceLine>Return "computedProperty"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Constant_</SourceLine>
+   <SourceLine>Return "constant"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Delegate_</SourceLine>
+   <SourceLine>Return "delegate"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Enum_</SourceLine>
+   <SourceLine>Return "enum"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Event_</SourceLine>
+   <SourceLine>Return "event"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.EventDefinition_</SourceLine>
+   <SourceLine>Return "eventDefinition"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Method_</SourceLine>
+   <SourceLine>Return "method"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Note_</SourceLine>
+   <SourceLine>Return "note"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Property_</SourceLine>
+   <SourceLine>Return "property"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.MemberTypes.Structure_</SourceLine>
+   <SourceLine>Return "structure"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New XKException("Unknown member type.")</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends type As XojoKit.MemberTypes</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
  <ViewBehavior>

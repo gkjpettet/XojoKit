@@ -82,23 +82,23 @@
   <PartID>144852991</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function ToString(Extends type As XojoKit.ObjectTypes) As String</SourceLine>
+   <SourceLine>Function ToString(Extends type As XojoKit.ItemTypes) As String</SourceLine>
    <SourceLine>/// Returns a string representation of `type`.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Select Case type</SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine>Return "class"</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Folder</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Folder</SourceLine>
    <SourceLine>Return "folder"</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Interface_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Interface_</SourceLine>
    <SourceLine>Return "interface"</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine>Return "module"</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Root</SourceLine>
    <SourceLine>Return "root"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
@@ -110,7 +110,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>Extends type As XojoKit.ObjectTypes</ItemParams>
+  <ItemParams>Extends type As XojoKit.ItemTypes</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
  <Method>
@@ -221,11 +221,10 @@
  </Enumeration>
  <Enumeration>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>ObjectTypes</ItemName>
+  <ItemName>ItemTypes</ItemName>
   <ItemFlags>1</ItemFlags>
-  <ItemType>Integer</ItemType>
   <BinaryEnum>0</BinaryEnum>
-  <ItemName>ObjectTypes</ItemName>
+  <ItemName>ItemTypes</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <CodeDescription>The supported object types.</CodeDescription>

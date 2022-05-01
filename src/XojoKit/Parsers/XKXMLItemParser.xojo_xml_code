@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
- <ObjContainerID>1087893503</ObjContainerID>
+ <ObjContainerID>770533375</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -185,11 +185,11 @@
    <SourceLine></SourceLine>
    <SourceLine>// Determine the type of item by analysing the isClass and isInterface flags.</SourceLine>
    <SourceLine>If isInterface Then</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Interface_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Interface_</SourceLine>
    <SourceLine>ElseIf isClass Then</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>

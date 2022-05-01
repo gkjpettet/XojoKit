@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1258860543">
  <ObjName>XKItem</ObjName>
- <ObjContainerID>530241535</ObjContainerID>
+ <ObjContainerID>2039191551</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -571,11 +571,11 @@
   <PartID>188237823</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Type As XojoKit.ObjectTypes = XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>Type As XojoKit.ItemTypes = XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Type As XojoKit.ObjectTypes = XojoKit.ObjectTypes.Class_</ItemDeclaration>
+  <ItemDeclaration>Type As XojoKit.ItemTypes = XojoKit.ItemTypes.Class_</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

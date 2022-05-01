@@ -152,7 +152,7 @@
    <SourceLine>For i As Integer = Items.LastIndex DownTo 0</SourceLine>
    <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If item.Type &lt;&gt; XojoKit.ObjectTypes.Folder And item.Type &lt;&gt; XojoKit.ObjectTypes.Root Then</SourceLine>
+   <SourceLine>If item.Type &lt;&gt; XojoKit.ItemTypes.Folder And item.Type &lt;&gt; XojoKit.ItemTypes.Root Then</SourceLine>
    <SourceLine>item.Parse(Options)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
@@ -170,16 +170,16 @@
    <SourceLine></SourceLine>
    <SourceLine>// Find the classes and modules contained within other modules.</SourceLine>
    <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
-   <SourceLine>If item.Type &lt;&gt; XojoKit.ObjectTypes.Module_ Then Continue</SourceLine>
+   <SourceLine>If item.Type &lt;&gt; XojoKit.ItemTypes.Module_ Then Continue</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each query As XKItem In Self.Items</SourceLine>
    <SourceLine>If query.ParentID = item.ID Then</SourceLine>
    <SourceLine>// `item` is the parent of `query`.</SourceLine>
-   <SourceLine>If query.Type = XojoKit.ObjectTypes.Class_ Then</SourceLine>
+   <SourceLine>If query.Type = XojoKit.ItemTypes.Class_ Then</SourceLine>
    <SourceLine>item.Classes.Add(query)</SourceLine>
-   <SourceLine>ElseIf query.Type = XojoKit.ObjectTypes.Module_ Then</SourceLine>
+   <SourceLine>ElseIf query.Type = XojoKit.ItemTypes.Module_ Then</SourceLine>
    <SourceLine>item.Modules.Add(query)</SourceLine>
-   <SourceLine>ElseIf query.Type = XojoKit.ObjectTypes.Interface_ Then</SourceLine>
+   <SourceLine>ElseIf query.Type = XojoKit.ItemTypes.Interface_ Then</SourceLine>
    <SourceLine>item.Interfaces.Add(query)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -365,7 +365,7 @@
    <SourceLine>Var parents() As XKItem</SourceLine>
    <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Do</SourceLine>
-   <SourceLine>If current.Type &lt;&gt; XojoKit.ObjectTypes.Root Then</SourceLine>
+   <SourceLine>If current.Type &lt;&gt; XojoKit.ItemTypes.Root Then</SourceLine>
    <SourceLine>parents.Add(current)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>current = Self.ItemContainers.Lookup(current.ParentID, Nil)</SourceLine>
@@ -375,7 +375,7 @@
    <SourceLine>// Add the parent names to the FQN array.</SourceLine>
    <SourceLine>For i As Integer = parents.LastIndex DownTo 0</SourceLine>
    <SourceLine>path.Add(parents(i).Name)</SourceLine>
-   <SourceLine>If parents(i).Type = XojoKit.ObjectTypes.Folder Then</SourceLine>
+   <SourceLine>If parents(i).Type = XojoKit.ItemTypes.Folder Then</SourceLine>
    <SourceLine>path(path.LastIndex) = path(path.LastIndex) + "&gt;"</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>fqn.Add(parents(i).Name)</SourceLine>
@@ -402,7 +402,7 @@
    <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude any items in the option's list of excluded object types.</SourceLine>
-   <SourceLine>For Each excludedType As XojoKit.ObjectTypes In Options.ExcludedItemTypes</SourceLine>
+   <SourceLine>For Each excludedType As XojoKit.ItemTypes In Options.ExcludedItemTypes</SourceLine>
    <SourceLine>If item.Type = excludedType Then</SourceLine>
    <SourceLine>item.IsExcluded = True</SourceLine>
    <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then</SourceLine>
@@ -487,7 +487,7 @@
    <SourceLine>// Clear out the `ItemContainers` dictionary and add a new project root.</SourceLine>
    <SourceLine>Self.ItemContainers = New Dictionary</SourceLine>
    <SourceLine>mRoot = New XKItem(Self)</SourceLine>
-   <SourceLine>mRoot.Type = XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>mRoot.Type = XojoKit.ItemTypes.Root</SourceLine>
    <SourceLine>mRoot.Name = "Project Root"</SourceLine>
    <SourceLine>mRoot.ID = 0</SourceLine>
    <SourceLine>mRoot.ParentID = -1</SourceLine>
@@ -607,13 +607,13 @@
    <SourceLine></SourceLine>
    <SourceLine>// Modules can also be containers.</SourceLine>
    <SourceLine>If key = "Module" Then</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine>Self.ItemContainers.Value(item.ID) = item</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Folder"</SourceLine>
    <SourceLine>Var folder As New XKItem(Self)</SourceLine>
-   <SourceLine>folder.Type = XojoKit.ObjectTypes.Folder</SourceLine>
+   <SourceLine>folder.Type = XojoKit.ItemTypes.Folder</SourceLine>
    <SourceLine>folder.Name = components(COMPONENT_NAME)</SourceLine>
    <SourceLine>folder.ID = Integer.FromHex(components(COMPONENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
    <SourceLine>folder.ParentID = Integer.FromHex(components(COMPONENT_PARENT_ID).ReplaceAll("&amp;h", ""))</SourceLine>
@@ -681,7 +681,7 @@
    <SourceLine>// Clear out the item containers dictionary and add the root.</SourceLine>
    <SourceLine>Self.ItemContainers = New Dictionary</SourceLine>
    <SourceLine>mRoot = New XKItem(Self)</SourceLine>
-   <SourceLine>mRoot.Type = XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>mRoot.Type = XojoKit.ItemTypes.Root</SourceLine>
    <SourceLine>mRoot.Name = "Project Root"</SourceLine>
    <SourceLine>mRoot.ID = 0</SourceLine>
    <SourceLine>mRoot.ParentID = -1</SourceLine>
@@ -763,7 +763,7 @@
    <SourceLine>item.File = Nil</SourceLine>
    <SourceLine>item.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
    <SourceLine>item.XML = block.Clone(True)</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For k As Integer = 0 To block.ChildCount - 1</SourceLine>
    <SourceLine>Var node As XmlNode = block.Child(k)</SourceLine>
@@ -817,7 +817,7 @@
    <SourceLine>Case "Folder"</SourceLine>
    <SourceLine>// A folder.</SourceLine>
    <SourceLine>Var folder As New XKItem(Self)</SourceLine>
-   <SourceLine>folder.Type = XojoKit.ObjectTypes.Folder</SourceLine>
+   <SourceLine>folder.Type = XojoKit.ItemTypes.Folder</SourceLine>
    <SourceLine>folder.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For a As Integer = 0 To block.ChildCount - 1</SourceLine>
@@ -1128,28 +1128,28 @@
    <SourceLine>/// Determine's the type of item passed and increments the project's internal item type count properties.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Select Case item.Type</SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine>mClassCount = mClassCount + 1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.FileType_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.FileType_</SourceLine>
    <SourceLine>mFileTypeCount = mFileTypeCount + 1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.ImageSet_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.ImageSet_</SourceLine>
    <SourceLine>mImageSetCount = mImageSetCount + 1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Interface_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Interface_</SourceLine>
    <SourceLine>mInterfaceCount = mInterfaceCount + 1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.MenuBar_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.MenuBar_</SourceLine>
    <SourceLine>mMenuBarCount = mMenuBarCount + 1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine>mModuleCount = mModuleCount + 1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.ToolBar_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.ToolBar_</SourceLine>
    <SourceLine>mToolBarCount = mToolBarCount + 1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case XojoKit.ObjectTypes.Window_</SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Window_</SourceLine>
    <SourceLine>mWindowCount = mWindowCount + 1</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -1485,7 +1485,7 @@
    <SourceLine>Get</SourceLine>
    <SourceLine>If Self.ItemContainers.Lookup(0, Nil) = Nil Then</SourceLine>
    <SourceLine>mRoot = New XKItem(Self)</SourceLine>
-   <SourceLine>mRoot.Type = XojoKit.ObjectTypes.Root</SourceLine>
+   <SourceLine>mRoot.Type = XojoKit.ItemTypes.Root</SourceLine>
    <SourceLine>mRoot.Name = "Project Root"</SourceLine>
    <SourceLine>mRoot.ID = 0</SourceLine>
    <SourceLine>mRoot.ParentID = -1</SourceLine>

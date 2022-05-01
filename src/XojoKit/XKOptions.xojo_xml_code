@@ -26,7 +26,7 @@
    <SourceLine>options.ExcludedFQNs.Add(fqn)</SourceLine>
    <SourceLine>Next fqn</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>For Each type As XojoKit.ObjectTypes In Self.ExcludedItemTypes</SourceLine>
+   <SourceLine>For Each type As XojoKit.ItemTypes In Self.ExcludedItemTypes</SourceLine>
    <SourceLine>options.ExcludedItemTypes.Add(type)</SourceLine>
    <SourceLine>Next type</SourceLine>
    <SourceLine></SourceLine>
@@ -107,11 +107,11 @@
   <PartID>281698303</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>ExcludedItemTypes() As XojoKit.ObjectTypes</SourceLine>
+   <SourceLine>ExcludedItemTypes() As XojoKit.ItemTypes</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>ExcludedItemTypes() As XojoKit.ObjectTypes</ItemDeclaration>
+  <ItemDeclaration>ExcludedItemTypes() As XojoKit.ItemTypes</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

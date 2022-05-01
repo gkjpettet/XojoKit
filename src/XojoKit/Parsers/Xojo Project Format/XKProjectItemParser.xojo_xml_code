@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="708849663">
  <ObjName>XKProjectItemParser</ObjName>
- <ObjContainerID>1057513471</ObjContainerID>
+ <ObjContainerID>97009663</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -25,7 +25,7 @@
    <SourceLine>mOptions = options</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Default to this item being a class.</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var tin As TextInputStream</SourceLine>
    <SourceLine>Var contents As String</SourceLine>
@@ -139,7 +139,7 @@
    <SourceLine>/// Scope             → PROTECTED | PRIVATE</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// The item must be a class.</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Class_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Sanity check.</SourceLine>
    <SourceLine>If i &gt;= lines.LastIndex Then</SourceLine>
@@ -946,7 +946,7 @@
    <SourceLine>/// Scope             → PROTECTED | PRIVATE</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// The file must be an interface.</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Interface_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Interface_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Sanity check.</SourceLine>
    <SourceLine>If i &gt;= lines.LastIndex Then</SourceLine>
@@ -1155,7 +1155,7 @@
    <SourceLine>/// Scope → PROTECTED | PRIVATE</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// The file must be a module.</SourceLine>
-   <SourceLine>item.Type = XojoKit.ObjectTypes.Module_</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Sanity check.</SourceLine>
    <SourceLine>If i &gt;= lines.LastIndex Then</SourceLine>

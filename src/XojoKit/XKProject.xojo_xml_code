@@ -199,6 +199,111 @@
    <SourceLine>Next item</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Do we need to remove excluded items?</SourceLine>
+   <SourceLine>If Options.RemoveExcludedItems Then</SourceLine>
+   <SourceLine>For i As Integer = Items.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If Items(i).IsExcluded Then</SourceLine>
+   <SourceLine>Items.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Do we need to remove excluded members?</SourceLine>
+   <SourceLine>If Options.RemoveExcludedMembers Then</SourceLine>
+   <SourceLine>For Each item As XKItem In Items</SourceLine>
+   <SourceLine>// Classes.</SourceLine>
+   <SourceLine>For i As Integer = item.Classes.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Classes(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Classes.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Computed properties.</SourceLine>
+   <SourceLine>For i As Integer = item.ComputedProperties.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.ComputedProperties(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.ComputedProperties.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Constants.</SourceLine>
+   <SourceLine>For i As Integer = item.Constants.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Constants(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Constants.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Delegates.</SourceLine>
+   <SourceLine>For i As Integer = item.Delegates.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Delegates(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Delegates.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Enums.</SourceLine>
+   <SourceLine>For i As Integer = item.Enums.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Enums(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Enums.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Event definitions.</SourceLine>
+   <SourceLine>For i As Integer = item.EventDefinitions.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.EventDefinitions(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.EventDefinitions.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Events.</SourceLine>
+   <SourceLine>For i As Integer = item.Events.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Events(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Events.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Interfaces.</SourceLine>
+   <SourceLine>For i As Integer = item.Interfaces.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Interfaces(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Interfaces.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Methods.</SourceLine>
+   <SourceLine>For i As Integer = item.Methods.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Methods(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Methods.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Modules.</SourceLine>
+   <SourceLine>For i As Integer = item.Modules.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Modules(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Modules.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Notes.</SourceLine>
+   <SourceLine>For i As Integer = item.Notes.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Notes(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Notes.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Properties.</SourceLine>
+   <SourceLine>For i As Integer = item.Properties.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Properties(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Properties.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Structures.</SourceLine>
+   <SourceLine>For i As Integer = item.Structures.LastIndex DownTo 0</SourceLine>
+   <SourceLine>If item.Structures(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Structures.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>Next item</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

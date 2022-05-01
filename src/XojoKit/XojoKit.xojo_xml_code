@@ -167,6 +167,63 @@
   <ItemParams>Extends type As XojoKit.MemberTypes</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
+ <Method>
+  <ItemName>ItemTypeFromString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns `s` as an item type. If `s` is invalid then an `XKException` is raised. Case insensitive.</CodeDescription>
+  <PartID>1727164415</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ItemTypeFromString(s As String) As XojoKit.ItemTypes</SourceLine>
+   <SourceLine>/// Returns `s` as an item type. If `s` is invalid then an `XKException` is raised. Case insensitive.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' class, interface, module, folder, root, window, menubar, toolbar, filetype, imageset</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case s</SourceLine>
+   <SourceLine>Case "class"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.Class_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "fileType"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.FileType_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "folder"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.Folder</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "imageSet"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.ImageSet_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "interface"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.Interface_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "menuBar"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.MenuBar_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "module"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.Module_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "root"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.Root</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "toolBar"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.ToolBar_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "window"</SourceLine>
+   <SourceLine>Return XojoKit.ItemTypes.Window_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New XKException("Unknown item type: " + s)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>XojoKit.ItemTypes</ItemResult>
+ </Method>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>

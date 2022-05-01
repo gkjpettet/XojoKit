@@ -178,8 +178,6 @@
    <SourceLine>Function ItemTypeFromString(s As String) As XojoKit.ItemTypes</SourceLine>
    <SourceLine>/// Returns `s` as an item type. If `s` is invalid then an `XKException` is raised. Case insensitive.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>' class, interface, module, folder, root, window, menubar, toolbar, filetype, imageset</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Select Case s</SourceLine>
    <SourceLine>Case "class"</SourceLine>
    <SourceLine>Return XojoKit.ItemTypes.Class_</SourceLine>
@@ -223,6 +221,61 @@
   <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>XojoKit.ItemTypes</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MemberTypeFromString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Returns `s` as a member type. If `s` is invalid then an `XKException` is raised. Case insensitive.</CodeDescription>
+  <PartID>1795524607</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function MemberTypeFromString(s As String) As XojoKit.MemberTypes</SourceLine>
+   <SourceLine>/// Returns `s` as a member type. If `s` is invalid then an `XKException` is raised. Case insensitive.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case s</SourceLine>
+   <SourceLine>Case "computedProperty"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.ComputedProperty_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "constant"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Constant_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "delegate"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Delegate_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "enum"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Enum_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "event"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Event_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "eventDefinition"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.EventDefinition_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "method"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Method_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "note"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Note_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "property"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Property_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "structure"</SourceLine>
+   <SourceLine>Return XojoKit.MemberTypes.Structure_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Raise New XKException("Unknown member type: " + s)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>XojoKit.MemberTypes</ItemResult>
  </Method>
  <ViewBehavior>
   <ViewProperty>

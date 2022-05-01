@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>530241535</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -1509,7 +1509,7 @@
   <PartID>1597429759</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property ContainsExternalItems As Boolean</SourceLine>
+   <SourceLine>ContainsExternalItems As Boolean</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1553,7 +1553,7 @@
   <PartID>1753765887</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property ClassCount As Integer</SourceLine>
+   <SourceLine>ClassCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1598,7 +1598,7 @@
   <PartID>1301868543</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property ModuleCount As Integer</SourceLine>
+   <SourceLine>ModuleCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1643,7 +1643,7 @@
   <PartID>596185087</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property InterfaceCount As Integer</SourceLine>
+   <SourceLine>InterfaceCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1688,7 +1688,7 @@
   <PartID>2036768767</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property FileTypeCount As Integer</SourceLine>
+   <SourceLine>FileTypeCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1733,7 +1733,7 @@
   <PartID>2056341503</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property ImageSetCount As Integer</SourceLine>
+   <SourceLine>ImageSetCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1779,7 +1779,7 @@
   <PartID>1614755839</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property WindowCount As Integer</SourceLine>
+   <SourceLine>WindowCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1825,7 +1825,7 @@
   <PartID>1449041919</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property ToolBarCount As Integer</SourceLine>
+   <SourceLine>ToolBarCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1871,7 +1871,7 @@
   <PartID>1367289855</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property MenuBarCount As Integer</SourceLine>
+   <SourceLine>MenuBarCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -2094,12 +2094,6 @@
   <ViewProperty>
    <ObjName>MenuBarCount</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>mMenuBarCount</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>

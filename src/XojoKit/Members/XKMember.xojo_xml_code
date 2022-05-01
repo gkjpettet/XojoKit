@@ -71,6 +71,22 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>Data</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Arbitrary data associated with the member.</CodeDescription>
+  <PartID>730204159</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Data As Variant</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Data As Variant</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -143,6 +159,17 @@
     <ItemDef>2 - Protected_</ItemDef>
     <ItemDef>3 - Global_</ItemDef>
    </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Signature</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Data</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

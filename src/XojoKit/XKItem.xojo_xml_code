@@ -796,6 +796,22 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>Data</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Arbitrary data associated with this item.</CodeDescription>
+  <PartID>423899135</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Data As Variant</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Data As Variant</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -869,6 +885,11 @@
     <ItemDef>2 - Module_</ItemDef>
     <ItemDef>3 - Folder</ItemDef>
     <ItemDef>4 - Root</ItemDef>
+    <ItemDef>5 - Window_</ItemDef>
+    <ItemDef>6 - MenuBar_</ItemDef>
+    <ItemDef>7 - ToolBar_</ItemDef>
+    <ItemDef>8 - FileType_</ItemDef>
+    <ItemDef>9 - ImageSet_</ItemDef>
    </Enumeration>
   </ViewProperty>
   <ViewProperty>
@@ -920,6 +941,12 @@
   </ViewProperty>
   <ViewProperty>
    <ObjName>IsApplicationObject</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsExcluded</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>

@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>2039191551</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -245,10 +245,10 @@
    <SourceLine>// =================================================</SourceLine>
    <SourceLine>// COMPUTE EACH ITEM'S PATH AND FULLY QUALIFIED NAME</SourceLine>
    <SourceLine>// =================================================</SourceLine>
+   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
    <SourceLine>Var path() As String</SourceLine>
    <SourceLine>Var fqn() As String // Will be concatenated to form the item's FQN.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>For Each item As XKItem In Self.Items</SourceLine>
    <SourceLine>If item.ParentId = 0 Then</SourceLine>
    <SourceLine>// This is an item at the root of the project.</SourceLine>
    <SourceLine>item.FQN = item.Name</SourceLine>
@@ -260,7 +260,9 @@
    <SourceLine>Var parents() As XKItem</SourceLine>
    <SourceLine>If current &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Do</SourceLine>
+   <SourceLine>If current.Type &lt;&gt; XojoKit.ObjectTypes.Root Then</SourceLine>
    <SourceLine>parents.Add(current)</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>current = Self.ItemContainers.Lookup(current.ParentID, Nil)</SourceLine>
    <SourceLine>Loop Until current Is Nil</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -283,8 +285,9 @@
    <SourceLine>item.Path = String.FromArray(path, ".").ReplaceAll("&gt;.", "&gt;")</SourceLine>
    <SourceLine>If item.Path.EndsWith("&gt;") Then item.Path = item.Path.TrimRight("&gt;")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// The fully qualifed name is a dot-separated path that excludes folders.</SourceLine>
+   <SourceLine>// The fully qualified name is a dot-separated path that excludes folders.</SourceLine>
    <SourceLine>item.FQN = String.FromArray(fqn, ".")</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Next item</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// =================================================</SourceLine>

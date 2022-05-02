@@ -157,7 +157,13 @@
   <GetAccessor>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
-   <SourceLine>Raise New UnsupportedOperationException("This should never be called by subclasses.")</SourceLine>
+   <SourceLine>If Self IsA XKComputedProperty Then</SourceLine>
+   <SourceLine>Return XKComputedProperty(Self).GetterLines.Count &gt; 0</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// Regular properties are always readable.</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
@@ -185,7 +191,13 @@
   <GetAccessor>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
-   <SourceLine>Raise New UnsupportedOperationException("This should never be called by subclasses.")</SourceLine>
+   <SourceLine>If Self IsA XKComputedProperty Then</SourceLine>
+   <SourceLine>Return XKComputedProperty(Self).SetterLines.Count &gt; 0</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// Regular properties are always writeable.</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>

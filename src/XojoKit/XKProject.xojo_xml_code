@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>2039191551</ObjContainerID>
+ <ObjContainerID>772347903</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -125,7 +125,12 @@
    <SourceLine>/// Parses the project file adhering to its set options.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>ParseManifest</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>ParseItems</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Clear out any references to items in Root that are excluded.</SourceLine>
+   <SourceLine>PurgeExcludedChildren(Self.Root)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>ComputeLineAndCommentCounts</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -450,6 +455,7 @@
    <SourceLine>// Sort this item's children alphabetically (folders first, then modules, then all other item types)</SourceLine>
    <SourceLine>current.Children.Sort(AddressOf ItemChildrenSortDelegate)</SourceLine>
    <SourceLine>Next entry</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1152,6 +1158,36 @@
    <SourceLine>Case XojoKit.ItemTypes.Window_</SourceLine>
    <SourceLine>mWindowCount = mWindowCount + 1</SourceLine>
    <SourceLine>End Select</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>item As XKItem</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PurgeExcludedChildren</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Loops through item's children, removing any that are marked as excluded.</CodeDescription>
+  <PartID>302759935</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PurgeExcludedChildren(item As XKItem)</SourceLine>
+   <SourceLine>/// Loops through item's children, removing any that are marked as excluded.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = item.Children.LastIndex DownTo 0</SourceLine>
+   <SourceLine>Var child As XKItem = item.Children(i)</SourceLine>
+   <SourceLine>If child.Children.Count &gt; 0 Then</SourceLine>
+   <SourceLine>PurgeExcludedChildren(child)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>If item.Children(i).IsExcluded Then</SourceLine>
+   <SourceLine>item.Children.RemoveAt(i)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

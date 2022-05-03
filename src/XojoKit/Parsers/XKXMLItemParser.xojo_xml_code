@@ -843,7 +843,6 @@
    <SourceLine>Var m As New XKMethod</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
-   <SourceLine>Var itemParams As String</SourceLine>
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
@@ -870,12 +869,12 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemParams"</SourceLine>
    <SourceLine>m.Parameters = ParseParametersNode(child)</SourceLine>
-   <SourceLine>itemParams = If(child.FirstChild = Nil, "", child.FirstChild.Value)</SourceLine>
+   <SourceLine>m.ParameterString = If(child.FirstChild = Nil, "", child.FirstChild.Value)</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Compute the signature.</SourceLine>
-   <SourceLine>m.Signature = m.Name + "(" + itemParams + ")" + If(m.ReturnType = "", "", " As " + m.ReturnType)</SourceLine>
+   <SourceLine>m.Signature = m.Name + "(" + m.ParameterString + ")" + If(m.ReturnType = "", "", " As " + m.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this member?</SourceLine>
    <SourceLine>m.IsExcluded = XKProject.ShouldExcludeMember(m, mOptions)</SourceLine>

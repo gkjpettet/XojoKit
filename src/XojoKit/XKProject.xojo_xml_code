@@ -129,7 +129,9 @@
    <SourceLine>ParseItems</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Clear out any references to items in Root that are excluded.</SourceLine>
+   <SourceLine>If Options.RemoveExcludedItems Then</SourceLine>
    <SourceLine>PurgeExcludedChildren(Self.Root)</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>ComputeLineAndCommentCounts</SourceLine>
    <SourceLine></SourceLine>

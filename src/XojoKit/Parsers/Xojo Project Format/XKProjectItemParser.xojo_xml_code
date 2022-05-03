@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="708849663">
  <ObjName>XKProjectItemParser</ObjName>
- <ObjContainerID>97009663</ObjContainerID>
+ <ObjContainerID>1057513471</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -69,7 +69,7 @@
    <SourceLine>item.Properties.Add(ParseProperty(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "ComputedProperty"</SourceLine>
-   <SourceLine>item.ComputedProperties.Add(ParseComputedProperty(tag, lines, i))</SourceLine>
+   <SourceLine>item.Properties.Add(ParseComputedProperty(tag, lines, i))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "Method"</SourceLine>
    <SourceLine>item.Methods.Add(ParseMethod(tag, lines, i))</SourceLine>
@@ -245,7 +245,7 @@
   <PartID>736511999</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function ParseComputedProperty(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKComputedProperty</SourceLine>
+   <SourceLine>Function ParseComputedProperty(tag As XKProjectItemTag, lines() As String, ByRef i As Integer) As XKProperty</SourceLine>
    <SourceLine>/// Parses a computed property from `lines` starting at `i` using the data within `tag`. </SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `lines(i)` is the "#tag ComputedProperty" line which has been parsed into `tag`.</SourceLine>
@@ -269,7 +269,8 @@
    <SourceLine>"parser reached the end.")</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Var cp As New XKComputedProperty</SourceLine>
+   <SourceLine>Var cp As New XKProperty(XojoKit.MemberTypes.ComputedProperty_)</SourceLine>
+   <SourceLine>cp.IsComputed = True</SourceLine>
    <SourceLine>cp.Description = tag.Description</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Advance past the #tag "ComputedProperty" line.</SourceLine>
@@ -343,7 +344,7 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>tag As XKProjectItemTag, lines() As String, ByRef i As Integer</ItemParams>
-  <ItemResult>XKComputedProperty</ItemResult>
+  <ItemResult>XKProperty</ItemResult>
  </Method>
  <Method>
   <ItemName>ParseConstant</ItemName>
@@ -1288,7 +1289,7 @@
    <SourceLine>Raise New XKException("Expected a property signature line but instead the parser reached the end.")</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Var prop As New XKProperty</SourceLine>
+   <SourceLine>Var prop As New XKProperty(XojoKit.MemberTypes.Property_)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Advance to first line after the #tag Property. It's likely the signature but could be a note tag.</SourceLine>
    <SourceLine>i = i + 1</SourceLine>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1258860543">
  <ObjName>XKItem</ObjName>
- <ObjContainerID>772347903</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -76,10 +76,12 @@
    <SourceLine>/// Computes the total number of user-written lines of code and comments.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Computed properties.</SourceLine>
-   <SourceLine>For Each cp As XKComputedProperty In Self.ComputedProperties</SourceLine>
-   <SourceLine>mCodeLineCount = mCodeLineCount + cp.CodeLineCount</SourceLine>
-   <SourceLine>mCommentCount = mCommentCount + cp.CommentCount</SourceLine>
-   <SourceLine>Next cp</SourceLine>
+   <SourceLine>For Each p As XKProperty In Self.Properties</SourceLine>
+   <SourceLine>If p.IsComputed Then</SourceLine>
+   <SourceLine>mCodeLineCount = mCodeLineCount + p.CodeLineCount</SourceLine>
+   <SourceLine>mCommentCount = mCommentCount + p.CommentCount</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next p</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Events.</SourceLine>
    <SourceLine>For Each e As XKEvent In Self.Events</SourceLine>
@@ -118,11 +120,6 @@
    <SourceLine>/// them for many developers as the IDE does not show their descriptions in the IDE.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var missing() As Variant</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Computed properties.</SourceLine>
-   <SourceLine>For Each cp As XKComputedProperty In Self.ComputedProperties</SourceLine>
-   <SourceLine>If cp.Description.IsEmpty Then missing.Add(cp)</SourceLine>
-   <SourceLine>Next cp</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Constants.</SourceLine>
    <SourceLine>For Each con As XKConstant In Self.Constants</SourceLine>
@@ -186,22 +183,6 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Attributes_() As Pair</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>ComputedProperties()</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>This item's computed properties. May be empty. Only classes and modules can have computed properties.</CodeDescription>
-  <PartID>318152703</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>ComputedProperties() As XKComputedProperty</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>ComputedProperties() As XKComputedProperty</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -820,7 +801,7 @@
   <PartID>1271926783</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property MemberCount As Integer</SourceLine>
+   <SourceLine>MemberCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -837,7 +818,6 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
    <SourceLine>Return _</SourceLine>
-   <SourceLine>ComputedProperties.Count + _</SourceLine>
    <SourceLine>Constants.Count + _</SourceLine>
    <SourceLine>Delegates.Count + _</SourceLine>
    <SourceLine>Enums.Count + _</SourceLine>
@@ -988,6 +968,11 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MemberCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

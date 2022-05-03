@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>772347903</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -222,13 +222,6 @@
    <SourceLine>For i As Integer = item.Classes.LastIndex DownTo 0</SourceLine>
    <SourceLine>If item.Classes(i).IsExcluded Then</SourceLine>
    <SourceLine>item.Classes.RemoveAt(i)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Next i</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Computed properties.</SourceLine>
-   <SourceLine>For i As Integer = item.ComputedProperties.LastIndex DownTo 0</SourceLine>
-   <SourceLine>If item.ComputedProperties(i).IsExcluded Then</SourceLine>
-   <SourceLine>item.ComputedProperties.RemoveAt(i)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
@@ -2154,18 +2147,6 @@
    <ObjName>CommentCount</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>FileFormat</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>XojoKit.FileFormats.Project</PropertyValue>
-   <ItemType>XojoKit.FileFormats</ItemType>
-   <EditorType>Enum</EditorType>
-   <Enumeration>
-    <ItemDef>0 - Project</ItemDef>
-    <ItemDef>1 - Unknown</ItemDef>
-    <ItemDef>2 - XML</ItemDef>
-   </Enumeration>
   </ViewProperty>
   <ViewProperty>
    <ObjName>NameMac</ObjName>

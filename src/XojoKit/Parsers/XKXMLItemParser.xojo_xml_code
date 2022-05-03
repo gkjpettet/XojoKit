@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
- <ObjContainerID>770533375</ObjContainerID>
+ <ObjContainerID>1087893503</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>XKItemParser</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -12,17 +12,15 @@
   <ItemName>FinishParsingComputedProperty</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <CodeDescription>Takes a partially parsed computed property and completes it by parsing the contents of the passed "Property" XML node.</CodeDescription>
   <PartID>1899919359</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function FinishParsingComputedProperty(absProp As XKAbstractProperty, node As XmlNode) As XKComputedProperty</SourceLine>
-   <SourceLine>/// Takes a partially parsed computed property as an abstract property and completes it by </SourceLine>
+   <SourceLine>Function FinishParsingComputedProperty(cp As XKProperty, node As XmlNode) As XKProperty</SourceLine>
+   <SourceLine>/// Takes a partially parsed computed property and completes it by </SourceLine>
    <SourceLine>/// parsing the contents of the passed "Property" XML node.</SourceLine>
    <SourceLine>///</SourceLine>
-   <SourceLine>/// Assumes `node` is a valid property node that was used to generate `prop`.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Clone the abstract property to a computed property.</SourceLine>
-   <SourceLine>Var cp As XKComputedProperty = XKComputedProperty.FromAbstractProperty(absProp)</SourceLine>
+   <SourceLine>/// Assumes `node` is a valid property node that was used to generate `p`.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
@@ -50,25 +48,22 @@
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>absProp As XKAbstractProperty, node As XmlNode</ItemParams>
-  <ItemResult>XKComputedProperty</ItemResult>
+  <ItemParams>cp As XKProperty, node As XmlNode</ItemParams>
+  <ItemResult>XKProperty</ItemResult>
  </Method>
  <Method>
   <ItemName>FinishParsingProperty</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Takes a partially parsed regular property as an abstract property and completes it by parsing the contents of the passed "Property" XML node.</CodeDescription>
+  <CodeDescription>Takes a partially parsed regular property that is known to not be a computed property and completes it by parsing the contents of the passed "Property" XML node.</CodeDescription>
   <PartID>1937420287</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function FinishParsingProperty(absProp As XKAbstractProperty, node As XmlNode) As XKProperty</SourceLine>
-   <SourceLine>/// Takes a partially parsed regular property as an abstract property and completes it by </SourceLine>
+   <SourceLine>Function FinishParsingProperty(prop As XKProperty, node As XmlNode) As XKProperty</SourceLine>
+   <SourceLine>/// Takes a partially parsed regular property that is known to not be a computed property and completes it by </SourceLine>
    <SourceLine>/// parsing the contents of the passed "Property" XML node.</SourceLine>
    <SourceLine>///</SourceLine>
    <SourceLine>/// Assumes `node` is a valid property node that was used to generate `prop`.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Clone the abstract property to a computed property.</SourceLine>
-   <SourceLine>Var prop As XKProperty = XKProperty.FromAbstractProperty(absProp)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>prop.IsArray = If(prop.Name.IndexOf("(") = -1, False, True)</SourceLine>
    <SourceLine></SourceLine>
@@ -94,7 +89,7 @@
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>absProp As XKAbstractProperty, node As XmlNode</ItemParams>
+  <ItemParams>prop As XKProperty, node As XmlNode</ItemParams>
   <ItemResult>XKProperty</ItemResult>
  </Method>
  <Method>
@@ -149,11 +144,11 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "Property"</SourceLine>
    <SourceLine>// Could be either a regular property or a computed property.</SourceLine>
-   <SourceLine>Var prop As XKAbstractProperty = ParseAbstractProperty(node)</SourceLine>
+   <SourceLine>Var prop As XKProperty = ParseProperty(node)</SourceLine>
    <SourceLine>If prop &lt;&gt; Nil Then</SourceLine>
    <SourceLine>If prop.IsComputed Then</SourceLine>
    <SourceLine>// Parse the rest of the node for the computed property specific data.</SourceLine>
-   <SourceLine>item.ComputedProperties.Add(FinishParsingComputedProperty(prop, node))</SourceLine>
+   <SourceLine>item.Properties.Add(FinishParsingComputedProperty(prop, node))</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>// Parse the rest of the node for the regular property specific data.</SourceLine>
    <SourceLine>item.Properties.Add(FinishParsingProperty(prop, node))</SourceLine>
@@ -201,19 +196,19 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>ParseAbstractProperty</ItemName>
+  <ItemName>ParseProperty</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <CodeDescription>Takes a "Property" XML node and returns an abstract property comprising the common data of both regular and computed properties.</CodeDescription>
   <PartID>1031852031</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function ParseAbstractProperty(node As XmlNode) As XKAbstractProperty</SourceLine>
-   <SourceLine>/// Takes a "Property" XML node and returns an abstract property comprising the common data of both </SourceLine>
+   <SourceLine>Function ParseProperty(node As XmlNode) As XKProperty</SourceLine>
+   <SourceLine>/// Takes a "Property" XML node and returns a property comprising the common data of both </SourceLine>
    <SourceLine>/// regular and computed properties.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Var prop As New XKAbstractProperty</SourceLine>
-   <SourceLine>prop.IsComputed = False</SourceLine>
+   <SourceLine>// Default to a regular property.</SourceLine>
+   <SourceLine>Var prop As New XKProperty(XojoKit.MemberTypes.Property_)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If node = Nil Then Return Nil</SourceLine>
    <SourceLine></SourceLine>
@@ -252,6 +247,11 @@
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// If this is a computed property, update its type to match.</SourceLine>
+   <SourceLine>If prop.IsComputed Then</SourceLine>
+   <SourceLine>prop.MemberType = XojoKit.MemberTypes.ComputedProperty_</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Exclude this member?</SourceLine>
    <SourceLine>prop.IsExcluded = XKProject.ShouldExcludeMember(prop, mOptions)</SourceLine>
    <SourceLine></SourceLine>
@@ -265,7 +265,7 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>node As XmlNode</ItemParams>
-  <ItemResult>XKAbstractProperty</ItemResult>
+  <ItemResult>XKProperty</ItemResult>
  </Method>
  <Method>
   <ItemName>ParseAttributesNode</ItemName>

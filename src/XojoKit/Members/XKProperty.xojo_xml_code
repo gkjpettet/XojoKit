@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="440838143">
  <ObjName>XKProperty</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>217157631</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>XKMember</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -315,22 +315,6 @@
   </GetAccessor>
  </Property>
  <Property>
-  <ItemName>Name</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>This property's name.</CodeDescription>
-  <PartID>1138442239</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Name As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Name As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>NoteLines()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -364,12 +348,6 @@
  </Property>
  <ViewBehavior>
   <ViewProperty>
-   <ObjName>Signature</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>String</ItemType>
-   <EditorType>MultiLineEditor</EditorType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>MemberType</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>XojoKit.MemberTypes.Unknown</PropertyValue>
@@ -388,6 +366,25 @@
     <ItemDef>9 - Note_</ItemDef>
     <ItemDef>10 - Unknown</ItemDef>
    </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Scope</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
+   <ItemType>XojoKit.Scopes</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Public_</ItemDef>
+    <ItemDef>1 - Private_</ItemDef>
+    <ItemDef>2 - Protected_</ItemDef>
+    <ItemDef>3 - Global_</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Signature</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>IsExcluded</ObjName>
@@ -418,19 +415,6 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Scope</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
-   <ItemType>XojoKit.Scopes</ItemType>
-   <EditorType>Enum</EditorType>
-   <Enumeration>
-    <ItemDef>0 - Public_</ItemDef>
-    <ItemDef>1 - Private_</ItemDef>
-    <ItemDef>2 - Protected_</ItemDef>
-    <ItemDef>3 - Global_</ItemDef>
-   </Enumeration>
   </ViewProperty>
   <ViewProperty>
    <ObjName>IsReadable</ObjName>

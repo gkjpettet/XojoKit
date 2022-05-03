@@ -104,22 +104,6 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Name</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>The method's name.</CodeDescription>
-  <PartID>1548677119</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Name As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Name As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>Parameters()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -352,6 +336,12 @@
    <ObjName>CommentCount</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ParameterString</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
  </ViewBehavior>
 </block>

@@ -87,6 +87,22 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>Name</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>This member's name.</CodeDescription>
+  <PartID>960161791</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Name As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Name As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -128,6 +144,12 @@
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
+   <ObjName>Signature</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
    <ObjName>MemberType</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>XojoKit.MemberTypes.Unknown</PropertyValue>
@@ -159,17 +181,6 @@
     <ItemDef>2 - Protected_</ItemDef>
     <ItemDef>3 - Global_</ItemDef>
    </Enumeration>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Signature</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>String</ItemType>
-   <EditorType>MultiLineEditor</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Data</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

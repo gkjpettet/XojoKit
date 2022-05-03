@@ -72,22 +72,6 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Name</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>The delegate's name.</CodeDescription>
-  <PartID>974643199</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Name As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Name As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>Parameters()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -132,13 +116,32 @@
     <ItemDef>2 - Method_</ItemDef>
     <ItemDef>3 - Enum_</ItemDef>
     <ItemDef>4 - Event_</ItemDef>
-    <ItemDef>5 - EventDefiniition_</ItemDef>
+    <ItemDef>5 - EventDefinition_</ItemDef>
     <ItemDef>6 - Delegate_</ItemDef>
     <ItemDef>7 - ComputedProperty_</ItemDef>
     <ItemDef>8 - Structure_</ItemDef>
     <ItemDef>9 - Note_</ItemDef>
     <ItemDef>10 - Unknown</ItemDef>
    </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Scope</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
+   <ItemType>XojoKit.Scopes</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Public_</ItemDef>
+    <ItemDef>1 - Private_</ItemDef>
+    <ItemDef>2 - Protected_</ItemDef>
+    <ItemDef>3 - Global_</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Signature</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>IsExcluded</ObjName>
@@ -195,19 +198,6 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>String</ItemType>
    <EditorType>MultiLineEditor</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Scope</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>XojoKit.Scopes.Public_</PropertyValue>
-   <ItemType>XojoKit.Scopes</ItemType>
-   <EditorType>Enum</EditorType>
-   <Enumeration>
-    <ItemDef>0 - Public_</ItemDef>
-    <ItemDef>1 - Private_</ItemDef>
-    <ItemDef>2 - Protected_</ItemDef>
-    <ItemDef>3 - Global_</ItemDef>
-   </Enumeration>
   </ViewProperty>
  </ViewBehavior>
 </block>

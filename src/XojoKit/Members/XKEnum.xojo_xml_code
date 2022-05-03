@@ -27,22 +27,6 @@
   <ItemResult></ItemResult>
  </Method>
  <Property>
-  <ItemName>Description</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>The enumeration's IDE description. May be empty.</CodeDescription>
-  <PartID>82849791</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Description As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Description As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>IsBinary</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -74,23 +58,13 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
- <Property>
-  <ItemName>Attributes_()</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>This enum's optional attributes as key/value pairs. Left = Key (String), Right = Value (String).</CodeDescription>
-  <PartID>1923196927</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Attributes_() As Pair</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Attributes_() As Pair</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Description</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>MemberType</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
@@ -174,12 +148,6 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Description</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>String</ItemType>
-   <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
  </ViewBehavior>
 </block>

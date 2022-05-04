@@ -566,8 +566,8 @@
    <SourceLine></SourceLine>
    <SourceLine>d.Description = tag.Description</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Compute the delegate's signature.</SourceLine>
-   <SourceLine>d.Signature = ComputeDelegateSignature(d)</SourceLine>
+   <SourceLine>// Compute the delegate's signature and parameter string.</SourceLine>
+   <SourceLine>ComputeDelegateSignatureAndParameterString(d)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this member?</SourceLine>
    <SourceLine>d.IsExcluded = XKProject.ShouldExcludeMember(d, mOptions)</SourceLine>
@@ -1637,6 +1637,40 @@
   <IsShared>0</IsShared>
   <ItemParams>d As XKDelegate</ItemParams>
   <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeDelegateSignatureAndParameterString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Computes and assigns the passed delegate's user-facing signature (less decorations like attributes, etc) and its `parameterString`.</CodeDescription>
+  <PartID>809140223</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ComputeDelegateSignatureAndParameterString(ByRef d As XKDelegate)</SourceLine>
+   <SourceLine>/// Computes and assigns the passed delegate's user-facing signature (less decorations like attributes, etc) and</SourceLine>
+   <SourceLine>/// its `parameterString`.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>d.Signature = d.Name + "("</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 0 To d.Parameters.LastIndex</SourceLine>
+   <SourceLine>Var p As XKParameter = d.Parameters(i)</SourceLine>
+   <SourceLine>d.ParameterString = d.ParameterString + p.ToString + If(i &lt; d.Parameters.LastIndex, ", ", "")</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>d.Signature = d.Signature + d.ParameterString + ")"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If d.ReturnType &lt;&gt; "" Then</SourceLine>
+   <SourceLine>d.Signature = d.Signature + " As " + d.ReturnType</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>ByRef d As XKDelegate</ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>

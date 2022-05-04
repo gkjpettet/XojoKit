@@ -669,7 +669,6 @@
    <SourceLine>Var ed As NEw XKEventDefinition</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
-   <SourceLine>Var itemParams As String</SourceLine>
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
    <SourceLine>Select Case child.Name</SourceLine>
@@ -684,16 +683,14 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "ItemParams"</SourceLine>
    <SourceLine>ed.Parameters = ParseParametersNode(child)</SourceLine>
-   <SourceLine>itemParams = If(child.FirstChild = Nil, "", child.FirstChild.Value)</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>ed.ParameterString = If(child.FirstChild = Nil, "", child.FirstChild.Value)</SourceLine>
    <SourceLine>Case "ItemResult"</SourceLine>
    <SourceLine>ed.ReturnType = If(child.FirstChild &lt;&gt; Nil, child.FirstChild.Value, "")</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Compute the signature.</SourceLine>
-   <SourceLine>ed.Signature = ed.Name + "(" + itemParams + ")" + If(ed.ReturnType = "", "", " As " + ed.ReturnType)</SourceLine>
+   <SourceLine>ed.Signature = ed.Name + "(" + ed.ParameterString + ")" + If(ed.ReturnType = "", "", " As " + ed.ReturnType)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this member?</SourceLine>
    <SourceLine>ed.IsExcluded = XKProject.ShouldExcludeMember(ed, mOptions)</SourceLine>

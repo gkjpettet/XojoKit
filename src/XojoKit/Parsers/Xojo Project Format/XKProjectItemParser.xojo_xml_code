@@ -838,8 +838,8 @@
    <SourceLine></SourceLine>
    <SourceLine>ed.Description = tag.Description</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Compute the event definition's signature.</SourceLine>
-   <SourceLine>ed.Signature = ComputeEventDefinitionSignature(ed)</SourceLine>
+   <SourceLine>// Compute the event definition's signature and parameter string.</SourceLine>
+   <SourceLine>ComputeEventDefinitionSignatureAndParameterString(ed)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Exclude this member?</SourceLine>
    <SourceLine>ed.IsExcluded = XKProject.ShouldExcludeMember(ed, mOptions)</SourceLine>
@@ -1572,38 +1572,38 @@
   <ItemResult>String</ItemResult>
  </Method>
  <Method>
-  <ItemName>ComputeEventDefinitionSignature</ItemName>
+  <ItemName>ComputeEventDefinitionSignatureAndParameterString</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <CodeDescription>Computes and returns the passed event definition's user-facing signature (less decorations like attributes, etc).</CodeDescription>
+  <CodeDescription>Computes and assigns the passed event definition's user-facing signature (less decorations like attributes, etc) and its `parameterString`.</CodeDescription>
   <PartID>1740480511</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function ComputeEventDefinitionSignature(e As XKEventDefinition) As String</SourceLine>
-   <SourceLine>/// Computes and returns the passed event definition's user-facing signature (less decorations </SourceLine>
-   <SourceLine>/// like attributes, etc).</SourceLine>
+   <SourceLine>Sub ComputeEventDefinitionSignatureAndParameterString(ByRef e As XKEventDefinition)</SourceLine>
+   <SourceLine>/// Computes and assigns the passed event definition's user-facing signature (less decorations like attributes, etc) and</SourceLine>
+   <SourceLine>/// its `parameterString`.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Var sig as String = e.Name + "("</SourceLine>
+   <SourceLine>e.Signature = e.Name + "("</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i As Integer = 0 To e.Parameters.LastIndex</SourceLine>
    <SourceLine>Var p As XKParameter = e.Parameters(i)</SourceLine>
-   <SourceLine>sig = sig + p.ToString + If(i &lt; e.Parameters.LastIndex, ", ", "")</SourceLine>
+   <SourceLine>e.ParameterString = e.ParameterString + p.ToString + If(i &lt; e.Parameters.LastIndex, ", ", "")</SourceLine>
    <SourceLine>Next i</SourceLine>
-   <SourceLine>sig = sig + ")"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>e.Signature = e.Signature + e.ParameterString + ")"</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>If e.ReturnType &lt;&gt; "" Then</SourceLine>
-   <SourceLine>sig = sig + " As " + e.ReturnType</SourceLine>
+   <SourceLine>e.Signature = e.Signature + " As " + e.ReturnType</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Return sig</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
+   <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>e As XKEventDefinition</ItemParams>
-  <ItemResult>String</ItemResult>
+  <ItemParams>ByRef e As XKEventDefinition</ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Method>
   <ItemName>ComputeDelegateSignature</ItemName>

@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>2068469759</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -414,7 +414,7 @@
    <SourceLine></SourceLine>
    <SourceLine>// Exclude any items in the option's list of excluded paths.</SourceLine>
    <SourceLine>For Each excludedPath As String In Options.ExcludedPaths</SourceLine>
-   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Then</SourceLine>
+   <SourceLine>If item.Path.IndexOf(excludedPath) &lt;&gt; -1 Or (item.Path = "" And item.Name = excludedPath) Then</SourceLine>
    <SourceLine>Self.Items(i).IsExcluded = True</SourceLine>
    <SourceLine>If Self.ItemContainers.HasKey(item.ID) Then</SourceLine>
    <SourceLine>XKItem(Self.ItemContainers.Value(item.ID)).IsExcluded = True</SourceLine>
@@ -1491,44 +1491,6 @@
   </GetAccessor>
  </Property>
  <Property>
-  <ItemName>Root</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>The "virtual" root item. It contains all other items in the project.</CodeDescription>
-  <PartID>821686271</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Root As XKItem</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Root As XKItem</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <SetAccessor>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Set</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Set</SourceLine>
-  </SetAccessor>
-  <GetAccessor>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Get</SourceLine>
-   <SourceLine>If Self.ItemContainers.Lookup(0, Nil) = Nil Then</SourceLine>
-   <SourceLine>mRoot = New XKItem(Self)</SourceLine>
-   <SourceLine>mRoot.Type = XojoKit.ItemTypes.Root</SourceLine>
-   <SourceLine>mRoot.Name = "Project Root"</SourceLine>
-   <SourceLine>mRoot.ID = 0</SourceLine>
-   <SourceLine>mRoot.ParentID = -1</SourceLine>
-   <SourceLine>Return mRoot</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Return Self.ItemContainers.Value(0)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Get</SourceLine>
-  </GetAccessor>
- </Property>
- <Property>
   <ItemName>ItemContainers</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -1541,22 +1503,6 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>ItemContainers As Dictionary</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>mRoot</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>The "virtual" root item that contains all other items in the project.</CodeDescription>
-  <PartID>163301375</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mRoot As XKItem</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mRoot As XKItem</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -2048,6 +1994,62 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>Root</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The "virtual" root item. It contains all other items in the project.</CodeDescription>
+  <PartID>757733375</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Root As XKItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Root As XKItem</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>If Self.ItemContainers.Lookup(0, Nil) = Nil Then</SourceLine>
+   <SourceLine>mRoot = New XKItem(Self)</SourceLine>
+   <SourceLine>mRoot.Type = XojoKit.ItemTypes.Root</SourceLine>
+   <SourceLine>mRoot.Name = "Project Root"</SourceLine>
+   <SourceLine>mRoot.ID = 0</SourceLine>
+   <SourceLine>mRoot.ParentID = -1</SourceLine>
+   <SourceLine>'Return mRoot</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>mRoot = Self.ItemContainers.Value(0)</SourceLine>
+   <SourceLine>'Return Self.ItemContainers.Value(0)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return mRoot</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mRoot</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The "virtual" root item that contains all other items in the project.</CodeDescription>
+  <PartID>1009020927</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mRoot As XKItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mRoot As XKItem</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -2222,6 +2224,18 @@
    <ObjName>MenuBarCount</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FileFormat</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>XojoKit.FileFormats.Project</PropertyValue>
+   <ItemType>XojoKit.FileFormats</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Project</ItemDef>
+    <ItemDef>1 - Unknown</ItemDef>
+    <ItemDef>2 - XML</ItemDef>
+   </Enumeration>
   </ViewProperty>
  </ViewBehavior>
 </block>

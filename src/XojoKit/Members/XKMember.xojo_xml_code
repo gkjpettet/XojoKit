@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="546156543">
  <ObjName>XKMember</ObjName>
  <ObjContainerID>217157631</ObjContainerID>

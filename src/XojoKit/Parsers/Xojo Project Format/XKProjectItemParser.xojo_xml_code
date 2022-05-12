@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="708849663">
  <ObjName>XKProjectItemParser</ObjName>
  <ObjContainerID>1057513471</ObjContainerID>
@@ -1106,7 +1106,7 @@
    <SourceLine>m.Description = tag.Description</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>While i &lt;= lines.LastIndex</SourceLine>
-   <SourceLine>Var line As String = lines(i).Trim(&amp;u09)</SourceLine>
+   <SourceLine>Var line As String = lines(i).TrimLeft(&amp;u09)</SourceLine>
    <SourceLine>If line.BeginsWith("End Sub") Or line.BeginsWith("End Function") Or line.BeginsWith("#tag") Then Exit</SourceLine>
    <SourceLine>m.Lines.Add(line)</SourceLine>
    <SourceLine>i = i + 1</SourceLine>

@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1978705919">
  <ObjName>XKMethod</ObjName>
- <ObjContainerID>217157631</ObjContainerID>
+ <ObjContainerID>613568511</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>XKMember</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -40,22 +40,6 @@
   <ItemFlags>0</ItemFlags>
  </Note>
  <Property>
-  <ItemName>IsShared</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>If True then this is shared method. If False, it is an instance method.</CodeDescription>
-  <PartID>1192134655</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>IsShared As Boolean = False</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>IsShared As Boolean = False</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>Lines()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -68,38 +52,6 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Lines() As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>Parameters()</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>This method's optional parameters.</CodeDescription>
-  <PartID>1637871615</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Parameters() As XKParameter</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Parameters() As XKParameter</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>ReturnType</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>The method's optional return type. If there is no return type then technically this is a "Sub".</CodeDescription>
-  <PartID>1161775103</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>ReturnType As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>ReturnType As String</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -176,22 +128,6 @@
    <SourceLine></SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
- </Property>
- <Property>
-  <ItemName>ParameterString</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>This method's parameters as a concatenated string (e.g. "s As String, i As Integer").</CodeDescription>
-  <PartID>67448831</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>ParameterString As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>ParameterString As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
   <ViewProperty>
@@ -282,12 +218,6 @@
    <ObjName>Name</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>String</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>IsShared</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>False</PropertyValue>
-   <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>ReturnType</ObjName>

@@ -2,7 +2,7 @@
 <RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="440838143">
  <ObjName>XKProperty</ObjName>
- <ObjContainerID>217157631</ObjContainerID>
+ <ObjContainerID>613568511</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>XKMember</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -233,22 +233,6 @@
   </GetAccessor>
  </Property>
  <Property>
-  <ItemName>IsShared</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <CodeDescription>If True then this is a shared property. Only classes have shared properties.</CodeDescription>
-  <PartID>293945343</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>IsShared As Boolean = False</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>IsShared As Boolean = False</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>IsWriteable</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -315,6 +299,18 @@
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>ParameterString</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ReturnType</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>Description</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>

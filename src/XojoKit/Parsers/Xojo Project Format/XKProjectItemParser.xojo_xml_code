@@ -1237,7 +1237,7 @@
    <SourceLine>// Get the contents of the note.</SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>While i &lt;= lines.LastIndex</SourceLine>
-   <SourceLine>Var line As String = lines(i).Trim</SourceLine>
+   <SourceLine>Var line As String = lines(i).TrimLeft</SourceLine>
    <SourceLine>If line.BeginsWith("#tag EndNote") Then Exit</SourceLine>
    <SourceLine>note.Lines.Add(line)</SourceLine>
    <SourceLine>i = i + 1</SourceLine>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2022r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
  <ObjContainerID>1087893503</ObjContainerID>
@@ -979,6 +979,7 @@
    <SourceLine>Var p As New XKParameter</SourceLine>
    <SourceLine>p.DefaultValue = paramRx.NamedGroups.Lookup("default", "")</SourceLine>
    <SourceLine>p.IsParamArray = If(paramRx.NamedGroups.Lookup("isParamArray", "") = "", False, True)</SourceLine>
+   <SourceLine>p.IsAssigns = If(paramRx.NamedGroups.Lookup("isAssigns", "") = "", False, True)</SourceLine>
    <SourceLine>p.Name = paramRx.NamedGroups.Lookup("name", "")</SourceLine>
    <SourceLine>p.IsArray = If(p.Name.IndexOf("(") = -1, False, True)</SourceLine>
    <SourceLine>p.Type = paramRx.NamedGroups.Lookup("type", "")</SourceLine>
@@ -1306,7 +1307,7 @@
   <PartID>99684351</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>0</ItemType>
-  <ItemDef>(?P&lt;isParamArray&gt;ParamArray)?\s?(?P&lt;name&gt;[a-z0-9_\.]+(?:\(.*\))?)\sAs\s(?P&lt;type&gt;[a-z0-9_\.]+)(?:\s=\s)?(?P&lt;default&gt;[a-z0-9._"\-\s]+)?</ItemDef>
+  <ItemDef>(?P&lt;isParamArray&gt;ParamArray)?(?P&lt;isAssigns&gt;Assigns)?\s?(?P&lt;name&gt;[a-z0-9_\.]+(?:\(.*\))?)\sAs\s(?P&lt;type&gt;[a-z0-9_\.]+)(?:\s=\s)?(?P&lt;default&gt;[a-z0-9._"\-\s]+)?</ItemDef>
   <ItemFlags>33</ItemFlags>
  </Constant>
 </block>

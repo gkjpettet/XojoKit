@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="396412927">
  <ObjName>XKParameter</ObjName>
  <ObjContainerID>530241535</ObjContainerID>
@@ -61,7 +61,11 @@
    <SourceLine></SourceLine>
    <SourceLine>Var s As String</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Self.IsParamArray Then s = s + "ParamArray "</SourceLine>
+   <SourceLine>If Self.IsParamArray Then</SourceLine>
+   <SourceLine>s = s + "ParamArray "</SourceLine>
+   <SourceLine>ElseIf Self.IsAssigns Then</SourceLine>
+   <SourceLine>s = s + "Assigns "</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>s = s + Self.Name + " As "</SourceLine>
    <SourceLine></SourceLine>
@@ -168,6 +172,22 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Type As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>IsAssigns</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>True if this is an assignment parameter (i.e. declared with the `Assigns` keyword).</CodeDescription>
+  <PartID>404135935</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>IsAssigns As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>IsAssigns As Boolean = False</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

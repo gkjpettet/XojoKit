@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>2068469759</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -155,6 +155,8 @@
    <SourceLine>Sub ParseItems()</SourceLine>
    <SourceLine>/// Parses those items in the project manifest that have not been excluded. </SourceLine>
    <SourceLine>/// Assumes `ParseManifest` has already executed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma Warning "TODO: Handle external methods"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i As Integer = Items.LastIndex DownTo 0</SourceLine>
    <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>

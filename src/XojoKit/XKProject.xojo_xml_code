@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>530241535</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -155,8 +155,6 @@
    <SourceLine>Sub ParseItems()</SourceLine>
    <SourceLine>/// Parses those items in the project manifest that have not been excluded. </SourceLine>
    <SourceLine>/// Assumes `ParseManifest` has already executed.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Handle external methods"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i As Integer = Items.LastIndex DownTo 0</SourceLine>
    <SourceLine>Var item As XKItem = Self.Items(i)</SourceLine>
@@ -338,10 +336,12 @@
    <SourceLine>Select Case Self.Manifest.NameExtensionMBS</SourceLine>
    <SourceLine>Case "xojo_project"</SourceLine>
    <SourceLine>Self.FileFormat = XojoKit.FileFormats.Project</SourceLine>
+   <SourceLine>Self.Name = Self.Manifest.NameWithoutExtensionMBS</SourceLine>
    <SourceLine>ParseProjectManifest</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "xojo_xml_project"</SourceLine>
    <SourceLine>Self.FileFormat = XojoKit.FileFormats.XML</SourceLine>
+   <SourceLine>Self.Name = Self.Manifest.NameWithoutExtensionMBS</SourceLine>
    <SourceLine>ParseXMLManifest</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
@@ -2052,6 +2052,51 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>Name</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The name of the project.</CodeDescription>
+  <PartID>828788735</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Name As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Name As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>TotalLineCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>The total number of lines of code in the project (including comments).</CodeDescription>
+  <PartID>38139903</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property TotalLineCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>TotalLineCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return mCodeLineCount + mCommentCount</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -2238,6 +2283,16 @@
     <ItemDef>1 - Unknown</ItemDef>
     <ItemDef>2 - XML</ItemDef>
    </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TotalLineCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="479965183">
  <ObjName>XojoKit</ObjName>
- <ObjContainerID>2039191551</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -89,17 +89,35 @@
    <SourceLine>Case XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine>Return "class"</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.FileType_</SourceLine>
+   <SourceLine>Return "fileType"</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ItemTypes.Folder</SourceLine>
    <SourceLine>Return "folder"</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.ImageSet_</SourceLine>
+   <SourceLine>Return "imageSet"</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ItemTypes.Interface_</SourceLine>
    <SourceLine>Return "interface"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.MenuBar_</SourceLine>
+   <SourceLine>Return "menuBar"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine>Return "module"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case XojoKit.ItemTypes.Root</SourceLine>
    <SourceLine>Return "root"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.ToolBar_</SourceLine>
+   <SourceLine>Return "toolBar"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Unknown</SourceLine>
+   <SourceLine>Return "unknown"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case XojoKit.ItemTypes.Window_</SourceLine>
+   <SourceLine>Return "window"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Raise New InvalidArgumentException("Unknown item type.")</SourceLine>
@@ -327,6 +345,7 @@
    <SourceLine>Project</SourceLine>
    <SourceLine>Unknown</SourceLine>
    <SourceLine>XML</SourceLine>
+   <SourceLine>Window</SourceLine>
   </ItemSource>
  </Enumeration>
  <Enumeration>
@@ -351,6 +370,7 @@
    <SourceLine>ToolBar_</SourceLine>
    <SourceLine>FileType_</SourceLine>
    <SourceLine>ImageSet_</SourceLine>
+   <SourceLine>Unknown</SourceLine>
   </ItemSource>
  </Enumeration>
  <Enumeration>

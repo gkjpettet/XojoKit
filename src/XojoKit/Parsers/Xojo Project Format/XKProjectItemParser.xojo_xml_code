@@ -62,6 +62,9 @@
    <SourceLine>Case "Module"</SourceLine>
    <SourceLine>ParseModuleTag(item, lines, i)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Case "WindowCode"</SourceLine>
+   <SourceLine>ParseWindowCodeTag(item, lines, i)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Case "Interface"</SourceLine>
    <SourceLine>ParseInterfaceTag(item, lines, i)</SourceLine>
    <SourceLine></SourceLine>
@@ -73,6 +76,10 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "Method"</SourceLine>
    <SourceLine>item.Methods.Add(ParseMethod(tag, lines, i))</SourceLine>
+   <SourceLine>// Ensure that interfaces methods are empty.</SourceLine>
+   <SourceLine>If item.Type = XojoKit.ItemTypes.Interface_ Then</SourceLine>
+   <SourceLine>item.Methods(item.Methods.LastIndex).Lines.RemoveAll</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "DelegateDeclaration"</SourceLine>
    <SourceLine>item.Delegates.Add(ParseDelegate(tag, lines, i))</SourceLine>
@@ -96,7 +103,6 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "Structure"</SourceLine>
    <SourceLine>item.Structures.Add(ParseStructure(tag, lines, i))</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
@@ -1109,7 +1115,7 @@
    <SourceLine>While i &lt;= lines.LastIndex</SourceLine>
    <SourceLine>Var line As String = lines(i).TrimLeft(&amp;u09)</SourceLine>
    <SourceLine>If line.BeginsWith("End Sub") Or line.BeginsWith("End Function") Or line.BeginsWith("#tag") Then Exit</SourceLine>
-   <SourceLine>m.Lines.Add(line)</SourceLine>
+   <SourceLine>m.Lines.Add(line.Trim)</SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
@@ -1671,6 +1677,44 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>ByRef d As XKDelegate</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseWindowCodeTag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses a WindowCode tag. Mutates `i`. May raise a `XKException`.</CodeDescription>
+  <PartID>1140961279</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseWindowCodeTag(ByRef item As XKItem, lines() As String, ByRef i As Integer)</SourceLine>
+   <SourceLine>/// Parses a WindowCode tag. Mutates `i`. May raise a `XKException`.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Assumes `lines` is the contents of `file`.</SourceLine>
+   <SourceLine>/// Assumes `i` is the index in `lines` of a "#tag WindowCode" line.</SourceLine>
+   <SourceLine>/// Sets the required properties on `item` for this window.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// #tag WindowCode format:</SourceLine>
+   <SourceLine>/// ```</SourceLine>
+   <SourceLine>/// #tag WindowCode</SourceLine>
+   <SourceLine>/// ...</SourceLine>
+   <SourceLine>/// #tag EndWindowCode</SourceLine>
+   <SourceLine>/// ```</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma Unused item</SourceLine>
+   <SourceLine>#Pragma Unused lines</SourceLine>
+   <SourceLine>#Pragma Unused i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The item must be a window.</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Window_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>ByRef item As XKItem, lines() As String, ByRef i As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Note>

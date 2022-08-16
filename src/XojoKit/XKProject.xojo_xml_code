@@ -2,7 +2,7 @@
 <RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1868421119">
  <ObjName>XKProject</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>530241535</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -559,13 +559,17 @@
    <SourceLine>Case "OrigIDEVersion"</SourceLine>
    <SourceLine>Self.OriginalIDEVersion = value</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Case "Class", "Module", "Interface"</SourceLine>
+   <SourceLine>Case "Class", "Module", "Interface", "DesktopWindow", "Window"</SourceLine>
    <SourceLine>// Assert that the path is a known xojo file format.</SourceLine>
    <SourceLine>Var fileFormat As XojoKit.FileFormats = XojoKit.FileFormats.Unknown</SourceLine>
    <SourceLine>If components(COMPONENT_PATH).EndsWith(".xojo_code") Then</SourceLine>
    <SourceLine>fileFormat = XojoKit.FileFormats.Project</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>ElseIf components(COMPONENT_PATH).EndsWith(".xojo_xml_code") Then</SourceLine>
    <SourceLine>fileFormat = XojoKit.FileFormats.XML</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ElseIf components(COMPONENT_PATH).EndsWith(".xojo_window") Then</SourceLine>
+   <SourceLine>fileFormat = XojoKit.FileFormats.Window</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If fileFormat = XojoKit.FileFormats.Unknown Then</SourceLine>
@@ -625,9 +629,6 @@
    <SourceLine></SourceLine>
    <SourceLine>Case "MenuBar"</SourceLine>
    <SourceLine>#Pragma Warning "TODO: Parse MenuBars"</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Case "DesktopWindow", "Window"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "DesktopToolbar", "Toolbar"</SourceLine>
    <SourceLine>#Pragma Warning "TODO: Parse ToolBars"</SourceLine>
@@ -766,7 +767,7 @@
    <SourceLine>item.File = Nil</SourceLine>
    <SourceLine>item.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
    <SourceLine>item.XML = block.Clone(True)</SourceLine>
-   <SourceLine>item.Type = XojoKit.ItemTypes.Module_</SourceLine>
+   <SourceLine>'item.Type = XojoKit.ItemTypes.Module_</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For k As Integer = 0 To block.ChildCount - 1</SourceLine>
    <SourceLine>Var node As XmlNode = block.Child(k)</SourceLine>
@@ -840,7 +841,28 @@
    <SourceLine>#Pragma Warning "TODO: Parse Workers"</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "DesktopWindow", "Window"</SourceLine>
-   <SourceLine>#Pragma Warning "TODO: Parse Windows"</SourceLine>
+   <SourceLine>// Build this item.</SourceLine>
+   <SourceLine>Var item As New XKItem(Self)</SourceLine>
+   <SourceLine>item.FileFormat = XojoKit.FileFormats.XML</SourceLine>
+   <SourceLine>item.IsExternal = False</SourceLine>
+   <SourceLine>item.File = Nil</SourceLine>
+   <SourceLine>item.ID = Integer.FromString(block.GetAttribute("ID"))</SourceLine>
+   <SourceLine>item.XML = block.Clone(True)</SourceLine>
+   <SourceLine>item.Type = XojoKit.ItemTypes.Window_</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For k As Integer = 0 To block.ChildCount - 1</SourceLine>
+   <SourceLine>Var node As XmlNode = block.Child(k)</SourceLine>
+   <SourceLine>Select Case node.Name</SourceLine>
+   <SourceLine>Case "ObjName"</SourceLine>
+   <SourceLine>item.Name = node.FirstChild.Value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case "ObjContainerID"</SourceLine>
+   <SourceLine>item.ParentID = Integer.FromString(node.FirstChild.Value)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next k</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Add this item to the project.</SourceLine>
+   <SourceLine>Self.Items.Add(item)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case "MultiImage"</SourceLine>
    <SourceLine>#Pragma Warning "TODO: Parse ImageSets"</SourceLine>

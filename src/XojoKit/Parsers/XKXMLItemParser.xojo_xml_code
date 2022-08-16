@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1.1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1962539007">
  <ObjName>XKXMLItemParser</ObjName>
  <ObjContainerID>1087893503</ObjContainerID>
@@ -120,6 +120,7 @@
    <SourceLine>Var iLimit As Integer = item.XML.ChildCount - 1</SourceLine>
    <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
    <SourceLine>Var node As XmlNode = item.XML.Child(i)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Select Case node.Name</SourceLine>
    <SourceLine>Case "IsClass"</SourceLine>
    <SourceLine>isClass = If(node.FirstChild.Value = "0", False, True)</SourceLine>
@@ -175,16 +176,25 @@
    <SourceLine>Case "Structure"</SourceLine>
    <SourceLine>item.Structures.Add(ParseStructure(node))</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Case "ControlBehavior"</SourceLine>
+   <SourceLine>If item.Type = XojoKit.ItemTypes.Window_ Then</SourceLine>
+   <SourceLine>// This is an event implement within a control on a window.</SourceLine>
+   <SourceLine>// Add any events implemented by this control to this window's events. This is obviously</SourceLine>
+   <SourceLine>// incorrect but it's what the project item parser does so for now we will replicate it.</SourceLine>
+   <SourceLine>ParseControlBehaviourNode(item, node)</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine>Next i</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Determine the type of item by analysing the isClass and isInterface flags.</SourceLine>
+   <SourceLine>// Determine the type of item if not already known by analysing the isClass and isInterface flags.</SourceLine>
+   <SourceLine>If item.Type = XojoKit.ItemTypes.Unknown Then</SourceLine>
    <SourceLine>If isInterface Then</SourceLine>
    <SourceLine>item.Type = XojoKit.ItemTypes.Interface_</SourceLine>
    <SourceLine>ElseIf isClass Then</SourceLine>
    <SourceLine>item.Type = XojoKit.ItemTypes.Class_</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>item.Type = XojoKit.ItemTypes.Module_</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -1225,6 +1235,40 @@
   <IsShared>0</IsShared>
   <ItemParams>e As XKEvent</ItemParams>
   <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseControlBehaviourNode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <CodeDescription>Parses an XML "ControlBehavior" node into a `XKEvent`s for `item`.</CodeDescription>
+  <PartID>1748258815</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseControlBehaviourNode(item As XKItem, node As XmlNode)</SourceLine>
+   <SourceLine>/// Parses an XML "ControlBehavior" node into a `XKEvent`s for `item`.</SourceLine>
+   <SourceLine>///</SourceLine>
+   <SourceLine>/// Strictly speaking this the implementation of an event within a control.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Var iLimit As Integer = node.ChildCount - 1</SourceLine>
+   <SourceLine>For i As Integer = 0 To iLimit</SourceLine>
+   <SourceLine>Var child As XmlNode = node.Child(i)</SourceLine>
+   <SourceLine>Select Case child.Name</SourceLine>
+   <SourceLine>Case "HookInstance"</SourceLine>
+   <SourceLine>Var controlEvent As XKEvent = ParseEvent(child)</SourceLine>
+   <SourceLine>If controlEvent &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>item.Events.Add(controlEvent)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>item As XKItem, node As XmlNode</ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Property>
   <ItemName>mOptions</ItemName>

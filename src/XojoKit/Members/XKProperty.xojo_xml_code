@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="440838143">
  <ObjName>XKProperty</ObjName>
- <ObjContainerID>613568511</ObjContainerID>
+ <ObjContainerID>217157631</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>XKMember</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -88,14 +88,14 @@
    <SourceLine></SourceLine>
    <SourceLine>// Getter.</SourceLine>
    <SourceLine>For Each line As String In GetterLines</SourceLine>
-   <SourceLine>If Not line.IsEmpty And Not XojoKit.IsCommentLine(line) Then</SourceLine>
+   <SourceLine>If Not line.Trim.IsEmpty And Not XojoKit.IsCommentLine(line) Then</SourceLine>
    <SourceLine>count = count + 1</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next line</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Setter.</SourceLine>
    <SourceLine>For Each line As String In GetterLines</SourceLine>
-   <SourceLine>If Not line.IsEmpty And Not XojoKit.IsCommentLine(line) Then</SourceLine>
+   <SourceLine>If Not line.Trim.IsEmpty And Not XojoKit.IsCommentLine(line) Then</SourceLine>
    <SourceLine>count = count + 1</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next line</SourceLine>

@@ -68,7 +68,7 @@ End
 		  
 		  If f = Nil Then Return
 		  
-		  Var project As New XKProject(f)
+		  Var project As New XojoKit.XKProject(f)
 		  
 		  // Set options.
 		  project.Options.ExcludedPaths.Add("Unit Tests")

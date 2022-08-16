@@ -1,6 +1,18 @@
 #tag Class
 Protected Class App
 Inherits DesktopApplication
+	#tag Event
+		Sub Opening()
+		  // Register the MBS plugins.
+		  // If you have cloned this repository, you will need a module named `RegisterPlugins` containing
+		  // a method (`MBS`) that registers your MBS plugins.
+		  #If Not DebugBuild
+		    RegisterPlugins.MBS
+		  #EndIf
+		End Sub
+	#tag EndEvent
+
+
 	#tag Constant, Name = kEditClear, Type = String, Dynamic = False, Default = \"&Delete", Scope = Public
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"&Delete"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"&Delete"

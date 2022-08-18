@@ -163,7 +163,6 @@ Implements XKItemParser
 		        // incorrect but it's what the project item parser does so for now we will replicate it.
 		        ParseControlBehaviourNode(item, node)
 		      End If
-		      
 		    End Select
 		  Next i
 		  
@@ -180,6 +179,9 @@ Implements XKItemParser
 		  
 		  // HACK: Xojo stores both windows and containers under the umbrella of a Window block type.
 		  // However, only windows should have an `ImplicitInstance` property.
+		  // This is actually a really dirty hack because I think there's a bug in the Xojo XML parser/
+		  // For inexplicable reasons I am unable to ge the "Name" attribute within the loop above, hence
+		  // why we do this `String.Contains` nonsense.
 		  If item.Type = XojoKit.ItemTypes.Window_ Then
 		    If Not item.XML.ToString.Contains("<PropertyVal Name=""ImplicitInstance"">") Then
 		      item.Type = XojoKit.ItemTypes.Container

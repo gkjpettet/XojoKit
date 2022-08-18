@@ -1595,6 +1595,14 @@ Protected Class XKProject
 				"3 - Window"
 			#tag EndEnumValues
 		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ContainerCount"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
 #tag EndClass

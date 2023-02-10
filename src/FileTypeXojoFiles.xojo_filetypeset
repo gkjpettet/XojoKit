@@ -23,7 +23,7 @@
 		MacType=TEXT
 		Name=XojoXMLProject
 		UTI=public.xml
-		UTIConformsTo=public.xml,public.data
+		UTIConformsTo=public.xml, public.data
 		Description=
 		MimeType=
 		Imported=True
